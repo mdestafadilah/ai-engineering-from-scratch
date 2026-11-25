@@ -3,7 +3,7 @@
 > 曲的问题有一个谷,神经网络有数百万.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 
@@ -18,7 +18,7 @@
 
 课8教你梯度下降,动力和亚当.这些优化者在任何表面上都会下山. 但它们没有保证.在非形的景观上,梯度下降可能会降落在一个糟糕的地方最低值,卡在车点上,或者永远振荡.你无论如何都使用它,因为神经网络是非形的,没有替代方案.
 
-但是机器学习中的许多问题都是曲的.线性回归,物流回归,SVM,LASSO,脊坡回归.对于这些问题来说,存在更强大的东西:优化与数学保障.曲的问题完全有一个谷.任何走下坡的算法都将达到全球最低水平.不需要重新启动.没有学习率的时间表.没有祈祷.
+但机器学习中的许多问题都是曲的. 线性回归,物流回归,SVM,LASSO,脊坡回归. 对于这些,有更强大的东西: 曲的问题没有虚假的谷:每一个地方最小的都是全球最小的. 对于具有最小的平函数,梯度下降与适当的步骤尺寸相近. 没有需要重新启动. 没有学习时间表. 没有祈祷.
 
 了解曲性有三个作用.首先,它告诉你当你的问题是容易 (曲) 时与硬 (非曲) 时.第二,它给你提供了比如牛顿曲问题的方法的更快工具.第三,它解释了整个 ML 中出现的概念:规律化作为一个限制,SVM 中的二元性,以及深度学习为什么尽管违反了曲性给你的每一个好特性,但它仍然有效.
 
@@ -91,13 +91,13 @@ f(tx + (1-t)y) \le t f(x) + (1-t) f(y)
 
 **For a convex function, every local minimum is a global minimum.**
 
-任何下坡路都会导致相同的答案.算法保证将趋于最佳解决方案.
+这意味着梯度下降不能被困在一个坏的本地最小.每一个最低值达到的,都会产生相同的损失.对于一个具有最小的平滑凸函数,一个适当的步骤尺寸的梯度下降保证将趋于最佳值.
 
 ```mermaid
 graph LR
     subgraph "Convex: ONE answer"
         direction TB
-        C1["Loss surface has a single valley"] --> C2["Gradient descent ALWAYS finds the global minimum"]
+        C1["Loss surface has no false valleys"] --> C2["Gradient descent with a suitable step converges to the global minimum"]
     end
     subgraph "Non-convex: MANY traps"
         direction TB
@@ -534,6 +534,18 @@ print(f"Support vectors: {svm.n_support_}")
 4. **Regularization constraint.**实现L1限制优化:尽量减少$(x-3)^2 + (y-2)^2$根据$\lvert x \rvert + \lvert y \rvert \le 1$显示溶液有一个坐标等于零 (钻石约束的差).
 
 5. **Hessian eigenvalue analysis.**计算Rosenbrock函数的Hessian在 (1,1) 和 (-1,1).计算两个点的自值.自值告诉你关于最小与远离的曲线?
+
+### 暗示
+
+**Exercise 1.**在跑步之前,预测每一个结果.`check_convexity`,在一个维度,看看标志$f''(x)$两个维度,看看赫西亚的本值.$f(x,y) = xy$检查器必须报告它不是曲的.
+
+**Exercise 2.**电话`optimize_gd`其他`newtons_method`向和向的向$f$对于梯度下降,学习率必须低于$2/100$由于$50x^2$它们的含量$y$方向移动缓慢. 重复$100x^2$然后再数几步.
+
+**Exercise 3.**使用`lagrange_solve`随着$g(x,y) = x + 2y - 4$在答案上,查看.$x + 2y = 4$现在,$\nabla f = (2(x-3), 2(y-3))$是一个乘法$\nabla g = (1, 2)$现在,我们要去.
+
+**Exercise 4.**没有限制的最小值 (3, 2) 在钻石之外,所以答案在钻石的边界上. 使用预测梯度下降:采取梯度步骤,然后投射回$\lvert x \rvert + \lvert y \rvert \le 1$检查结果是否满足平等的限制,并将其与`demo_regularization_geometry`现在,我们要去.
+
+**Exercise 5.**电话`rosenbrock_hessian`在每一个点,然后将结果传递给`hessian_eigenvalues_2d`在 (1, 1) 时,两个自值值都是正值的,它们的比率非常大,所以谷口在一方向窄而另一方向平坦.
 
 ## 关键词
 

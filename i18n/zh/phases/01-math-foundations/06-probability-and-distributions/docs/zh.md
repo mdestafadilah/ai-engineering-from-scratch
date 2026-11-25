@@ -190,14 +190,14 @@ P(X = x) = \sum_{y} P(X = x, Y = y)
 
 ### 为什么常规分布在各处出现
 
-中央限量定理:许多独立随机变量的总和 (或平均值) 融合到正常分布,不管原始分布如何.
+中央限量定理:是同一分布的许多独立随机变量的平均值,一次集中和规模为$\sqrt{n}$总数是以一个中和规模的总数为相同的.
 
 ```
 Roll 1 die:  uniform distribution (flat)
 Average of 2 dice:  triangular (peaked)
 Average of 30 dice: nearly perfect bell curve
 
-This works for ANY starting distribution.
+This works for ANY starting distribution with finite variance.
 ```
 
 这就是为什么:
@@ -448,6 +448,16 @@ print(f"Log-softmax: {log_probs}")
 
 4. 写一个函数,以记录概率列表,返回最有可能的序列,总记录概率和相当的原始概率. 用50字的句子测试,每个字的概率为0.01.
 
+### 暗示
+
+**Exercise 1.**画`u`均的分配和回报$-\ln(1 - u) / \lambda$检查样本平均值是否接近$1/\lambda$并且后续的历史图片$\lambda e^{-\lambda x}$现在,我们要去.
+
+**Exercise 2.**填写一个6x6表,每个细胞是概率,所有的细胞的总和是1,然后调用`joint_to_marginals`使用`check_independence`只有当每个细胞等于其两个边缘的乘法时, dice才是独立的.
+
+**Exercise 3.**申请`softmax`子和子$-\ln$结果必须接近0.421,这是值`nn.CrossEntropyLoss`给出相同的标志和目标.
+
+**Exercise 4.**对于50个字的概率是0.01,总数必须是$50 \ln(0.01) \approx -230.26$并且原始概率是$10^{-100}$现在,我们要去.
+
 ## 关键词
 
 | Term | What people say | What it actually means |
@@ -460,7 +470,7 @@ print(f"Log-softmax: {log_probs}")
 | Expected value | "The average" | The probability-weighted sum of all outcomes. The loss function is an expected value |
 | Variance | "How spread out" | The expected squared deviation from the mean. High variance = noisy, unstable estimates |
 | Normal distribution | "The bell curve" | $f(x) = (1/\sqrt{2\pi\sigma^2}) \cdot \exp(-(x-\mu)^2/(2\sigma^2))$. Appears everywhere due to the CLT |
-| Central Limit Theorem | "Averages become normal" | The mean of many independent samples converges to a normal distribution regardless of the source |
+| Central Limit Theorem | "Averages become normal" | The centered, scaled mean of many independent samples converges to a normal distribution for any source with finite variance |
 | Joint distribution | "Two variables together" | $P(X, Y)$ describes the probability of every combination of $X$ and $Y$ outcomes |
 | Marginal distribution | "Sum out the other variable" | $P(X) = \sum_y P(X, Y)$. Recovers one variable's distribution from the joint |
 | Log probability | "Log of the probability" | $\log P(x)$. Turns products into sums, preventing numerical underflow in long sequences |

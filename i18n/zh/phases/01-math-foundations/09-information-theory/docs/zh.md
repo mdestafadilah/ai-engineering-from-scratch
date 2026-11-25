@@ -3,7 +3,7 @@
 > 信息理论是惊喜的,损失函数是基于它.
 
 **Type:** Learn
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 
@@ -202,7 +202,7 @@ I(X;Y) &= H(X) - H(X \mid Y) \\
 2. 根据MI分数的排名.
 3. 保持顶部$k$其他功能
 
-这适用于任何功能与目标之间的关系--线性,非线性,单调,或者不.
+这对于特征与目标之间的任何关系都适用 - - 线性,非线性,单调或不.皮尔森相关性只捕捉到线性关系.MI捕捉到任何依赖性,但在有限的数据下,它的估计需要足够的样本和合理的结合.
 
 | Method | Detects | Computational cost | Handles categorical? |
 |--------|---------|-------------------|---------------------|
@@ -460,6 +460,16 @@ print(f"KL div:     {np_kl_divergence(true, pred):.4f} nats")
 3. 显示KL分离不对称.$P$其他$Q$计算$D_{KL}(P \Vert Q)$其他$D_{KL}(Q \Vert P)$解释他们为什么不同.
 
 4. 构建一个函数,计算一个符号预测序列的困难. 给出 (true_token_index, predicted_logits) 对的列表,返回序列的困难.
+
+### 暗示
+
+**Exercise 1.**电话`entropy`结果必须是$\log_2 26 \approx 4.70$实际的字母频率不均,所以它们的值一定较低.
+
+**Exercise 2.**计算`softmax`子的子,$-\ln$分析结果的概率在指数1上,并与`cross_entropy_loss(1, logits)`只有当类1的逻辑比其他两个大得多时,损失才接近0
+
+**Exercise 3.**例如,使用两个不同形状的小分布.$P = [0.9, 0.1]$其他$Q = [0.5, 0.5]$打电话`kl_divergence`两种值必须不同,因为每个方向的分量与分数不同.
+
+**Exercise 4.**对于每一对,计算`cross_entropy_loss(true_token_index, predicted_logits)`通过一个字母,`perplexity`查看统一的记录.$V$标记: 必须是$V$现在,我们要去.
 
 ## 关键词
 

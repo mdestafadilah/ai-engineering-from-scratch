@@ -3,7 +3,7 @@
 > 你的距离函数定义了"类似"的意思.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -102,7 +102,7 @@ L1和L2是Lp标准的特殊案例:
 \lVert x \rVert_p = (|x_1|^p + |x_2|^p + \cdots + |x_n|^p)^{1/p}
 ```
 
-不同值$p$产生不同形状的"单体球" (距离原点1处的所有点集合):
+不同值$p$产生不同形状的"单体球" (最多距离原点1的所有点集合;以下形状是它们的边界):
 
 ```
 p=1:    Diamond shape      (corners on axes)
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### 步骤1:所有标准和距离函数
 
-看到`code/distances.py`每个函数都是从零开始构建的,只使用基本的Python数学.
+看到`code/distances.py`根据Python的基本数学,每个函数都是从头开始构建的.`code/distances.ts`是一个具有相同的功能和演示的TypeScript端口.
 
 ### 步骤2:相同的数据,不同的距离,不同的邻居
 
@@ -483,6 +483,18 @@ print(f"Similarities: {similarities[top_k]}")
 4. 通过使用CDF方法手动计算[0.5,0.5,0.0,0,0]和[0,0,0,0,5,0.5]之间的瓦斯斯坦距离.然后计算[0.25,0.25,0.25,0.25]和[0,0,0,0.5,0.5].哪个更大,为什么?
 
 5. 实现 MinHash 实现近似Jaccard相似性.生成100个随机集合,计算所有对的精确Jaccard,并使用 50,100和200个哈希函数与 MinHash近似相比较.绘制近似错误.
+
+### 暗示
+
+**Exercise 1.**变量向量为 (-3, 2, -3),所以计算该向量的三个规范`l1_norm`现在`l2_norm`其他`linf_norm`为了证明,比较最大的$\lvert d_i \rvert$并且将总数与绝对值的总数的正方形进行比较.
+
+**Exercise 2.**对于第二个案例,使用两个短的向量,在不同方向指向的来源附近,然后检查两个条件.`cosine_similarity`其他`l2_distance`现在,我们要去.
+
+**Exercise 3.**电话`find_nearest_neighbor(query, dataset, distance_fn)`每个人的一次`l1_distance`现在`l2_distance`现在`cosine_distance`其他`mahalanobis_distance`现在,我们要去.`demo_different_neighbors`显示数据集,其中的数据表不同,所以先读一下,然后改变点,直到四个答案都不同.
+
+**Exercise 4.**写出每个分布的累计总和,然后加上两个累计总量的绝对差异.`wasserstein_1d(p, q)`并且解释了更大的值,
+
+**Exercise 5.**对于每个哈希函数,集合的 MinHash签名是其元素的最小哈希值,并且两个集合得到相同的最小值值的哈希函数的比例估计其Jaccard相似性.`jaccard_similarity`错误应该大致是$1/\sqrt{k}$为了$k$值函数
 
 ## 关键词
 

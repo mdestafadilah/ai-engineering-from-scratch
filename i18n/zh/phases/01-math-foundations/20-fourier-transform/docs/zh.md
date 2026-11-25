@@ -3,7 +3,7 @@
 > 每个信号都是阴影波的总和. 福利尔转换告诉你哪些.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -34,7 +34,7 @@
 X[k] = \sum_{n=0}^{N-1} x[n] \, e^{-2\pi i k n/N} \qquad \text{for } k = 0, 1, \ldots, N-1
 ```
 
-每个$X[k]$它们的大小是$\lvert X[k] \rvert$告诉你频率的幅度$k$现在的阶段$\angle X[k]$它们可以告诉你该频率的相对缓解.
+每个$X[k]$它们的大小是$\lvert X[k] \rvert$频率的宽度是比例的$k$没有正常化,一个真正的宽度阴影.$A$这就完全落在bin上$k$给出$\lvert X[k] \rvert = AN/2$现在,我们要把它分为$N/2$它们的相是$\angle X[k]$它们可以告诉你该频率的相对缓解.
 
 关键的见解:$e^{-2\pi i k n/N}$是一个频率旋转的相子$k$ DFT计算信号与每个信号之间的相关性$N$如果信号含有频率的能量$k$如果没有,它接近零.
 
@@ -103,7 +103,7 @@ graph TD
     end
 ```
 
-根据FFT的要求,信号长度为2.实践中,信号将为下一个2.
+信号长度为2. 每当一个子问题有奇数长度时,它会回到平面.`dft`图库FFT如: 图库FFT等`numpy.fft`它们在长度上最快,但在小等因数上最快.
 
 ### 频谱分析
 
@@ -113,8 +113,8 @@ graph TD
 
 ```math
 \begin{aligned}
-\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \operatorname{Re}(X[k])^2 + \operatorname{Im}(X[k])^2 \\
-\text{Phase at frequency } k: \quad \phi[k] &= \operatorname{atan2}(\operatorname{Im}(X[k]), \operatorname{Re}(X[k]))
+\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \mathop{\mathrm{Re}}(X[k])^2 + \mathop{\mathrm{Im}}(X[k])^2 \\
+\text{Phase at frequency } k: \quad \phi[k] &= \mathop{\mathrm{atan2}}(\mathop{\mathrm{Im}}(X[k]), \mathop{\mathrm{Re}}(X[k]))
 \end{aligned}
 ```
 
@@ -426,7 +426,7 @@ spectrogram = np.abs(Zxx) ** 2
 
 ## 运送它
 
-跑步`code/fourier.py`产生`outputs/prompt-spectral-analyzer.md`现在,我们要去.
+跑步`code/fourier.py`产生`outputs/prompt-spectral-analyzer.md`字体编写版本,`code/fourier.ts`写着同一个文件.
 
 ## 运动
 
@@ -439,6 +439,18 @@ spectrogram = np.abs(Zxx) ** 2
 4. **Windowing effects.**创建一个信号,是两个海脉波的总和10 Hz和12 Hz (非常接近).在128 Hz上进行样本1秒.计算没有窗户的功率频谱,汉窗和汉明窗.哪个窗户使得区分两个峰值最容易?为什么?
 
 5. **Positional encoding analysis.**生成d_model = 128 和max_pos = 512 的阴影形位置编码.$(p_1, p_2)$显示点数的产量仅取决于$\lvert p_1 - p_2 \rvert$随着距离的增加,点的乘法会发生什么?
+
+### 暗示
+
+**Exercise 1.**通过1秒的 128 个样本,$k$是$k$对于整数频率,在1到63的桶中最大值的指数是频率. 选择一项整数的赫兹.两个桶之间的频率扩散到邻居,而峰值只给出了最近的桶. 使用 `generate_signal`其他`magnitude_spectrum`增加噪音后,检查其他垃圾桶升高时,峰值仍然在同一桶里.
+
+**Exercise 2.**使用两长的功率,因为`fft`检查 电源的数据`max(abs(a - b))`时间比率将大约增长为$N / \log_2 N$现在,我们要去.
+
+**Exercise 3.**对于圆形卷积,计算$y[n] = \sum_k h[k] x[(n-k) \bmod 8]$通过手动$n$分析结果:`convolve_direct`其他`convolve_fft`线性卷积长度为4 +3 - 1 = 6,所以首先检查长度8是否已经足够长.
+
+**Exercise 4.**使用`hann_window`现在`hamming_window`现在`apply_window`其他`power_spectrum`它们可以在10 Hz 和 12 Hz 之间完成整个周期,因此没有窗户可以看起来最好.重复在 10.5 Hz 和 12.5 Hz 之间,以看到窗户减少的泄漏.
+
+**Exercise 5.**计算每个编码的方法`positional_encoding(pos, 128)`比较位置 (0, 10) 的点子乘法和 (100, 110) 的点子乘法:两个值必须与1e-10左右相匹配.$\lvert p_1 - p_2 \rvert$对于一个固定$p_1$现在,我们要去.
 
 ## 关键词
 

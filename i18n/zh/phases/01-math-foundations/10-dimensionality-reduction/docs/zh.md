@@ -3,7 +3,7 @@
 > 通过从正面角度看,我们可以找到它.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -198,6 +198,13 @@ pca-axes
 
 ## 建立它
 
+类型字符号端口已启动`code/dim_reduction.ts`现在,MNIST的演示需要学习,所以它们只运行在Python中.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
+
 ### 步骤1:从零开始进行PCA
 
 ```python
@@ -354,6 +361,14 @@ for k in [10, 30, 50, 100, 200]:
 2. 在同一MNIST子组上运行t-SNE,具有5,30和100的困难值.描述输出变化.为什么困难会影响集群紧密性?
 
 3. 采用50个特征的数据集,只有5个是信息性的 (生成一个具有`sklearn.datasets.make_classification`) 应用PCA并检查解释的变异曲线是否正确地识别数据实际上是五维的.
+
+### 暗示
+
+**Exercise 1.**阅读`inverse_transform`在`PCA`计算 计算 计算 计算 计算 计算 `reconstruction_error`对于 10, 50 和 200 个组件,随着组件数量增加,错误必须减少.
+
+**Exercise 2.**适合`sklearn.manifold.TSNE`只有变化.`perplexity`并且使用相同的方法`random_state`低度看待少数邻居,所以预期小小紧密群体;高度看待更多邻居,所以预期更大,更平滑的群体.
+
+**Exercise 3.**电话`make_classification(n_features=50, n_informative=5, n_redundant=45)`适合`PCA`随着一个线性变量的变化, 变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变量变化变量变化变化变量变量变量变量变量变量变化变化变化变量变量变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变化变`n_redundant=0`其他45个特征是独立的噪音,曲线不会平坦.
 
 ## 关键词
 

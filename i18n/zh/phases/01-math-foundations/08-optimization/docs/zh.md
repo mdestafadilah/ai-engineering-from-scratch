@@ -46,7 +46,7 @@ w = w - \text{lr} \cdot \text{gradient}
 
 ```mermaid
 graph TD
-    A["* Starting point (high loss)"] --> B["Moving downhill along gradient"]
+    A["* Starting point (high loss)"] --> B["Moving downhill, against the gradient"]
     B --> C["Approaching minimum"]
     C --> D["o Minimum (low loss)"]
 ```
@@ -158,7 +158,7 @@ w &= w - \text{lr} \cdot \hat{m} / (\sqrt{\hat{v}} + \epsilon)
 
 ### 形与非形
 
-曲函数有一个最小值.渐进式下降总是找到它.$f(x) = x^2$形的.
+曲函数没有坏的本地最小值:每个本地最小值是全球最小值.对于一个具有最小值的平滑曲函数,渐进下降率与学习率相对相近.$f(x) = x^2$形,最小的形是独特的.
 
 网络损失功能是非形的.它们有许多本地最小值,车点和平面区域.
 
@@ -356,6 +356,16 @@ scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(adam, T_max=100)
 3. **Saddle point escape.**定义函数$f(x, y) = x^2 - y^2$开始于0.01,0.01. 比较尼拉GD,SGD与动力以及亚当的行为.哪个逃离点?
 
 4. **Implement learning rate decay.**添加一个指数式衰变时间表到 GradientDescent 类:`lr = lr_0 * 0.999^step`根据罗森布洛克函数的与不衰变相似性.
+
+### 暗示
+
+**Exercise 1.**绕学习率,创造一个`GradientDescent(lr=...)`给每一个人,然后把它传递给`optimize`随着`rosenbrock`其他`rosenbrock_gradient`走向的走向显示了增长或变得损失`nan`最低限度为$(1, 1)$损失为0.
+
+**Exercise 2.**创建`SGDMomentum(momentum=m)`根据每一步的值,并记录损失.`find_convergence_step`为了比较速度, 寻找上下的损失,
+
+**Exercise 3.**写下梯度$(2x, -2y)$然后从 (0.01,0.01) 运行三个优化器.$y$每100步,逃离的优化器就是一个$\lvert y \rvert$长大了.
+
+**Exercise 4.**存储`lr_0`子里有一个步骤计数器.`GradientDescent`计算`lr = lr_0 * 0.999 ** step`在里面`step`打印学习率在步骤0和步骤1000;`lr_0`现在,$0.37 \times \text{lr}_0$现在,我们要去.
 
 ## 关键词
 

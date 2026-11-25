@@ -3,7 +3,7 @@
 > 概率是你预期的,贝叶斯定理是你学习的.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 增加1个数量,确保没有可能性是零的.
 
+没有在任何培训信息中出现的单词都不在词汇中.`predict`没有证据证明任何一个类.
+
 ### 后期最大 (MAP)
 
 们需要什么参数才能达到最大的水平?$P(\text{data} \mid \text{parameters})$现在,我们要去.
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ for msg, pred in zip(test_messages, predictions):
 
 ## 运送它
 
-代码在 果中是 果的代码, 代码在 果的代码中是 果的代码.`code/bayes.py`无需超越Python的标准库的依赖性.
+代码在 果中是 果的代码, 代码在 果的代码中是 果的代码.`code/bayes.py`通过Python的标准库,它运行无关.`code/bayes.ts`仅使用 Node 标准库.
 
 ### 结合的先驱
 
@@ -450,6 +452,16 @@ graph LR
 3. **Add features.**扩展NaiveBayes 类,以使消息长度 (短/长) 作为单词数量的功能. 估计$P(\text{short} \mid \text{spam})$其他$P(\text{short} \mid \text{ham})$根据训练数据,将其折叠成预测分数.
 
 4. **MAP by hand.**根据观察到的数据 (7个头在10个币中),使用一个$\text{Beta}(2,2)$之前.与MLE估计相比 ($7/10$)
+
+### 暗示
+
+**Exercise 1.**电话`bayes`检测1后,再用后方作为前方. `sequential_bayes(prior, likelihood, false_positive_rate, 2)`必须提供相同的值,接近0.5.
+
+**Exercise 2.**创建一个`NaiveBayes(smoothing=s)`对于每个值,将其训练在相同的数据上,`top_words`通过平滑0,一个从来没有出现在垃圾邮件中的字得到了0的概率,所以它的日志没有定义.
+
+**Exercise 3.**计算多少短短的垃圾邮件和便,按每个类的消息数量进行分数,并将该比例的日志添加到分数中`predict`检查每个类的两个概率的总数为1.
+
+**Exercise 4.**通过一个$\text{Beta}(\alpha, \beta)$之前,MAP估计是$\frac{h + \alpha - 1}{n + \alpha + \beta - 2}$放进去$h = 7$现在$n = 10$;结果必须在MLE (0.7) 和之前模式 (0.5) 之间.
 
 ## 关键词
 
