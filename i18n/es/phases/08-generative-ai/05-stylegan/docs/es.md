@@ -3,7 +3,7 @@
 > La mayoría de los generadores se mueven .$z$StyleGAN lo divide en partes: primer mapa$z$a un intermediario $w$, luego * inyectar *$w$Este cambio único desentrañó el espacio latente y hizo que las caras fotorealistas fueran un problema resuelto durante siete años consecutivos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
@@ -26,7 +26,7 @@ El resultado:$W$tiene aproximadamente ejes ortogonales para "estilo de alto nive
 **AdaIN.**
 
 ```math
-\operatorname{AdaIN}(x, y) = y_{\text{scale}} \cdot \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x)} + y_{\text{bias}}
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 donde$y_{\text{scale}}$y $y_{\text{bias}}$se derivan de proyecciones afines de $w$Normaliza por mapa de características, luego rediseña. "estilo" aquí es la estadística de primer y segundo orden del mapa de características.

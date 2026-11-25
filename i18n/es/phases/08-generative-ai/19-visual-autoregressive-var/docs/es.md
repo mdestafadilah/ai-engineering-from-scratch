@@ -34,7 +34,7 @@ f -> tokenize at (H/p)x(W/p): token grid z_K of shape (H/p, W/p)
 Cada uno .$z_k$utiliza el mismo libro de códigos (tamaño típico 4096-16384). La tokenización en cada escala no es independiente  se forma de tal manera que la suma de los residuos en cada escala se reconstruye $f$¿Qué es esto ?
 
 ```math
-f \approx \operatorname{upsample}(\operatorname{embed}(z_1), \text{target\_size}) + \cdots + \operatorname{upsample}(\operatorname{embed}(z_K), \text{target\_size})
+f \approx \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_1), \text{target\_size}) + \cdots + \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_K), \text{target\_size})
 ```
 
 Esto es un**residual VQ**Variante.$k$captura qué escalas $1 \ldots k-1$El decodificador toma la suma de todas las incorporaciones de escala y produce la imagen.
@@ -50,7 +50,7 @@ Estructura de la secuencia de entrada:
 [START, z_1 tokens, z_2 tokens, z_3 tokens, ..., z_K tokens]
 ```
 
-Las incorporaciones de posición codifican tanto el índice de escala como la posición espacial dentro de la escala.$k$, posición $(i, j)$puede atender a todos los tokens en escalas $1 \ldots k$y a tokens en escala $k$La VAR utiliza la atención de posición fija sin causalidad intraescala  todas las posiciones dentro de una escala se predicen en paralelo.
+Las incorporaciones de posición codifican tanto el índice de escala como la posición espacial dentro de la escala.$k$, posición $(i, j)$puede atender a todos los tokens en escalas $1 \ldots k$, incluyendo todas las posiciones de la escala $k$No hay orden intraescala y no hay causalidad intraescala, por lo que todas las posiciones dentro de una escala se predicen en paralelo.
 
 Perdida de formación: en cada escala $k$, predecir los tokens $z_k$La estructura de la GPT, excepto la "secuencia", ahora está estructurada en escala.
 
