@@ -45,7 +45,7 @@ No hay red, no hay conectividad. Dos propiedades hacen que esto sea difícil par
 PointNet (Qi et al., 2017) resolvió ambos con una idea: aplicar un MLP compartido a cada punto, luego agregar con una función simétrica (pool máximo).
 
 ```math
-f(P) = \max_{p \in P} \operatorname{MLP}(p)
+f(P) = \max_{p \in P} \mathop{\mathrm{MLP}}(p)
 ```
 
 Este es todo el núcleo de PointNet. Las variantes más profundas (PointNet++, Point Transformer) añaden muestreo jerárquico y agregación local, pero el truco de función simétrica no ha cambiado.

@@ -90,7 +90,7 @@ Para una primera U-Net, bilinear es más seguro.
 Para la segmentación semántica con $C$las clases, el modelo de salida es `(N, C, H, W)`El objetivo es`(N, H, W)`La entropía cruzada es idéntica al caso de clasificación, sólo aplicada en cada posición espacial:
 
 ```math
-\text{Loss} = \operatorname*{mean}_{(n, h, w)} \left[ -\log\left( \operatorname{softmax}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy`PyTorch maneja esta forma de forma nativa.
@@ -103,7 +103,7 @@ La pérdida de dados resuelve esto optimizando directamente la superposición en
 
 ```math
 \begin{aligned}
-\operatorname{Dice}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
 \text{Dice}_{\text{loss}} &= 1 - \text{Dice}
 \end{aligned}
 ```
@@ -129,7 +129,7 @@ La media de la UIE oculta una clase en 15% cuando otras nueve en 85%.
 
 ### Compromiso de resolución de entrada
 
-El codificador de U-Net reduce la resolución a la mitad cuatro veces, por lo que la entrada debe ser divisible por 16. Las imágenes médicas son a menudo 512x512 o 1024x1024.`H * W * C_max`, y en 1024x1024 con 1024 canales de cuello de botella el pase hacia adelante ya utiliza gigabytes de VRAM.
+El codificador de U-Net reduce la resolución a la mitad cuatro veces, por lo que las conexiones de salto se alinean exactamente solo cuando la entrada es divisible por 16. Otros tamaños necesitan relleno o el redimensionamiento en el bloque ascendente (escenada 2). Las imágenes médicas son a menudo 512x512 o 1024x1024.`H * W * C_max`, y en 1024x1024 con 1024 canales de cuello de botella el pase hacia adelante ya utiliza gigabytes de VRAM.
 
 Dos soluciones estándar:
 1. Tela la entrada  proceso 256x256 azulejos con superposición y costura.
