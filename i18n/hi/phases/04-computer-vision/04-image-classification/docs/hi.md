@@ -53,19 +53,19 @@ flowchart LR
 एक वर्गीकरण उत्पादित करता है `C`प्रति छवि logits कहा जाता संख्याओं। softmax लागू करने से उन्हें एक संभावना वितरण में परिवर्तित करता हैः
 
 ```math
-\operatorname{softmax}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
+\mathop{\mathrm{softmax}}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
 ```
 
 क्रॉस-एंट्रोपी सही वर्ग की नकारात्मक लॉग संभावना को मापता हैः
 
 ```math
 \begin{aligned}
-\mathrm{CE}(z, y) &= -\log\left( \operatorname{softmax}(z)_y \right) \\
+\mathrm{CE}(z, y) &= -\log\left( \mathop{\mathrm{softmax}}(z)_y \right) \\
 &= -z_y + \log\left( \sum_j \exp(z_j) \right)
 \end{aligned}
 ```
 
-दाएं हाथ का रूप संख्यात्मक रूप से स्थिर है (लॉग-सॉम-एक्सप) ।`nn.CrossEntropyLoss`एक ऑपरेशन में सॉफ्टमैक्स + एनएलएल को फ्यूज करता है और सीधे कच्चे लॉजिट लेता है। पहले सॉफ्टमैक्स को स्वयं लागू करना लगभग हमेशा एक बग होता है  आप गणना करते हैं $\log(\operatorname{softmax}(\operatorname{softmax}(z)))$, एक अर्थहीन मात्रा।
+दाएं हाथ का रूप संख्यात्मक रूप से स्थिर है (लॉग-सॉम-एक्सप) ।`nn.CrossEntropyLoss`एक ऑपरेशन में सॉफ्टमैक्स + एनएलएल को फ्यूज करता है और सीधे कच्चे लॉजिट लेता है। पहले सॉफ्टमैक्स को स्वयं लागू करना लगभग हमेशा एक बग होता है  आप गणना करते हैं $\log(\mathop{\mathrm{softmax}}(\mathop{\mathrm{softmax}}(z)))$, एक अर्थहीन मात्रा।
 
 ### वृद्धि का काम क्यों होता है
 
@@ -100,7 +100,7 @@ Cutmix:
 
 ### लेबल चिकनाई
 
-एक भ्रमित चचेरे भाई के बजाय प्रशिक्षण के खिलाफ`[0, 0, 1, 0, 0]`, ट्रेन के खिलाफ`[eps/C, eps/C, 1-eps, eps/C, eps/C]`एक छोटे से के लिए `eps`जैसे 0.1. मॉडल को मनमाने ढंग से तेज लॉजिट का उत्पादन करने से रोकता है और लगभग बिना किसी लागत के माप सुधारता है।`nn.CrossEntropyLoss(label_smoothing=0.1)`PyTorch 1.10 के बाद से।
+एक भ्रमित चचेरे भाई के बजाय प्रशिक्षण के खिलाफ`[0, 0, 1, 0, 0]`, ट्रेन के खिलाफ`[eps/C, eps/C, 1-eps+eps/C, eps/C, eps/C]`एक छोटे से के लिए `eps`जैसे 0.1 (एक ही गर्म लक्ष्य एक समान वितरण के साथ मिश्रित है, इसलिए यह अभी भी 1 तक योग करता है) मॉडल को मनमाने ढंग से तेज लॉजिट का उत्पादन करने से रोकता है और लगभग बिना किसी लागत के माप सुधार करता है।`nn.CrossEntropyLoss(label_smoothing=0.1)`PyTorch 1.10 के बाद से।
 
 ### सटीकता से परे मूल्यांकन
 
@@ -415,7 +415,7 @@ val_ds   = CIFAR10(root="./data", train=False, download=True, transform=eval_tf)
 | DataLoader | "The batcher" | Wraps a dataset with shuffling, batching, and (optional) multi-worker loading; gets blamed for half of training bugs |
 | Augmentation | "Random transforms" | Any pixel-level transform at training time that preserves the label; teaches invariances the CNN does not have natively |
 | Mixup / Cutmix | "Mix two images" | Blend both inputs and labels so the classifier learns smooth interpolations instead of hard boundaries |
-| Label smoothing | "Softer targets" | Replace one-hot with (1-eps, eps/(C-1), ...); improves calibration and slightly boosts accuracy |
+| Label smoothing | "Softer targets" | Replace one-hot with (1-eps+eps/C, eps/C, ...); improves calibration and slightly boosts accuracy |
 | Top-k accuracy | "Top-5" | The correct class is in the k highest-probability predictions; used on datasets with genuinely ambiguous classes |
 | Confusion matrix | "Where errors live" | C x C table where entry (i, j) counts images of true class i predicted as j; diagonal is right, off-diagonal tells you what to fix |
 
