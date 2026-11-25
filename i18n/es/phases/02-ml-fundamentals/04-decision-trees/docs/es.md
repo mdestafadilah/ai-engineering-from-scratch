@@ -3,7 +3,7 @@
 > Un árbol de decisión es sólo un diagrama de flujo, pero un bosque de ellos es una de las herramientas más poderosas en ML.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -104,7 +104,7 @@ Este enfoque codicioso no garantiza el árbol óptimo a nivel mundial. Encontrar
 
 ### Condiciones de detención
 
-Sin condiciones de detención, el árbol crece hasta que cada hoja es pura (una muestra por hoja).
+Sin condiciones de detención, el árbol crece hasta que cada hoja es pura o sin fragmentación puede separar sus muestras, a menudo hasta una sola muestra por hoja.
 
 **Pre-pruning**detiene el árbol antes de que crezca completamente:
 - Profundidad máxima: dejar de dividirse cuando el árbol alcance una profundidad fija
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-¿ Qué ?`code/trees.py`para la implementación completa con todos los métodos auxiliares.
+¿ Qué ?`code/trees.py`para la implementación completa con todos los métodos auxiliares. `code/trees.ts`es un puerto de TypeScript con las mismas funciones y demos.`npx tsx code/trees.ts`¿ Qué ?
 
 ## Usalo
 
