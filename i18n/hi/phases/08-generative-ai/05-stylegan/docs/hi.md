@@ -3,7 +3,7 @@
 > अधिकांश जनरेटर हलचल $z$स्टाइलगैन इसे अलग अलग करता हैः पहला नक्शा$z$मध्यवर्ती $w$, फिर * इंजेक्शन *$w$यह एक परिवर्तन लटके हुए स्थान को उजागर किया और सात वर्षों तक फोटोरियल चेहरे को एक हल समस्या बना दिया।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
@@ -26,7 +26,7 @@ Karras et al. (2019, NVIDIA) ने प्रस्तावित किया�
 **AdaIN.**
 
 ```math
-\operatorname{AdaIN}(x, y) = y_{\text{scale}} \cdot \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x)} + y_{\text{bias}}
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 कहाँ$y_{\text{scale}}$और $y_{\text{bias}}$$w$. विशेषता मानचित्र के अनुसार सामान्यीकरण, फिर पुनर्व्यवहार. "शैली" यहाँ विशेषता मानचित्र के प्रथम और द्वितीय क्रम के आंकड़े है.
