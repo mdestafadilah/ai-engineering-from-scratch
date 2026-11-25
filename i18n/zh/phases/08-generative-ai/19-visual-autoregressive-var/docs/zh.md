@@ -34,7 +34,7 @@ f -> tokenize at (H/p)x(W/p): token grid z_K of shape (H/p, W/p)
 每个$z_k$采用相同的代码簿 (典型尺寸4096-16384). 每个尺度的代码化不独立它是训练有素的,使每个尺度的残余积合起来重建$f$其他:
 
 ```math
-f \approx \operatorname{upsample}(\operatorname{embed}(z_1), \text{target\_size}) + \cdots + \operatorname{upsample}(\operatorname{embed}(z_K), \text{target\_size})
+f \approx \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_1), \text{target\_size}) + \cdots + \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_K), \text{target\_size})
 ```
 
 这是一个**residual VQ**变量.$k$捕捉了什么尺度$1 \ldots k-1$解码器将所有规模嵌入式的总和,生成图像.
@@ -50,7 +50,7 @@ f \approx \operatorname{upsample}(\operatorname{embed}(z_1), \text{target\_size}
 [START, z_1 tokens, z_2 tokens, z_3 tokens, ..., z_K tokens]
 ```
 
-位置嵌入式编码了尺度指数和尺度内的空间位置.注意力是因果的尺度顺序:尺度的代币$k$位置$(i, j)$可以在尺度上关注所有代币$1 \ldots k$并且对规模的代币$k$它们本身在任何使用的内尺度顺序中都出现得更早 (VAR使用固定位置注意力,没有内尺度因果关系,在尺度内的所有位置都被平行预测).
+位置嵌入式编码了尺度指数和尺度内的空间位置.注意力是尺度顺序和尺度内区块智能的原因:标志在尺度中$k$位置$(i, j)$可以在尺度上关注所有代币$1 \ldots k$包括每一个尺寸位置$k$没有内部规模的顺序,也没有内部规模的因果关系,所以一个规模内的所有位置都是平行预测的.
 
 培训损失:每一个规模$k$预测标志$z_k$根据前面的代码,VQ代码的交叉缩损失.除了"序列"之外,GPT的结构现在是规模结构化的.
 

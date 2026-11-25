@@ -3,7 +3,7 @@
 > 大多数发电机都会动$z$时刻将它们分开.$z$通过中间$w$接着*注射*$w$通过AdaIN,每一个分辨率级别. 这一变化解开了隐藏的空间,
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
@@ -26,7 +26,7 @@
 **AdaIN.**
 
 ```math
-\operatorname{AdaIN}(x, y) = y_{\text{scale}} \cdot \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x)} + y_{\text{bias}}
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 在哪里$y_{\text{scale}}$其他$y_{\text{bias}}$来自于 $w$按特征地图进行正常化,然后重新样式化. "样式"是特征地图的第一和第二级统计数据.

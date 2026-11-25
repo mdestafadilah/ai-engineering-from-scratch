@@ -3,7 +3,7 @@
 > 每个生成模型排名表都引用了人类偏好领域的FID,CLIP分数和胜利率.每个数字都有一个确定研究人员可以玩的失败模式.如果你不知道失败模式,你无法从游戏运行中辨别真正的改善.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 
@@ -27,7 +27,7 @@
 
 1. 提取Inception-v3功能 (2048-D) 对于N真实图像和N生成的图像.
 2. 按一个高斯人对每个池:计算平均值$\mu_r, \mu_g$及共变性$\Sigma_r, \Sigma_g$现在,我们要去.
-3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \operatorname{Tr}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$现在,我们要去.
+3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \mathop{\mathrm{Tr}}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$现在,我们要去.
 
 解释:特征空间中的两个多变量高素之间的弗雷切距离.
 
