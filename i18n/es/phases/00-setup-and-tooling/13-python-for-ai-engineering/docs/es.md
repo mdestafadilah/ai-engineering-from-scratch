@@ -3,7 +3,7 @@
 > La mayoría de los códigos en este curso utilizan el mismo conjunto pequeño de idiomas Python. Aprenda ese conjunto aquí, antes de que las lecciones de matemáticas y modelos dependen de él.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Dev Environment, Python Environments
 **Time:** ~120 minutes
 
@@ -821,6 +821,7 @@ Un clasificador de centroides más cercano almacena el vector de característica
 
 ```bash
 python3 phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.py
+npx tsx phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.ts
 ```
 
 ```text
@@ -1028,6 +1029,18 @@ Informará cada hallazgo con una ubicación, el problema y una solución.
 3. Escriba .`stream_records(path)`, un generador que da uno `Record`Haga un archivo de 200.000 filas. Compara la memoria máxima de`stream_records`y `load_records`con`tracemalloc`¿ Qué ?
 4. Escriba .`matvec(matrix, vector)`En Python puro y en NumPy.`best_time`Encuentra el tamaño en el que NumPy se hace más rápido en tu máquina.
 5. Escriba el escáner de construcción de The Concept.`ast.parse`y `ast.walk`en cada archivo en `phases/*/*/code/*.py`Cuenta los archivos que contienen`ast.ListComp`¿ Qué ?`ast.Yield`, y `ast.With`, y comparar sus recuentos con la mesa.
+
+### Indicios
+
+**Exercise 1.**Importar`run_demo`de la`code/main.py`y llamarlo con `seed=7`y con `seed=8`, luego imprimir ambos resultados con `format_report`. Los valores que provienen de datos aleatorios cambian; los tamaños divididos dependen sólo de `n`y `test_fraction`, para que permanezcan iguales.
+
+**Exercise 2.**Primero clasifique una copia de la lista, luego tome el elemento medio para longitudes impares y la media de los dos elementos medianos para longitudes paras.`statistics.median`en listas como `[3, 1, 2]`y `[4, 1, 3, 2]`Los dos deben dar los mismos números.
+
+**Exercise 3.**Leer .`load_records`En el`code/main.py`y mantener su paso de análisis, pero `yield`cada uno `Record`En lugar de añadirlo a una lista.`save_records`con`make_dataset(200_000)`para hacer el archivo, luego comparar `peak_bytes(lambda: load_records(path))`con`peak_bytes(lambda: sum(1 for _ in your_generator(path)))`El generador debe consumirse dentro de la llamada, o`peak_bytes`La Comisión ha decidido, en su opinión, que el Consejo de Ministros de la Unión Europea debe adoptar medidas para garantizar que el mercado interno se mantenga en el orden del día.
+
+**Exercise 4.**Usar`dot`como el modelo para la versión pura de Python y llamarlo una vez para cada fila, luego usar `np.array(matrix) @ np.array(vector)`Para NumPy. tiempo para ambos.`best_time`y imprimir una fila de tabla para cada tamaño; los dos resultados deben ser iguales antes de comparar los tiempos.
+
+**Exercise 5.**Lea cada archivo con `Path.read_text`, analizarlo con `ast.parse`, y usar`any(isinstance(node, ast.ListComp) for node in ast.walk(tree))`Cuenta cada archivo una vez, porque la tabla en El concepto cuenta archivos.
 
 ## Términos clave
 
