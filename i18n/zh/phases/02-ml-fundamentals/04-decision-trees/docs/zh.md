@@ -3,7 +3,7 @@
 > 决策树只是一个流程图,但森林是 ML 中最强大的工具之一.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -104,7 +104,7 @@ Entropy = -(0.6 * log2(0.6) + 0.4 * log2(0.4))
 
 ### 停止条件
 
-树木在不停的条件下生长,直到每一张叶子都清纯 (每叶一样子). 这可以完美地记住训练数据,并将其普遍化得非常糟糕.
+树木在不停的条件下,长得清纯,或者没有分裂,可以分离其样本,通常每叶只有一样样. 这可以完美地记住训练数据,并将其普遍化.
 
 **Pre-pruning**在树完全长大之前,停止:
 - 树木达到设定的深度时停止分开
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-看到`code/trees.py`对于所有辅助方法的全面实施.
+看到`code/trees.py`对于所有辅助方法的全面实施.`code/trees.ts`运行它使用 TypeScript 端口,`npx tsx code/trees.ts`现在,我们要去.
 
 ## 用它
 

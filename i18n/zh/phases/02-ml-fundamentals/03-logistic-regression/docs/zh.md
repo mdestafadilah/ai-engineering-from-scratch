@@ -3,7 +3,7 @@
 > 逻辑回归将直线曲线成S曲线,以回答与概率的"是"或"没有"问题.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -86,7 +86,7 @@ flowchart LR
 - 什么时候$y=0$其他$p$接近0: $\log(1) = 0$由于此类情况,
 - 什么时候$y=0$其他$p$接近1$\log(0)$接近负无限,所以损失是巨大的 (错误,高成本)
 
-由于这种损失函数是逻辑回归的曲,确保了单一的全球最低值.
+由于这种损失函数是逻辑回归的曲,因此每个地方最小是全球最小值,梯度下降不能被困在一个坏的数据上.在完全可分离的数据上,随着重量增长,损失不断下降,因此没有有限的最小值;L2规律化修复了这一点,使得最小值独特.
 
 ### 后勤回归的逐渐下降
 
@@ -503,6 +503,7 @@ print(f"\nClassification Report:\n{classification_report(y_te, y_pred)}")
 
 这一课产生了:
 - `code/logistic_regression.py`- 从零开始的物流回归,使用指标
+- `code/main.rs`- 只有Rust,只有Sdlib.`rustc --edition 2021 code/main.rs && ./main`现在,我们要去.
 
 ## 运动
 
