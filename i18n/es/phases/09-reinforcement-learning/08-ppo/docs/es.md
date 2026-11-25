@@ -3,7 +3,7 @@
 > A2C arroja cada implementación después de una actualización. PPO envuelve el gradiente de política en una relación de importancia reducida para que pueda hacer 10+ épocas en los mismos datos sin que la política explode. Schulman et al. (2017).
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 
@@ -32,13 +32,13 @@ Esta es la proporción de probabilidad de la nueva política frente a la políti
 **The clipped surrogate.**
 
 ```math
-L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min\left( r_t(\theta) A_t, \operatorname{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
+L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min\left( r_t(\theta) A_t, \mathop{\mathrm{clip}}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
 ```
 
 Dos términos:
 
 - Si la ventaja es$A_t > 0$y la proporción trata de crecer más allá $1 + \epsilon$, el clip aplanar el gradiente  no empujar una buena acción más allá de $+\epsilon$por encima de la antigua probabilidad.
-- Si la ventaja es$A_t < 0$y la proporción trata de crecer más allá $1 - \epsilon$(lo que significa que haríamos una mala acción más probable en comparación con su reducción recortada), el clip tapa el gradiente  no empujar una mala acción por debajo $-\epsilon$¿ Qué ?
+- Si la ventaja es$A_t < 0$y la proporción intenta caer por debajo $1 - \epsilon$(lo que significa que haríamos que una mala acción fuera mucho menos probable que la vieja política), el clip aplanía el gradiente: no empujes una mala acción más allá de $-\epsilon$por debajo de la antigua probabilidad.
 
 El `min`maneja la otra dirección: si la relación se ha movido en la dirección *beneficial* , todavía obtiene el gradiente (no hay recorte en el lado que le perjudique).
 
@@ -195,7 +195,7 @@ Refuse `K > 30` or `ε > 0.3` (unsafe trust region). Refuse any PPO run without 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
 | Importance ratio | "r_t(θ)" | $\pi_\theta(a \mid s) / \pi_{\text{old}}(a \mid s)$; deviation from the policy that collected the data. |
-| Clipped surrogate | "PPO's main trick" | $\min(r \cdot A, \operatorname{clip}(r, 1-\epsilon, 1+\epsilon) \cdot A)$; flat gradient past the clip on beneficial side. |
+| Clipped surrogate | "PPO's main trick" | $\min(r \cdot A, \mathop{\mathrm{clip}}(r, 1-\epsilon, 1+\epsilon) \cdot A)$; flat gradient past the clip on beneficial side. |
 | Trust region | "TRPO / PPO intent" | Limit each update's KL to guarantee monotone improvement. |
 | KL penalty | "Soft trust region" | Alternative PPO: $L - \beta \cdot \mathrm{KL}(\pi_\theta \Vert \pi_{\text{old}})$. Adaptive $\beta$. |
 | Clip fraction | "How often clipping triggers" | Diagnostic — should be 0.1-0.3; outside means mistuned. |
