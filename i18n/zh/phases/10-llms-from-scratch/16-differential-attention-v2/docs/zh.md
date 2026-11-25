@@ -3,7 +3,7 @@
 > 软max注意力在每一个不匹配的代币上分散了少量的概率. 超过100万个代币,这些噪音加起来,淹没了信号. 差异变压器 (Ye et al., ICLR 2025) 通过计算注意力为两个软max的差异来解决这一问题,减去共享噪音地面. DIFF V2 (微软,2026年1月) 是生产堆重写:与基线变压器相匹配的解码延迟,没有自定义内核,兼容FlashAttention. 这一课程是V1到V2端到端,用一个工作玩具实现的区别操作你可以运行在Stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 
@@ -16,7 +16,7 @@
 
 ## 问题
 
-标准软max注意力具有数学特性,它会变成规模上的操作头痛.`q`关注重量是`softmax(qK^T / sqrt(d))`软max 永远无法产生精确的零 每一个不匹配的代币都获得了一些正质量.那个残余质量是噪音,它随着背景长度而扩展.在128k代币时,即使每个不匹配的代币只有0.001%的可能性,其中127,999代币总共贡献了总量的12%.模型必须学习绕着环境增长的噪音地面路线.
+标准软max注意力具有数学特性,它会变成规模上的操作头痛.`q`关注重量是`softmax(qK^T / sqrt(d))`软max 永远无法产生精确的零:每一个不匹配的代币都获得了一些正质量.那个残余质量是噪音,它随着背景长度而扩展.在128k代币时,即使每个不匹配的代币只有0.0001%的可能性,其中127,999代币总共贡献了总量的13%.模型必须学习绕着环境增长的噪音地面路线.
 
 经验上,这表现为注意力头部干扰:长文本RAG中的幻觉引用,在100k标记检索任务中失败中失败,在32k以上的针基准上微妙的精度降低. 差异变压器论文 (arXiv:2410.05258,ICLR 2025) 测量了差距:DIFF变压器的困惑程度较低,长文本精度更高,幻觉比相同尺寸的基线更少.
 
@@ -42,15 +42,15 @@ w_i = \frac{\exp(q \cdot k_i / \sqrt{d})}{\sum_j \exp(q \cdot k_j / \sqrt{d})}
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d})
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d})
 \end{aligned}
 ```
 
 输出:
 
 ```math
-\operatorname{DiffAttn} = (A_1 - \lambda \cdot A_2) V
+\mathop{\mathrm{DiffAttn}} = (A_1 - \lambda \cdot A_2) V
 ```
 
 减值取消了两个地图共享的任何噪音分布.如果两个地图在127k不相关的代币上重量大约均 (随机初始化后),则这些都会取消.信号在少数实际相关的代币上最大重量只会取消如果它在两个地图上出现相同的 magnitud,这将不会一旦模型列车.
