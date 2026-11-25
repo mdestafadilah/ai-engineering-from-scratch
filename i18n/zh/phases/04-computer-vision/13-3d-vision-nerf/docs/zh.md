@@ -45,7 +45,7 @@ cloud = [
 PointNet (Qi et al., 2017) 通过一个想法解决了这两个问题:将共享MLP应用于每个点,然后用对称函数 (最大积分组) 进行聚合.结果是一个不依赖顺序的固定尺寸向量.
 
 ```math
-f(P) = \max_{p \in P} \operatorname{MLP}(p)
+f(P) = \max_{p \in P} \mathop{\mathrm{MLP}}(p)
 ```
 
 这就是PointNet的核心.更深层次的变体 (PointNet++,Point Transformer) 增加了层次性样本和本地聚合,但对称函数技巧没有改变.

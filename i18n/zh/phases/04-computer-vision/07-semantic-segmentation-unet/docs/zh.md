@@ -90,7 +90,7 @@ flowchart LR
 用于语义分类$C$模型输出是`(N, C, H, W)`目标是`(N, H, W)`交叉透与分类案例相同,只应在每个空间位置上应用:
 
 ```math
-\text{Loss} = \operatorname*{mean}_{(n, h, w)} \left[ -\log\left( \operatorname{softmax}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy`在 PyTorch 处理这种形状原生.
@@ -103,7 +103,7 @@ flowchart LR
 
 ```math
 \begin{aligned}
-\operatorname{Dice}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
 \text{Dice}_{\text{loss}} &= 1 - \text{Dice}
 \end{aligned}
 ```
@@ -129,7 +129,7 @@ L = L_{\text{cross\_entropy}} + \lambda \cdot L_{\text{dice}} \qquad (\lambda \a
 
 ### 输入分辨率交易
 
-医疗图像通常是512x512或1024x1024.自动驾驶作物是2048x1024. U-Net的内存成本与`H * W * C_max`通过1024x1024的瓶通道,前进通道已经使用了千兆瓦的VRAM.
+其他尺寸需要填充或在上方块中更大尺寸 (步骤 2). 医疗图像通常是512x512或1024x1024. 自动驾驶作物是2048x1024.`H * W * C_max`通过1024x1024的瓶通道,前进通道已经使用了千兆瓦的VRAM.
 
 两种标准解决方案:
 1. 入口处理 256x256 ,覆盖和接.

@@ -53,19 +53,19 @@ flowchart LR
 一个分类器产生`C`应用软max将它们转化为概率分布:
 
 ```math
-\operatorname{softmax}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
+\mathop{\mathrm{softmax}}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
 ```
 
 交叉透量测量正确类的负记录概率:
 
 ```math
 \begin{aligned}
-\mathrm{CE}(z, y) &= -\log\left( \operatorname{softmax}(z)_y \right) \\
+\mathrm{CE}(z, y) &= -\log\left( \mathop{\mathrm{softmax}}(z)_y \right) \\
 &= -z_y + \log\left( \sum_j \exp(z_j) \right)
 \end{aligned}
 ```
 
-右边的表格是数值稳定的表格 (log-sum-exp).`nn.CrossEntropyLoss`直接使用原始的记录. 应用软max 首先几乎总是错误$\log(\operatorname{softmax}(\operatorname{softmax}(z)))$没有意义的数量.
+右边的表格是数值稳定的表格 (log-sum-exp).`nn.CrossEntropyLoss`直接使用原始的记录. 应用软max 首先几乎总是错误$\log(\mathop{\mathrm{softmax}}(\mathop{\mathrm{softmax}}(z)))$没有意义的数量.
 
 ### 为什么增强效果
 
@@ -100,7 +100,7 @@ Cutmix:
 
 ### 标签滑滑
 
-的表哥,而不是训练`[0, 0, 1, 0, 0]`列车对抗`[eps/C, eps/C, 1-eps, eps/C, eps/C]`为了一个小的`eps`模型不会产生任意尖的位,并且几乎没有成本地提高校准.`nn.CrossEntropyLoss(label_smoothing=0.1)`自PyTorch 1.10以来.
+的表哥,而不是训练`[0, 0, 1, 0, 0]`列车对抗`[eps/C, eps/C, 1-eps+eps/C, eps/C, eps/C]`为了一个小的`eps`模型不产生任意尖的位,并且几乎没有成本提高校准.`nn.CrossEntropyLoss(label_smoothing=0.1)`自PyTorch 1.10以来.
 
 ### 超出准确性的评估
 
@@ -415,7 +415,7 @@ val_ds   = CIFAR10(root="./data", train=False, download=True, transform=eval_tf)
 | DataLoader | "The batcher" | Wraps a dataset with shuffling, batching, and (optional) multi-worker loading; gets blamed for half of training bugs |
 | Augmentation | "Random transforms" | Any pixel-level transform at training time that preserves the label; teaches invariances the CNN does not have natively |
 | Mixup / Cutmix | "Mix two images" | Blend both inputs and labels so the classifier learns smooth interpolations instead of hard boundaries |
-| Label smoothing | "Softer targets" | Replace one-hot with (1-eps, eps/(C-1), ...); improves calibration and slightly boosts accuracy |
+| Label smoothing | "Softer targets" | Replace one-hot with (1-eps+eps/C, eps/C, ...); improves calibration and slightly boosts accuracy |
 | Top-k accuracy | "Top-5" | The correct class is in the k highest-probability predictions; used on datasets with genuinely ambiguous classes |
 | Confusion matrix | "Where errors live" | C x C table where entry (i, j) counts images of true class i predicted as j; diagonal is right, off-diagonal tells you what to fix |
 

@@ -60,7 +60,7 @@ loss = (loss_i2t + loss_t2i) / 2
 
 ```math
 \begin{aligned}
-\text{loss} &= \operatorname*{mean}_{\text{pairs}} \log\left(1 + \exp(-y_{ij} \cdot \text{sim}_{ij})\right) \\
+\text{loss} &= \mathop{\mathrm{mean}}\limits_{\text{pairs}} \log\left(1 + \exp(-y_{ij} \cdot \text{sim}_{ij})\right) \\
 y_{ij} &= \begin{cases} +1 & \text{if matching} \\ -1 & \text{otherwise} \end{cases}
 \end{aligned}
 ```
