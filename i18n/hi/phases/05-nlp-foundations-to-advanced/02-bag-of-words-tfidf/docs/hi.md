@@ -3,7 +3,7 @@
 > पहले गिनें, बाद में सोचें। 2026 में TF-IDF अभी भी अच्छी तरह से परिभाषित कार्यों पर एम्बेडमेंट को हराता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 
@@ -26,7 +26,7 @@
 ```math
 \begin{aligned}
 \text{TF-IDF}(w, d) &= \text{TF}(w, d) \cdot \text{IDF}(w) \\
-&= \frac{\operatorname{count}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\operatorname{df}(w)}
+&= \frac{\mathop{\mathrm{count}}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\mathop{\mathrm{df}}(w)}
 \end{aligned}
 ```
 
@@ -126,7 +126,7 @@ def tfidf(bow_matrix):
 >>> tfidf(bow)
 ```
 
-तीन दस्तावेज, पांच शब्दावली शब्द (`the`,`cat`,`sat`,`dog`,`ran` ).`the`सभी तीन में दिखाई देता है, तो इसके IDF कम है। `dog`वेक्टर दुर्लभ हैं (ज्यादातर प्रविष्टियां छोटी हैं) और भेदभावपूर्ण शब्द पॉप अप करते हैं।
+तीन दस्तावेज, पांच शब्दावली शब्द (`the`,`cat`,`sat`,`dog`,`ran` ).`the`सभी तीन में दिखाई देता है, तो इसके IDF कम है। `dog`एक में दिखाई देता है, इसलिए इसकी आईडीएफ उच्च है। हजारों शब्दों की एक वास्तविक शब्दावली के साथ, ये वेक्टर दुर्लभ हैं (अधिकतर प्रविष्टियां शून्य हैं) । यहां तक कि इस खिलौने में, भेदभावपूर्ण शब्द पॉप।
 
 ### चरण 5: L2-सूची को सामान्य बनाएं
 

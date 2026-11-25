@@ -3,7 +3,7 @@
 > "उसने उसे फोन किया, उसने जवाब नहीं दिया, डॉक्टर दोपहर के भोजन पर थे" तीन संदर्भ दो लोगों के लिए और कोई नाम नहीं है। कोरफ़ेरेंस रिज़ॉल्यूशन पता चलता है कि कौन कौन है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 
@@ -61,14 +61,14 @@ coref-links
 ```python
 import spacy
 nlp = spacy.load("en_coreference_web_trf")   # experimental model
-doc = nlp("Apple announced new products. The company said they would ship soon.")
+doc = nlp("Apple announced new products. The company said it would ship them soon.")
 for cluster in doc._.coref_clusters:
     print(cluster, "->", [m.text for m in cluster])
 ```
 
 एक लंबे दस्तावेज पर, आपको कुछ ऐसा मिलता हैः
-- क्लस्टर 1: [Apple, कंपनी, वे]
-- समूह 2: [नए उत्पाद]
+- क्लस्टर 1: [Apple, कंपनी, यह]
+- समूह 2: [नए उत्पाद, वे]
 
 ### चरण 2: नियम आधारित प्रत्यय समाधान (शिक्षण)
 

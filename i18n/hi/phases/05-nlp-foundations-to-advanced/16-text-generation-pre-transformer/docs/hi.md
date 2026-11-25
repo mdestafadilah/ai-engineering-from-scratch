@@ -3,7 +3,7 @@
 > यदि कोई शब्द आश्चर्यजनक है, तो मॉडल बुरा है. भ्रम एक संख्या को आश्चर्यचकित करता है. चिकनाई इसे अंतहीन रखती है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 
@@ -42,7 +42,7 @@ prediction-game
 **N-gram probability:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`. ठीक करें `n`(आमतौर पर त्रिकोण के लिए 3 और चार ग्राम के लिए 4) गणना से करेंः
 
 ```math
-P(w \mid \text{context}) = \frac{\operatorname{count}(\text{context}, w)}{\operatorname{count}(\text{context})}
+P(w \mid \text{context}) = \frac{\mathop{\mathrm{count}}(\text{context}, w)}{\mathop{\mathrm{count}}(\text{context})}
 ```
 
 **The zero-count problem.**प्रशिक्षण में न देखे गए किसी भी n-ग्राम को शून्य संभावना मिलती है। ब्राउन कॉर्पस पर 2007 के एक अध्ययन में पाया गया कि 4 ग्राम मॉडल में भी प्रशिक्षण में न देखे गए 4 ग्राम का 30% था। आप बिना चिकनाई के किसी भी वास्तविक पाठ पर मूल्यांकन नहीं कर सकते।
