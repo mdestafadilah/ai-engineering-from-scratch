@@ -190,14 +190,14 @@ Los totales de filas y columnas de la tabla anterior son los márgenes.
 
 ### Por qué la distribución normal aparece en todas partes
 
-El Teorema del límite central: la suma (o promedio) de muchas variables aleatorias independientes converge a una distribución normal, independientemente de la distribución original.
+El Teorema del límite central: el promedio de muchas variables aleatorias independientes de la misma distribución, una vez centradas y escaladas por $\sqrt{n}$, se acerca a una distribución normal, cualquiera que sea la forma de la distribución original, siempre que su varianza sea finita.
 
 ```
 Roll 1 die:  uniform distribution (flat)
 Average of 2 dice:  triangular (peaked)
 Average of 30 dice: nearly perfect bell curve
 
-This works for ANY starting distribution.
+This works for ANY starting distribution with finite variance.
 ```
 
 Por eso es que:
@@ -448,6 +448,16 @@ Construiste esto desde cero, ahora sabes lo que hacen las llamadas de la bibliot
 
 4. Escriba una función que tome una lista de probabilidades de registro y devuelve la secuencia más probable, la probabilidad total de registro y la probabilidad bruta equivalente. Pruébalo con una oración de 50 palabras donde cada palabra tiene probabilidad 0.01.
 
+### Indicios
+
+**Exercise 1.**Describa`u`de una distribución y retorno uniformes $-\ln(1 - u) / \lambda$Compruebe si la media de la muestra está cerca de$1/\lambda$y que los contenedores de histogramas sigan $\lambda e^{-\lambda x}$¿ Qué ?
+
+**Exercise 2.**Llena una tabla de 6x6 donde cada célula es una probabilidad y la suma de todas las células es 1, luego llama `joint_to_marginals`- Usar .`check_independence`: los dados son independientes sólo si cada célula es igual al producto de sus dos margenas.
+
+**Exercise 3.**Aplicar`softmax`a las logitas y tomar $-\ln$El resultado debe estar cerca de 0.421, que es el valor `nn.CrossEntropyLoss`da para los mismos logits y objetivo.
+
+**Exercise 4.**Añadir las probabilidades de registro; no multiplicar las probabilidades crudas. Para 50 palabras con probabilidad 0.01, el total debe ser $50 \ln(0.01) \approx -230.26$, y la probabilidad bruta es $10^{-100}$¿ Qué ?
+
 ## Términos clave
 
 | Term | What people say | What it actually means |
@@ -460,7 +470,7 @@ Construiste esto desde cero, ahora sabes lo que hacen las llamadas de la bibliot
 | Expected value | "The average" | The probability-weighted sum of all outcomes. The loss function is an expected value |
 | Variance | "How spread out" | The expected squared deviation from the mean. High variance = noisy, unstable estimates |
 | Normal distribution | "The bell curve" | $f(x) = (1/\sqrt{2\pi\sigma^2}) \cdot \exp(-(x-\mu)^2/(2\sigma^2))$. Appears everywhere due to the CLT |
-| Central Limit Theorem | "Averages become normal" | The mean of many independent samples converges to a normal distribution regardless of the source |
+| Central Limit Theorem | "Averages become normal" | The centered, scaled mean of many independent samples converges to a normal distribution for any source with finite variance |
 | Joint distribution | "Two variables together" | $P(X, Y)$ describes the probability of every combination of $X$ and $Y$ outcomes |
 | Marginal distribution | "Sum out the other variable" | $P(X) = \sum_y P(X, Y)$. Recovers one variable's distribution from the joint |
 | Log probability | "Log of the probability" | $\log P(x)$. Turns products into sums, preventing numerical underflow in long sequences |

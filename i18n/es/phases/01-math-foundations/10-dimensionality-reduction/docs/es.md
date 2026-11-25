@@ -3,7 +3,7 @@
 > Los datos de alta dimensión tienen estructura. Se encuentran mirando desde el ángulo correcto.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -198,6 +198,13 @@ pca-axes
 
 ## Construye el mismo
 
+El puerto de TypeScript está en `code/dim_reduction.ts`Las demostraciones del MNIST necesitan aprender a usar, por lo que sólo funcionan en Python.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
+
 ### Paso 1: PCA desde cero
 
 ```python
@@ -354,6 +361,14 @@ Esta lección produce:
 2. Exercir t-SNE en el mismo subconjunto MNIST con valores de perplejidad de 5, 30 y 100. Describir cómo cambia la salida. ¿Por qué la perplejidad afecta la tensión del grupo?
 
 3. Tome un conjunto de datos con 50 características donde sólo 5 son informativas (generar uno con `sklearn.datasets.make_classification`Se aplicará el PCA y se comprobará si la curva de variación explicada identifica correctamente que los datos son efectivamente 5 dimensiones.
+
+### Indicios
+
+**Exercise 1.**Leer .`inverse_transform`en el `PCA`La clase y el ajuste de un modelo para cada número de componentes.`reconstruction_error`para los componentes 10, 50 y 200; el error debe disminuir a medida que crezca el número de componentes.
+
+**Exercise 2.**En forma .`sklearn.manifold.TSNE`tres veces en el mismo subconjunto, cambiando sólo `perplexity`, y usar el mismo `random_state`La baja perplejidad mira a pocos vecinos, así que espera grupos pequeños y estrechos; la alta perplejidad mira a más vecinos, así que espera grupos más grandes y más suaves.
+
+**Exercise 3.**Llamé`make_classification(n_features=50, n_informative=5, n_redundant=45)`, adecuado`PCA`Las características redundantes son combinaciones lineales de las informativas, por lo que la curva alcanza casi 1.0 en 5 componentes.`n_redundant=0`: las otras 45 características son sonidos independientes, y la curva no se aplanará.
 
 ## Términos clave
 

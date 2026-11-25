@@ -3,7 +3,7 @@
 > Su función de distancia define lo que significa "similar".
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -102,7 +102,7 @@ L1 y L2 son casos especiales de la norma Lp:
 \lVert x \rVert_p = (|x_1|^p + |x_2|^p + \cdots + |x_n|^p)^{1/p}
 ```
 
-Diferentes valores de $p$producen "bolas de unidad" de diferentes formas (el conjunto de todos los puntos a la distancia 1 del origen):
+Diferentes valores de $p$producen "bolas de unidad" de diferentes formas (el conjunto de todos los puntos a una distancia máxima de 1 del origen; las formas siguientes son sus límites):
 
 ```
 p=1:    Diamond shape      (corners on axes)
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### Paso 1: Todas las funciones normales y de distancia
 
-¿ Qué ?`code/distances.py`Cada función se construye desde cero utilizando sólo matemáticas básicas de Python.
+¿ Qué ?`code/distances.py`Cada función se construye desde cero utilizando sólo matemáticas básicas Python.`code/distances.ts`es un puerto TypeScript con las mismas funciones y demos.
 
 ### Paso 2: Los mismos datos, distancias diferentes, vecinos diferentes
 
@@ -483,6 +483,18 @@ Cuando llames .`model.encode(text)`y luego buscar una base de datos vectorial, e
 4. Calcule la distancia de Wasserstein entre [0,5, 0,5, 0,0] y [0, 0, 0,5, 0,5] a mano utilizando el método CDF. Luego, cálcala entre [0,25, 0.25, 0.25, 0.25] y [0, 0, 0, 0,5, 0.5]. ¿Cuál es mayor y por qué?
 
 5. Implemente MinHash para obtener una similitud aproximada con Jaccard. Generar 100 conjuntos aleatorios, calcular el Jaccard exacto para todos los pares y comparar con la aproximación de MinHash utilizando funciones de hash 50, 100 y 200.
+
+### Indicios
+
+**Exercise 1.**El vector de diferencia es (-3, 2, -3), así que calcular las tres normas de ese vector con `l1_norm`¿ Qué ?`l2_norm`, y `linf_norm`Para la prueba, comparar el mayor$\lvert d_i \rvert$con la suma de cuadrados, y comparar la suma de cuadrados con el cuadrado de la suma de valores absolutos.
+
+**Exercise 2.**La similitud cosínica ignora la longitud, así que comience con dos vectores que apuntan casi en la misma dirección y haga que uno de ellos sea mucho más largo. Para el segundo caso, use dos vectores cortos cerca del origen que apuntan en direcciones diferentes, luego compruebe ambas condiciones con `cosine_similarity`y `l2_distance`¿ Qué ?
+
+**Exercise 3.**Llamé`find_nearest_neighbor(query, dataset, distance_fn)`una vez por cada uno de ellos `l1_distance`¿ Qué ?`l2_distance`¿ Qué ?`cosine_distance`, y `mahalanobis_distance`- ¿ Qué ?`demo_different_neighbors`muestra un conjunto de datos donde las métricas no están de acuerdo, así que léelo primero y luego cambie los puntos hasta que las cuatro respuestas difieran.
+
+**Exercise 4.**Escriba la suma acumulada de cada distribución, luego suma las diferencias absolutas de las dos sumas acumuladas.`wasserstein_1d(p, q)`, luego explicar el valor más grande por lo lejos que la masa de probabilidad debe moverse.
+
+**Exercise 5.**Para cada función hash, la firma MinHash de un conjunto es el valor mínimo de hash sobre sus elementos, y la fracción de funciones hash donde dos conjuntos obtienen la misma estimación mínima de su similitud Jaccard.`jaccard_similarity`El error debe caer aproximadamente en $1/\sqrt{k}$por$k$funciones de hash.
 
 ## Términos clave
 

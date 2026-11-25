@@ -3,7 +3,7 @@
 > Cada señal es una suma de ondas senoides. La transformación de Fourier le dice cuáles son.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -34,7 +34,7 @@ Se dio $N$muestras $x[0], x[1], \ldots, x[N-1]$, la Transformación de Fourier d
 X[k] = \sum_{n=0}^{N-1} x[n] \, e^{-2\pi i k n/N} \qquad \text{for } k = 0, 1, \ldots, N-1
 ```
 
-Cada uno .$X[k]$Es un número complejo.$\lvert X[k] \rvert$Te dice la amplitud de frecuencia .$k$Su fase .$\angle X[k]$te dice la fase de compensación de esa frecuencia.
+Cada uno .$X[k]$Es un número complejo.$\lvert X[k] \rvert$es proporcional a la amplitud de frecuencia $k$Sin normalización, un seno real de amplitud.$A$que cae exactamente en Bin $k$da .$\lvert X[k] \rvert = AN/2$, así que dividir por $N/2$Para leer la amplitud.$\angle X[k]$te dice la fase de compensación de esa frecuencia.
 
 La clave de la información:$e^{-2\pi i k n/N}$es un faseor giratorio en frecuencia $k$. El DFT calcula la correlación entre la señal y cada uno de los $N$las frecuencias de igual espacio. si la señal contiene energía en frecuencia$k$Si no, es cerca de cero.
 
@@ -103,7 +103,7 @@ graph TD
     end
 ```
 
-El FFT requiere que la longitud de la señal sea de 2 potencia. En la práctica, las señales se empalan a cero a la siguiente potencia de 2.
+El radix-2 FFT construido aquí es más rápido cuando la longitud de la señal es una potencia de 2. Siempre que un sub-problema tiene longitud impar, cae de nuevo a la llanura `dft`, por lo que las señales a menudo son emparejadas a cero a la siguiente potencia de 2 para la velocidad.`numpy.fft`manejan cualquier longitud con algoritmos de radix mixtos, pero son más rápidos en longitudes con pequeños factores primos.
 
 ### Análisis espectral
 
@@ -113,8 +113,8 @@ El **phase spectrum**¿ Es verdad ?$\angle X[k]$Para la mayoría de las tareas d
 
 ```math
 \begin{aligned}
-\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \operatorname{Re}(X[k])^2 + \operatorname{Im}(X[k])^2 \\
-\text{Phase at frequency } k: \quad \phi[k] &= \operatorname{atan2}(\operatorname{Im}(X[k]), \operatorname{Re}(X[k]))
+\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \mathop{\mathrm{Re}}(X[k])^2 + \mathop{\mathrm{Im}}(X[k])^2 \\
+\text{Phase at frequency } k: \quad \phi[k] &= \mathop{\mathrm{atan2}}(\mathop{\mathrm{Im}}(X[k]), \mathop{\mathrm{Re}}(X[k]))
 \end{aligned}
 ```
 
@@ -426,7 +426,7 @@ La matriz de espectrograma tiene forma (n_frecuencias, n_time_frames). Cada colu
 
 ## Envío
 
-- ¿ Qué ?`code/fourier.py`para generar `outputs/prompt-spectral-analyzer.md`¿ Qué ?
+- ¿ Qué ?`code/fourier.py`para generar `outputs/prompt-spectral-analyzer.md`. La versión de TypeScript, `code/fourier.ts`, escribe el mismo archivo.
 
 ## Los ejercicios
 
@@ -439,6 +439,18 @@ La matriz de espectrograma tiene forma (n_frecuencias, n_time_frames). Cada colu
 4. **Windowing effects.**Crear una señal que sea la suma de dos ondas senolares a 10 Hz y 12 Hz (muy cerca). Muestrear a 128 Hz durante 1 segundo. Compute el espectro de potencia sin ventana, ventana Hann y ventana Hamming. ¿Qué ventana hace que sea más fácil distinguir los dos picos? ¿Por qué?
 
 5. **Positional encoding analysis.**Generar las codificaciones sinusoidales de posición para d_modelo = 128 y max_pos = 512. Para cada par de posiciones $(p_1, p_2)$, calcular el producto de puntos de sus codificaciones. Muestre que el producto de puntos depende sólo de$\lvert p_1 - p_2 \rvert$¿Qué pasa con el producto de puntos a medida que la distancia aumenta?
+
+### Indicios
+
+**Exercise 1.**Con 128 muestras en 1 segundo, bin $k$¿ Es verdad ?$k$Hz, por lo que para una frecuencia de un número entero el índice del valor más grande en los contenedores 1 a 63 es la frecuencia.`generate_signal`y `magnitude_spectrum`Después de añadir ruido, comprueba que el pico está todavía en la misma basura mientras las otras basura suben.
+
+**Exercise 2.**Utilice una potencia de dos longitudes, porque `fft`Se divide la señal en dos.`max(abs(a - b))`El ratio de tiempo debe crecer aproximadamente en la medida en que el tiempo de la$N / \log_2 N$¿ Qué ?
+
+**Exercise 3.**Para la convolución circular, calcular $y[n] = \sum_k h[k] x[(n-k) \bmod 8]$por mano para $n$= 0, 1 y 2, y comparar los tres primeros valores de `convolve_direct`y `convolve_fft`La convolución lineal tiene longitud 4 + 3 - 1 = 6, así que comprueba primero si la longitud 8 ya es lo suficientemente larga.
+
+**Exercise 4.**Usar`hann_window`¿ Qué ?`hamming_window`¿ Qué ?`apply_window`, y `power_spectrum`, y contar los picos separados entre 9 y 13 Hz. Tanto 10 Hz como 12 Hz completan ciclos enteros en 1 segundo, por lo que ninguna ventana puede verse mejor. Repita con 10,5 Hz y 12,5 Hz para ver la fuga que las ventanas reducen.
+
+**Exercise 5.**Computa cada codificación con `positional_encoding(pos, 128)`. Comparar el producto de puntos para posiciones (0, 10) con el producto de puntos para (100, 110): los dos valores deben coincidir con aproximadamente 1e-10.$\lvert p_1 - p_2 \rvert$para una fija$p_1$¿ Qué ?
 
 ## Términos clave
 

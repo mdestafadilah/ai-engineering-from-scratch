@@ -3,7 +3,7 @@
 > Los problemas convexos tienen un valle, las redes neuronales tienen millones, saber la diferencia importa.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 
@@ -18,7 +18,7 @@
 
 La lección 08 te enseñó la descenda de gradiente, el impulso y Adam. Esos optimizadores caminan por la ladera en cualquier superficie. Pero no tienen garantías. La descenda de gradiente en un paisaje no convexo puede aterrizar en un mínimo local malo, quedarse atascado en un punto de silla o oscilar para siempre. Lo usaste de todos modos porque las redes neuronales no son convexas y no hay alternativa.
 
-Pero muchos problemas en el aprendizaje automático son convexos. Regresión lineal, regresión logística, SVMs, LASSO, regresión de cresta. Para estos, existe algo más fuerte: optimización con garantías matemáticas. Un problema convexo tiene exactamente un valle. Cualquier algoritmo que camine descendente alcanzará el mínimo global. No se necesita reinicio. No hay horarios de tasa de aprendizaje. No hay oración.
+Pero muchos problemas en el aprendizaje automático son convexos. Regresión lineal, regresión logística, SVMs, LASSO, regresión de cresta. Para estos, existe algo más fuerte: optimización con garantías matemáticas. Un problema convexo no tiene valles falsos: cada mínimo local es un mínimo global. Para una función convexa lisa que tenga un mínimo, converge a ella un descenso de gradiente con un tamaño de paso adecuado. No es necesario reiniciar. No hay horarios de aprendizaje. No hay oración.
 
 Comprender la convexidad hace tres cosas. Primero, le dice cuándo su problema es fácil (convexa) versus duro (no convexa). Segundo, le da herramientas más rápidas como el método de Newton para problemas convexos. Tercero, explica conceptos que aparecen en todo ML: regularización como una restricción, dualidad en SVMs, y por qué el aprendizaje profundo funciona a pesar de violar cada propiedad agradable que le da la convexidad.
 
@@ -91,13 +91,13 @@ El teorema central de la optimización convexa:
 
 **For a convex function, every local minimum is a global minimum.**
 
-Esto significa que el descenso de gradiente no puede quedar atrapado. Cualquier camino descendente conduce a la misma respuesta. El algoritmo está garantizado para converger a la solución óptima.
+Esto significa que el descenso de gradiente no puede quedar atrapado en un mínimo local malo. Cada mínimo que puede alcanzar tiene la misma pérdida. Para una función convexa lisa que tiene un mínimo, el descenso de gradiente con un tamaño de paso adecuado está garantizado para converger al valor óptimo.
 
 ```mermaid
 graph LR
     subgraph "Convex: ONE answer"
         direction TB
-        C1["Loss surface has a single valley"] --> C2["Gradient descent ALWAYS finds the global minimum"]
+        C1["Loss surface has no false valleys"] --> C2["Gradient descent with a suitable step converges to the global minimum"]
     end
     subgraph "Non-convex: MANY traps"
         direction TB
@@ -534,6 +534,18 @@ print(f"Support vectors: {svm.n_support_}")
 4. **Regularization constraint.**Implementar la optimización limitada L1: minimizar $(x-3)^2 + (y-2)^2$sujeto a $\lvert x \rvert + \lvert y \rvert \le 1$. Mostrar que la solución tiene una coordenada igual a cero (sparsidad de la restricción del diamante).
 
 5. **Hessian eigenvalue analysis.**Compute el Hessian de la función Rosenbrock en (1,1) y en (-1,1). Compute los valores propios en ambos puntos. ¿Qué le dicen los valores propios sobre la curvatura en el mínimo versus lejos de él?
+
+### Indicios
+
+**Exercise 1.**Prevé cada resultado antes de correr .`check_convexity`En una dimensión, mira el signo de$f''(x)$En dos dimensiones, observe los valores propios del Hessian.$f(x,y) = xy$, el Hessian tiene valores propios 1 y -1, por lo que el comprobador debe informar que no es convexa.
+
+**Exercise 2.**Llamé`optimize_gd`y `newtons_method`con el gradiente y el hessiano de $f$El método de Newton resuelve un cuadrático en un paso. para la descesión de gradientes, la tasa de aprendizaje debe ser menor que$2/100$por el $50x^2$término, por lo que el $y$La dirección se mueve lentamente. Repita con $100x^2$y contar los pasos de nuevo.
+
+**Exercise 3.**Usar`lagrange_solve`con$g(x,y) = x + 2y - 4$En la respuesta, comprueba eso.$x + 2y = 4$Y eso .$\nabla f = (2(x-3), 2(y-3))$es un múltiplo de $\nabla g = (1, 2)$¿ Qué ?
+
+**Exercise 4.**El mínimo sin restricciones (3, 2) está fuera del diamante, por lo que la respuesta está en su límite.$\lvert x \rvert + \lvert y \rvert \le 1$. Compruebe si el resultado satisface la limitación con igualdad y compare con `demo_regularization_geometry`¿ Qué ?
+
+**Exercise 5.**Llamé`rosenbrock_hessian`en cada punto y pasar el resultado a `hessian_eigenvalues_2d`En (1, 1), ambos valores propios son positivos y su relación es muy grande, por lo que el valle es estrecho en una dirección y plano en la otra.
 
 ## Términos clave
 

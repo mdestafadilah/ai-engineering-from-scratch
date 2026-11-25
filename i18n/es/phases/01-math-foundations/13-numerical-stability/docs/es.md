@@ -3,7 +3,7 @@
 > El punto flotante es una abstracción que se filtra, te morderá durante el entrenamiento y no lo verás venir.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -173,7 +173,7 @@ Este truco aparece en todas partes en ML:
 Softmax convierte logits en probabilidades:
 
 ```math
-\operatorname{softmax}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
+\mathop{\mathrm{softmax}}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
 ```
 
 Sin el truco, los logitos de [100, 101, 102] causan sobreabundancia:
@@ -184,7 +184,7 @@ exp(101) = 7.31e43
 exp(102) = 1.99e44
 sum      = 2.99e44
 
-These overflow float32 (max ~3.4e38)? No, 2.69e43 < 3.4e38? Actually:
+2.69e43 > 3.4e38, the float32 maximum, so every term overflows.
 exp(88.7) is already at the float32 limit.
 exp(100) = inf in float32.
 ```
@@ -353,7 +353,7 @@ Layer 50: values in [0, inf]
 Normalización de los recicladores y las activaciones de recalculación en cada capa:
 
 ```math
-\operatorname{LayerNorm}(x) = \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x) + \epsilon} \cdot \gamma + \beta
+\mathop{\mathrm{LayerNorm}}(x) = \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x) + \epsilon} \cdot \gamma + \beta
 ```
 
 El `epsilon`(normalmente 1e-5) evita la división por cero cuando todas las activaciones son idénticas.`gamma`y `beta`Deja que la red restaure cualquier escala que necesite.
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-¿ Qué ?`code/numerical.py`para implementaciones completas con todas las pruebas de casos de riesgo.
+¿ Qué ?`code/numerical.py`El archivo `code/numerical.ts`es un puerto TypeScript con las mismas funciones y demos.
 
 ## Envío
 
@@ -579,6 +579,18 @@ Estas implementaciones estables reaparecen en la fase 3 cuando se construye el c
 4. **Gradient checking a neural network layer.**Implementar una sola capa lineal `y = Wx + b`y su paso analítico hacia atrás.`numerical_gradient`para verificar la corrección de una matriz de peso 3x2.
 
 5. **Loss scaling experiment.**Simula el entrenamiento con float16: crea gradientes aleatorios en el rango [1e-9, 1e-3], conviértelo en float16, y mide qué fracción se convierte en cero. Luego aplica la escala de pérdida (multiplica por 1024), conviértelo en float16, vuelva a escalar y mísera la fracción cero nuevamente.
+
+### Indicios
+
+**Exercise 1.**Convertir los tres valores con `np.float32`Antes de que los cuadremos, luego llama.`variance_naive`y `welford_variance`Un valor cercano a$10^{12}$en float32 tiene un espacio mucho mayor que 1, así que espera que el resultado ingenuo sea lejos de 0.6667 y el resultado Welford sea cercano.
+
+**Exercise 2.**Comience con`x = np.float32(1.0)`y la reducen a la mitad mientras`np.float32(1.0) + x != np.float32(1.0)`. Mantenga cada valor en float32, luego compare el último valor que todavía cambió la suma con `numpy.finfo(numpy.float32).eps`, que es $2^{-23}$¿ Qué ?
+
+**Exercise 3.**Prevé cada respuesta primero.$n$valores iguales $c$, el resultado es $c + \ln n$Para un valor grande, el resultado es cercano a ese valor.$-1000 + \ln n$, mientras que `logsumexp_naive`retorno `-inf`porque cada exponencial se desciende a 0.
+
+**Exercise 4.**Para$y = Wx + b$con una pérdida $L$, el gradiente para $W$es el producto exterior del gradiente aguas arriba y $x$. Envuelve la pérdida como función de la aplanada $W$, llamando`numerical_gradient`, y pasar ambos resultados a `check_gradient`¿ Qué ?
+
+**Exercise 5.**Muestre las magnitudes en una escala de registro con `10 ** np.random.uniform(-9, -3, n)`y convertirse con `np.float16`. Float16 no puede mantener los valores por debajo de aproximadamente $6 \times 10^{-8}$, así que espera aproximadamente un cuarto de los valores se vuelven cero antes de escalar y casi ninguno después de que se multiplica por 1024.
 
 ## Términos clave
 
