@@ -3,7 +3,7 @@
 > एकल एजेंट आरएल का मानना है कि पर्यावरण स्थिर है। एक ही दुनिया में दो सीखने वाले एजेंटों को रखें और यह धारणा टूट जाती हैः प्रत्येक एजेंट दूसरे के वातावरण का हिस्सा है, और दोनों बदल रहे हैं। मल्टी-एजेंट आरएल सीखने को अभिसरण करने के लिए युक्तियों का एक सेट है जब मार्कोव परिकल्पना अब मान्य नहीं है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (Q-learning), Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~45 minutes
 
@@ -86,10 +86,15 @@ def independent_q(env, episodes, alpha, gamma, epsilon):
     Q1, Q2 = defaultdict(default_q), defaultdict(default_q)
     for _ in range(episodes):
         s = env.reset()
+        done = False
         while not done:
             a1 = epsilon_greedy(Q1, s, epsilon)
             a2 = epsilon_greedy(Q2, s, epsilon)
             s_next, r, done = env.step(s, (a1, a2))
+            if done:
+                Q1[s][a1] += alpha * (r - Q1[s][a1])
+                Q2[s][a2] += alpha * (r - Q2[s][a2])
+                break
             target1 = r + gamma * max(Q1[s_next].values())
             target2 = r + gamma * max(Q2[s_next].values())
             Q1[s][a1] += alpha * (target1 - Q1[s][a1])

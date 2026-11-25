@@ -3,7 +3,7 @@
 > A2C एक अपडेट के बाद प्रत्येक रोलआउट को फेंक देता है। पीपीओ नीति ग्रेडिएंट को एक छोटा महत्व अनुपात में लपेटता है ताकि आप नीति विस्फोट के बिना एक ही डेटा पर 10+ युग कर सकें। Schulman et al. (2017). अभी भी 2026 में डिफ़ॉल्ट नीति-ग्रेडिएंट एल्गोरिथ्म।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 
@@ -32,13 +32,13 @@ r_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid
 **The clipped surrogate.**
 
 ```math
-L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min\left( r_t(\theta) A_t, \operatorname{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
+L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min\left( r_t(\theta) A_t, \mathop{\mathrm{clip}}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
 ```
 
 दो शर्तेंः
 
 - यदि लाभ $A_t > 0$और अनुपात आगे बढ़ने की कोशिश करता है $1 + \epsilon$, क्लिप ग्रेडिएंट फ्लैट करता है  एक अच्छा कार्रवाई आगे नहीं धक्का $+\epsilon$पुरानी संभावना से ऊपर।
-- यदि लाभ $A_t < 0$और अनुपात आगे बढ़ने की कोशिश करता है $1 - \epsilon$(जो कि इसका मतलब है कि हम एक बुरा कार्य की तुलना में अधिक संभावना है उसके कटौती कम), क्लिप को बंद करता है gradient  नीचे एक बुरा कार्य को धक्का नहीं $-\epsilon$. .
+- यदि लाभ $A_t < 0$और अनुपात नीचे गिरने की कोशिश करता है $1 - \epsilon$(जो कि पुराने नियम की तुलना में हम एक बुरा कार्य करने की संभावना कम कर देंगे) क्लिप ग्रेडिएंट को सपाट करता हैः एक बुरा कार्य को आगे नहीं धकेलें$-\epsilon$पुरानी संभावना से नीचे।
 
 `min`दूसरी दिशा को संभालता हैः यदि अनुपात *उपयोगी* दिशा में स्थानांतरित हो गया है, तो आपको अभी भी ग्रेडिएंट मिलता है (पक्ष पर कोई क्लिपिंग नहीं जो आपको चोट पहुंचाएगी) ।
 
@@ -195,7 +195,7 @@ Refuse `K > 30` or `ε > 0.3` (unsafe trust region). Refuse any PPO run without 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
 | Importance ratio | "r_t(θ)" | $\pi_\theta(a \mid s) / \pi_{\text{old}}(a \mid s)$; deviation from the policy that collected the data. |
-| Clipped surrogate | "PPO's main trick" | $\min(r \cdot A, \operatorname{clip}(r, 1-\epsilon, 1+\epsilon) \cdot A)$; flat gradient past the clip on beneficial side. |
+| Clipped surrogate | "PPO's main trick" | $\min(r \cdot A, \mathop{\mathrm{clip}}(r, 1-\epsilon, 1+\epsilon) \cdot A)$; flat gradient past the clip on beneficial side. |
 | Trust region | "TRPO / PPO intent" | Limit each update's KL to guarantee monotone improvement. |
 | KL penalty | "Soft trust region" | Alternative PPO: $L - \beta \cdot \mathrm{KL}(\pi_\theta \Vert \pi_{\text{old}})$. Adaptive $\beta$. |
 | Clip fraction | "How often clipping triggers" | Diagnostic — should be 0.1-0.3; outside means mistuned. |
