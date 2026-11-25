@@ -1,9 +1,9 @@
 # 注意 变量 滑动窗口,稀疏,差异性
 
-> 完全的注意力是圆. 每个代币都看到每一个代币,而记忆支付了代价. 四种变体折曲圆形,恢复了成本的一半.
+> 完全的注意力是圆. 每个代币都看到每一个代币,而记忆支付了代价. 三种变体折曲圆形,恢复了成本的一半.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -63,8 +63,8 @@ positions 0-7          positions 0-7, W=4
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d}) \\
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d}) \\
 \text{DiffAttn} &= (A_1 - \lambda \cdot A_2) V
 \end{aligned}
 ```
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## 建立它
 
-看到`code/main.py`我们实施了一个因果化面具比较器,显示一个玩具序列的全,SWA,本地+步骤,和差别注意力.
+看到`code/main.py`或其的港口`code/main.rs`运行了""版本:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`我们实施了一个因果化面具比较器,显示一个玩具序列的全,SWA,本地+步骤,和差别注意力.
 
 ### 步骤1:完整的因果性面具 (基线)
 
