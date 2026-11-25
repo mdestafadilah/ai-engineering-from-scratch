@@ -3,7 +3,7 @@
 > 输血混合连续和分离的表现. 显示 (Xie等同,2024年8月) 则是另一种方式:文字代币使用因果下一个代币预测,图像代币使用面具的分离传播, 两人都坐在一个变压器里, 结果将VQA,文字到图像,涂料和混合模式生成在一个背骨上统一,每个模式每一个代币,一个损失式 (下一个代币扩展到掩盖预测). 这一课标介绍了"Show-o"设计,为什么隐形分离散射是平行,几步的图像生成器,与转和Emu3有着对比.
 
 **Type:** Learn
-**Languages:** Python (stdlib, masked-discrete-diffusion sampler)
+**Languages:** Python, TypeScript (stdlib, masked-discrete-diffusion sampler)
 **Prerequisites:** Phase 12 · 13 (Transfusion)
 **Time:** ~120 minutes
 
@@ -11,7 +11,7 @@
 
 - 解释掩盖的分离散射:掩盖代币的时间表,然后要求变压器恢复它们.
 - 根据速度和质量,比较平行图像解码 (Show-o, MaskGIT) 与自动降低图像解码 (Chameleon, Emu3).
-- 举个名单,在一个检查点上,Show-o处理的三个任务:T2I,VQA,图像涂料.
+- 举个名称,Show-o在一个检查点处理的四项任务:文字生成,VQA,T2I,图像涂料.
 - 选择一个掩盖时间表 (,线性,缩短) 并考虑其对样品质量的影响.
 
 ## 问题

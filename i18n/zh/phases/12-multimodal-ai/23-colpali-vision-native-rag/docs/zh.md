@@ -3,7 +3,7 @@
 > 传统的RAG将PDF解析成文本,分成块,嵌入块,存储向量. 每一步都会失去信号:OCR丢掉图表数据,碎碎表行,文字嵌入式忽略数字. 科尔帕利 (Faysse等,2024年7月) 提出了一个更简单的问题:为什么要提取文本? 直接通过PaliGemma嵌入页面图像,使用ColBERT式的晚间交互来检索,并保留文件所载的所有布局,数字,字体和格式化信号. 发表的基准标准:视觉丰富的文档的端到端准确度比文本RAG要高20-40%.  ColQwen2, ColSmol 和 VisRAG 扩大了这种模式. 这一课读出了视觉原生RAG论文,
 
 **Type:** Build
-**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer)
+**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer), TypeScript
 **Prerequisites:** Phase 11 (LLM Engineering — RAG basics), Phase 12 · 05 (LLaVA)
 **Time:** ~180 minutes
 
@@ -95,10 +95,10 @@ M3DocRAG (Cho et al., arXiv:2411.04952) 将多模索取扩展到多页多文档�
 
 财务报告50页,每页有729个补丁,并包含128个维度的嵌入式:
 
--  ColPali: 50 * 729 * 128 * 4 字节 = ~ 18 MB 原始, PQ 后的 ~ 4 MB.
+-  ColPali: 50 * 729 * 128 * 4 字节 = ~ 18 MB 原始, ~ 2.3 MB 后 8x PQ.
 - 文字-RAG:50块 * 768-dim * 4字节 = ~150kB.
 
-文件存储量为每份文件的30倍.在规模上,OPQ/PQ将其降至5-10倍,通常是可以容忍的.
+ ColPali 存储量为每份原材料的120倍.在规模上,OPQ/PQ的8倍将其降至15倍,通常是可以容忍的.
 
 ### 当短信RAG仍然赢得
 
