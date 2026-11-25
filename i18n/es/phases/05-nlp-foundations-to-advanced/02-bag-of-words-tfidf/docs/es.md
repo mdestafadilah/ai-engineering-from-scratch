@@ -3,7 +3,7 @@
 > TF-IDF todavía supera las incorporaciones en tareas bien definidas en 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 
@@ -26,7 +26,7 @@ Esta lección construye una bolsa de palabras, luego TF-IDF, desde cero. Luego m
 ```math
 \begin{aligned}
 \text{TF-IDF}(w, d) &= \text{TF}(w, d) \cdot \text{IDF}(w) \\
-&= \frac{\operatorname{count}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\operatorname{df}(w)}
+&= \frac{\mathop{\mathrm{count}}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\mathop{\mathrm{df}}(w)}
 \end{aligned}
 ```
 
@@ -126,7 +126,7 @@ def tfidf(bow_matrix):
 >>> tfidf(bow)
 ```
 
-Tres documentos, cinco palabras vocabularias (`the`¿ Qué ?`cat`¿ Qué ?`sat`¿ Qué ?`dog`¿ Qué ?`ran`¿ Qué es esto ?`the`aparece en los tres, así que su IDF es baja. `dog`Los vectores son escasos (la mayoría de las entradas son pequeñas) y las palabras discriminatorias pop.
+Tres documentos, cinco palabras vocabularias (`the`¿ Qué ?`cat`¿ Qué ?`sat`¿ Qué ?`dog`¿ Qué ?`ran`¿ Qué es esto ?`the`aparece en los tres, así que su IDF es baja. `dog`En el caso de los vehículos de guerra, el número de vehículos de guerra que aparecen en uno es alto.
 
 ### Paso 5: Normaliza las filas L2
 

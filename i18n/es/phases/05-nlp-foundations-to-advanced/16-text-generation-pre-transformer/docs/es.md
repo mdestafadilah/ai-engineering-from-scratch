@@ -3,7 +3,7 @@
 > Si una palabra es sorprendente, el modelo es malo. La perplejidad hace que la sorpresa sea un número.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 
@@ -42,7 +42,7 @@ prediction-game
 **N-gram probability:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`- ¿ Qué ?`n`(normalmente 3 para trigramas, 4 para 4 gramos).
 
 ```math
-P(w \mid \text{context}) = \frac{\operatorname{count}(\text{context}, w)}{\operatorname{count}(\text{context})}
+P(w \mid \text{context}) = \frac{\mathop{\mathrm{count}}(\text{context}, w)}{\mathop{\mathrm{count}}(\text{context})}
 ```
 
 **The zero-count problem.**Cualquier n-gramo no visto en el entrenamiento obtiene probabilidad cero. Un estudio de 2007 sobre el corpus de Brown encontró que incluso un modelo de 4 gramos tenía el 30% de 4 gramos no vistos en el entrenamiento.
