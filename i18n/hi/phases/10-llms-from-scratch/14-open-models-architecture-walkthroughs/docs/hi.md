@@ -3,7 +3,7 @@
 > आपने पाठ 04 में एक जीपीटी-2 छोटा खरोंच से बनाया। 2026 में फ्रंटियर ओपन मॉडल पांच या छह ठोस परिवर्तनों के साथ एक ही परिवार हैं। LayerNorm के बजाय RMSNorm। जीएलयू के बजाय स्विगलू। सीखे पदों के बजाय रोपे। पूर्ण एमएचए के बजाय जीक्यूए या एमएलए। विशेषज्ञों के मिश्रण के पैमाने पर। गणित जो आप पहले से ही जानते हैं उनमें से 95% को कवर करता है। यह पाठ लामा 3, डीपसिक-वी3, मिक्स्ट्रल, क्यूवेन और जेम्मा को एक साथ पढ़ता है और उस सटीक रेखा का नाम देता है जहां प्रत्येक वास्तुकला भिन्न होती है।
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 
@@ -53,7 +53,7 @@
 LayerNorm औसत घटाता है, std, पैमाने, और शिफ्ट द्वारा विभाजित। RMSNorm केवल पैमाने को रखता हैः
 
 ```math
-\operatorname{RMSNorm}(x) = \frac{x}{\sqrt{\operatorname{mean}(x^2) + \epsilon}} \cdot \gamma
+\mathop{\mathrm{RMSNorm}}(x) = \frac{x}{\sqrt{\mathop{\mathrm{mean}}(x^2) + \epsilon}} \cdot \gamma
 ```
 
 कोई औसत घटाव नहीं। कोई पूर्वाग्रह नहीं। प्रति टोकन एक मैमूल कम। Zhang और Sennrich (2019) ने तर्क दिया कि यह मशीन अनुवाद पर LayerNorm से मेल खाता है जबकि 10% तेज़ है। हर आधुनिक खुला मॉडल इसे चलाता है।
@@ -79,7 +79,7 @@ score = q_rotated . k_rotated
 जीपीटी-2 की एमएलपी है `x -> gelu(xW1 + b1) -> (...)W2 + b2`. SwiGLU (Shazeer 2020) सक्रियण को एक बंद उत्पाद से बदल देता हैः
 
 ```math
-\operatorname{SwiGLU}(x) = (xW_1) \cdot \operatorname{sigmoid}(xW_1) \cdot xV
+\mathop{\mathrm{SwiGLU}}(x) = (xW_1) \cdot \mathop{\mathrm{sigmoid}}(xW_1) \cdot xV
 ```
 
 एक के बजाय समानांतर दो प्रोजेक्शन, स्विश सक्रियण द्वारा गॉट किए गए। पैरामीटर प्रति भ्रम पर अनुभवजन्य रूप से मजबूत। Llama 2 ने इसे अपनाया, सभी ने इसका पालन किया। MLP का छिपा आकार आमतौर पर सेट किया जाता है ताकि कुल पैरामीटर की गिनती मूल घने MLP से मेल खाएः यदि GPT-2 का उपयोग किया गया था`ff_dim = 4 * hidden`, SwiGLU का उपयोग करता है `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden`. .
