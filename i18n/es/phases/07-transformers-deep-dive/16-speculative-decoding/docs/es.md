@@ -3,7 +3,7 @@
 > El decodificación autoregressiva es serie. Cada token espera al anterior. El decodificación especulativa rompe la cadena: un modelo barato elabora N tokens, el modelo caro verifica todos los N en un solo pase hacia adelante. Cuando el borrador está correcto pagaste un gran adelanto para N generaciones.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -70,7 +70,7 @@ Pros: no hay segundo modelo. Los inconvenientes: añade parámetros entrenables;
 
 ### Eagle  mejor dibujo mediante la reutilización de estados ocultos
 
-EAGLE-1/2/3 (Li et al., 20242025) hace que el modelo de proyecto sea un pequeño transformador (típicamente de 1 capa) que ingere los estados ocultos de última capa del verificador. Debido a que el proyecto ve la representación de las características del verificador, sus predicciones se correlacionan fuertemente con la distribución de salida del verificador.
+EAGLE-1/2/3 (Li et al., 20242025) hace que el modelo de proyecto sea un pequeño transformador (típicamente de 1 capa) que ingere los estados ocultos de última capa del verificador. Debido a que el borrador ve la representación de las características del verificador, sus predicciones se correlacionan fuertemente con la distribución de salida del verificador. Las tasas de aceptación aumentan de ~ 0,6 (vanilla) a 0,85+. Estas son tasas por token en los puntos de referencia de chat, con un borrador entrenado en datos de chat correspondientes. En el caso del tráfico de producción mixta, la fase 17 · 05 se plantea con 0,6 a 0,8 para EAGLE-3, y el tráfico de dominio puede ser menor.
 
 EAGLE-3 (2025) añadió la búsqueda de árboles sobre las continuas candidatos. vLLM y SGLang nave EAGLE-2/3 como la ruta de especificación predeterminada para Llama 3/4 y Qwen 3.
 
@@ -91,6 +91,13 @@ draft-verify-tokens
 - Un "modelo grande" que es una determinación-softmax sobre una distribución codificada a mano (para que podamos verificar la aceptación matemática analíticamente).
 - Un "modelo de borrador" que es una perturbación del modelo grande.
 - Un bucle de aceptación/rechazo que produce la misma distribución marginal que la muestreo directo.
+
+`code/main.rs`El número aleatorio es diferente del de Python, pero las conclusiones impresas son las mismas.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Paso 1: el paso de rechazo
 

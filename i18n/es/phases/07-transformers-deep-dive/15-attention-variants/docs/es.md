@@ -1,9 +1,9 @@
 # Variancias de atención  Ventana deslizante, Sparse, Diferencial
 
-> La atención completa es un círculo. Cada token ve cada token, y la memoria paga el precio. Cuatro variantes doblan la forma del círculo y recuperan la mitad del costo.
+> La atención completa es un círculo. Cada token ve cada token, y la memoria paga el precio. Tres variantes doblan la forma del círculo y recuperan la mitad del costo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -63,8 +63,8 @@ La atención diferencial corrige esto mediante la computación **two**mapas de a
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d}) \\
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d}) \\
 \text{DiffAttn} &= (A_1 - \lambda \cdot A_2) V
 \end{aligned}
 ```
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## Construye el mismo
 
-¿ Qué ?`code/main.py`Implementamos un comparador de máscaras causales que muestra la atención completa, SWA, local+strided y diferencial lado a lado en una secuencia de juguetes.
+¿ Qué ?`code/main.py`, o su puerto de Rust`code/main.rs`Para ejecutar la versión de Rust:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Implementamos un comparador de máscaras causales que muestra la atención completa, SWA, local+strided y diferencial lado a lado en una secuencia de juguetes.
 
 ### Paso 1: máscara causal completa (línea de base)
 
