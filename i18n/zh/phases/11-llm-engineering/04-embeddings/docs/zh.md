@@ -101,19 +101,19 @@ MTEB (大规模文本嵌入基准) v2涵盖100多项任务,包括检索,分类,�
 **Cosine similarity**视角:两个向量之间的角的共数.从 -1 (相反) 到 1 (相同的方向). 忽略大小 - 10 字句和 500 字文档可以得到 1.0 如果它们指向相同的方向.这是 90% 的使用案例的默认.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**微分数是两个向量的原始内部产物.当向量正常化时与可西因相似 (单位长度).计算更快.OpenAI的嵌入式是正常化的,因此点产物和可西因都得到相同的排名.
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **Euclidean (L2) distance**微小 = 类似. 敏感于大小差异. 使用当空间中的绝对位置重要时,而不是仅仅是方向.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 什么时候使用:

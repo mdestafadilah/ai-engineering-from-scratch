@@ -95,19 +95,19 @@ graph LR
 **Cosine similarity**距离为 - 1 (相反) 到 1 (相同). 忽略大小,只关心方向.这是RAG的默认标准.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**较大的向量得到更高的分数. 很有用,当大小携带信息时 (更长的文档可能更相关).
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **L2 (Euclidean) distance**距离在向量空间中直线距离.较小距离 =更相似.对大小差异敏感.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 随着一个人说"向量搜索",他们几乎总是指随量相似.
