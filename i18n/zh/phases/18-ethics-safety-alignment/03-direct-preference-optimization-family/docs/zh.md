@@ -3,7 +3,7 @@
 > 拉斐洛夫等人 根据RLHF的优势在偏好数据方面具有封闭形式,因此您可以跳过明确的奖励模式并直接优化政策. 这种洞察力产生了一家IPO,KTO,SimPO,ORPO,BPO,每个都解决了DPO失败模式. 2026年,直线配列算法将比PPO更多的边境训练后运行. 但第二课的过度优化曲线仍然适用:DAA不逃离Goodhart,
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 
@@ -53,7 +53,7 @@ L_{\text{DPO}} = -\log \sigma\!\left(
 
 - 隐含的奖励差距`beta * (log(pi/pi_ref)_w - log(pi/pi_ref)_l)`只有一个小的偏好,就会产生一个任意大的差距.
 - 输出驱动选择和拒绝的日志探测器在相反的方向.只要拒绝的日志探测器更快地下降,它可以推倒所选的绝对日志探测器.这是降级的选择反应现象.
-- 分布外偏好 (罕见罕见对与罕见罕见对) 产生了任意的隐含奖励.
+- 经过分销的偏好 (在参考政策中,两种答案都很少存在的对) 产生了任意的隐含奖励.
 
 ### 投资者:
 
