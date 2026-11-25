@@ -3,7 +3,7 @@
 > "她打电话给他,他没有回答.医生在午餐上".三次提到两个人,没有人被命名.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 
@@ -61,14 +61,14 @@ coref-links
 ```python
 import spacy
 nlp = spacy.load("en_coreference_web_trf")   # experimental model
-doc = nlp("Apple announced new products. The company said they would ship soon.")
+doc = nlp("Apple announced new products. The company said it would ship them soon.")
 for cluster in doc._.coref_clusters:
     print(cluster, "->", [m.text for m in cluster])
 ```
 
 在更长的文件上,你得到了这样的东西:
-- 集团1: [果,公司,他们]
-- 集团2: [新产品]
+- 集团1: [果,公司,它]
+- 集团2:[新产品,它们]
 
 ### 步骤2:基于规则的代名词解决器 (教学)
 

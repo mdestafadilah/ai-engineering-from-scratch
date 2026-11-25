@@ -3,7 +3,7 @@
 > 根据F-IDF的数据,在2026年,
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 
@@ -26,7 +26,7 @@
 ```math
 \begin{aligned}
 \text{TF-IDF}(w, d) &= \text{TF}(w, d) \cdot \text{IDF}(w) \\
-&= \frac{\operatorname{count}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\operatorname{df}(w)}
+&= \frac{\mathop{\mathrm{count}}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\mathop{\mathrm{df}}(w)}
 \end{aligned}
 ```
 
@@ -126,7 +126,7 @@ def tfidf(bow_matrix):
 >>> tfidf(bow)
 ```
 
-文件,字母词 (`the`现在`cat`现在`sat`现在`dog`现在`ran`它们是`the`现在,它在三部都出现了,所以 IDF 很低.`dog`它们的向量很稀少 (大多数输入都是小的) 而歧视性的词则出现.
+文件,字母词 (`the`现在`cat`现在`sat`现在`dog`现在`ran`它们是`the`现在,它在三部都出现了,所以 IDF 很低.`dog`由于这些词汇的数量很高,这些向量很稀少 (大多数输入都是零).即使在这个玩具中,歧视性词语也会出现.
 
 ### 步骤 5: L2 规范行
 
