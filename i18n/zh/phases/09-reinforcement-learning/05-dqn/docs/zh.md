@@ -3,7 +3,7 @@
 > 2013年:Mnih在原始像素上训练了一种Q学习网络,在七款Atari游戏中击败了每一个经典RL代理. 2015年:扩展到49个游戏,发表在Nature上,引发了深度RL时代.DQN是Q学习加上三个技巧,使函数近似稳定.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 
@@ -72,7 +72,7 @@ class ReplayBuffer:
         return rng.sample(self.buf, batch)
 ```
 
-对于阿塔利的容量大约为5万,
+作为原始DQN,Atari的容量为106次 (学习开始之前收集5万次转型);我们的玩具环境5000次.
 
 ### 步骤2:一个小的Q网络 (手动MLP)
 
