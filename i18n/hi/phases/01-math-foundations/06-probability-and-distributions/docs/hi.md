@@ -190,14 +190,14 @@ P(X = x) = \sum_{y} P(X = x, Y = y)
 
 ### क्यों हर जगह सामान्य वितरण दिखाई देता है
 
-केंद्रीय सीमा प्रमेयः कई स्वतंत्र यादृच्छिक चर का योग (या औसत) मूल वितरण के बावजूद एक सामान्य वितरण के लिए अभिसरण करता है।
+केंद्रीय सीमा प्रमेयः एक ही वितरण से कई स्वतंत्र यादृच्छिक चर का औसत, एक बार केंद्रित और स्केल द्वारा $\sqrt{n}$, एक सामान्य वितरण के करीब आता है, मूल वितरण का आकार जो भी हो, जब तक कि इसका अंतर सीमित हो। केंद्रित और स्केल योग के लिए भी यही लागू होता है।
 
 ```
 Roll 1 die:  uniform distribution (flat)
 Average of 2 dice:  triangular (peaked)
 Average of 30 dice: nearly perfect bell curve
 
-This works for ANY starting distribution.
+This works for ANY starting distribution with finite variance.
 ```
 
 यही कारण है कि:
@@ -448,6 +448,16 @@ print(f"Log-softmax: {log_probs}")
 
 4. एक फ़ंक्शन लिखें जो लॉग संभावनाओं की सूची लेता है और सबसे अधिक संभावना वाले अनुक्रम, कुल लॉग संभावना और समकक्ष कच्चे संभावना को लौटाता है। इसे 50 शब्दों के वाक्य के साथ परीक्षण करें जहां प्रत्येक शब्द की संभावना 0.01 है।
 
+### संकेत
+
+**Exercise 1.**खींचें`u`एक समान वितरण और वापसी से $-\ln(1 - u) / \lambda$जांचें कि नमूना औसत के करीब है$1/\lambda$और हिस्टोग्राम डिब्बे के बाद$\lambda e^{-\lambda x}$. .
+
+**Exercise 2.**एक 6x6 तालिका भरें जहां प्रत्येक सेल एक संभावना है और सभी कोशिकाओं का योग 1 है, तो कॉल `joint_to_marginals`उपयोग करें`check_independence`: यदि प्रत्येक कोशिका अपने दो मार्जिनल के गुणक के बराबर हो तो ही डैस स्वतंत्र हो जाते हैं।
+
+**Exercise 3.**आवेदन करें`softmax`लॉजिट और ले लो$-\ln$3. परिणाम 0.421 के करीब होना चाहिए, जो कि मूल्य है `nn.CrossEntropyLoss`एक ही लॉजिट और लक्ष्य के लिए देता है।
+
+**Exercise 4.**लॉग संभावनाओं को जोड़ें; कच्चे संभावनाओं को गुणा न करें. 0.01 संभावना के साथ 50 शब्दों के लिए, कुल होना चाहिए $50 \ln(0.01) \approx -230.26$, और कच्ची संभावना है $10^{-100}$. .
+
 ## प्रमुख शर्तें
 
 | Term | What people say | What it actually means |
@@ -460,7 +470,7 @@ print(f"Log-softmax: {log_probs}")
 | Expected value | "The average" | The probability-weighted sum of all outcomes. The loss function is an expected value |
 | Variance | "How spread out" | The expected squared deviation from the mean. High variance = noisy, unstable estimates |
 | Normal distribution | "The bell curve" | $f(x) = (1/\sqrt{2\pi\sigma^2}) \cdot \exp(-(x-\mu)^2/(2\sigma^2))$. Appears everywhere due to the CLT |
-| Central Limit Theorem | "Averages become normal" | The mean of many independent samples converges to a normal distribution regardless of the source |
+| Central Limit Theorem | "Averages become normal" | The centered, scaled mean of many independent samples converges to a normal distribution for any source with finite variance |
 | Joint distribution | "Two variables together" | $P(X, Y)$ describes the probability of every combination of $X$ and $Y$ outcomes |
 | Marginal distribution | "Sum out the other variable" | $P(X) = \sum_y P(X, Y)$. Recovers one variable's distribution from the joint |
 | Log probability | "Log of the probability" | $\log P(x)$. Turns products into sums, preventing numerical underflow in long sequences |

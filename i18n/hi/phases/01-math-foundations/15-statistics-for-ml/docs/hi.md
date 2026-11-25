@@ -3,7 +3,7 @@
 > सांख्यिकी यह है कि आप कैसे जानते हैं कि आपका मॉडल वास्तव में काम करता है या सिर्फ भाग्यशाली था।
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -141,7 +141,7 @@ Cov(X, Y) < 0:  when X increases, Y tends to decrease
 Cov(X, Y) = 0:  no linear co-movement
 ```
 
-के लिए$d$विशेषताएं, सह-परिवर्तन मैट्रिक्स $C$है $d \times d$मैट्रिक्स जहां $C[i][j] = \operatorname{Cov}(\text{feature}_i, \text{feature}_j)$. विकर्ण प्रविष्टियाँ $C[i][i]$प्रत्येक विशेषता के भिन्नताएँ हैं।
+के लिए$d$विशेषताएं, सह-परिवर्तन मैट्रिक्स $C$है $d \times d$मैट्रिक्स जहां $C[i][j] = \mathop{\mathrm{Cov}}(\text{feature}_i, \text{feature}_j)$. विकर्ण प्रविष्टियाँ $C[i][i]$प्रत्येक विशेषता के भिन्नताएँ हैं।
 
 ```
 C = | Var(x1)      Cov(x1,x2)  Cov(x1,x3) |
