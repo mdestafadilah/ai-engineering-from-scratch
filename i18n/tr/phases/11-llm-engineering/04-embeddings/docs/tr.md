@@ -101,19 +101,19 @@ MTEB (Massive Text Embedding Benchmark) v2, geri alım, sınıflandırma, grupla
 **Cosine similarity**Bu, iki vektör arasındaki açının kozinüsünü gösterir. -1 (karşı) ile 1 (aynı yön) arasında değişir. Büyüklüğü görmezden gelir. 10 kelime cümle ve 500 kelimelik bir belge aynı yönü gösterirse 1.0 puan alabilir. Bu kullanım durumlarının %90'ında varsayılan puan.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**: iki vektörün çiğ iç ürünü. vektörler normalleştirildiğinde (birlik uzunluğu) kozin benzerliği ile aynı. Hesaplama daha hızlı. OpenAI'nin gömülmeleri normalleştirilmiştir, bu nedenle nokta ürünü ve kozin aynı sıralama verir.
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **Euclidean (L2) distance**Vectör alanında düz çizgi mesafe. Daha küçük = daha benzer. Büyüklük farklarına duyarlı. Sadece yön değil, uzaydaki mutlak pozisyon önemli olduğunda kullanın.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 Ne zaman kullanılır:
