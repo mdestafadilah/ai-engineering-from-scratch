@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**Dynamic Client Registration bị lỗi thời để ủng hộ các tài liệu Metadata ID của khách hàng. DCR vẫn là một cơ chế tương thích. Khi được sử dụng, khách hàng tuyên bố đúng `application_type`. Khách hàng xác nhận RFC 9207 hiện tại `iss`giá trị và không bao giờ sử dụng lại các thông tin tín dụng trên các nhà phát hành máy chủ ủy quyền.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ Từ nguồn kho, chạy:
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
@@ -354,7 +355,7 @@ Bài học này sẽ mang lại kết quả `outputs/skill-mcp-auth.md`. Với c
 
 ## Các bài tập
 
-1. Đi chạy`code/main.py`- Theo dõi dòng chảy. Nhận thấy cách IdP xoay một phím trong bước 6, các kế hoạch `refresh_jwks`kéo lại bộ đã xuất bản, và cả token cũ (trung cửa sổ chồng chéo) và token mới được xác nhận mà không cần khởi động lại.
+1. Đi chạy`code/main.py`. Theo dõi dòng chảy. Lưu ý cách IdP xoay một phím trong bước 6 của đầu ra kịch bản (phases 7 of the flow above), các lịch trình `refresh_jwks`kéo lại bộ đã xuất bản, và cả token cũ (trung cửa sổ chồng chéo) và token mới được xác nhận mà không cần khởi động lại.
 
 2. Thêm một IDP mới vào metadata nguồn được bảo vệ `authorization_servers`list. phát hành một token được ký bởi IDP mới và xác nhận người xác nhận chấp nhận nó. phát hành một token được ký bởi một IDP không được liệt kê và xác nhận người xác nhận từ chối với `WWW-Authenticate: Bearer error="invalid_token", error_description="iss not allowed"`- Tôi không biết.
 

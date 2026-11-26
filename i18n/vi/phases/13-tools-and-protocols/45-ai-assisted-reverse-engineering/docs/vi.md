@@ -3,7 +3,7 @@
 > Việc tái tạo mô hình là một yêu cầu với một báo cáo kèm theo, và bài học này xây dựng các vòng đeo điểm cả hai đối với byte, chạy, và DWARF bạn sở hữu.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 35 (evidence, confidence, and unknowns), Phase 13 · 36 (rebuild and prove equal)
 **Time:** ~140 minutes
 
@@ -218,9 +218,10 @@ Hai hàng xứng đáng được xem lại lần nữa.`f1_safe_div`- thay đổ
 ```bash
 cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
-Với clang trên con đường, demo biên soạn mỗi ứng cử viên với các cờ cố định, xây dựng tám chương trình khác biệt, chạy 92 tế bào và 256 đầu vào corpus thông qua mỗi, đọc DWARF, kiểm tra mọi trích dẫn, và in thẻ.`grid`và `fuzz`các trường đọc `unknown`, và cũng như mọi phán quyết.
+Với clang trên đường đi, demo biên soạn mỗi ứng cử viên với các cờ cố định, xây dựng tám chương trình khác biệt, chạy 92 tế bào và 256 đầu vào corpus thông qua mỗi, đọc DWARF, kiểm tra mọi trích dẫn, và in thẻ. Khi không có clang hay cc trên đường đi `grid`và `fuzz`các trường đọc `unknown`Một âm thanh khác ngoài bộ sưu tập phần cứng ghi lại trong`code/fixtures/build-record.json`chỉ để lại sự so sánh byte trên các đối tượng đã thực hiện.`grid`và `fuzz`các trường vẫn tập hợp lại từng ứng cử viên với trình biên dịch chủ. So sánh byte cần cùng một trình biên dịch và cờ để có ý nghĩa gì đó, và đối tượng được thực hiện chỉ tồn tại trong thời gian `code/fixtures/build-record.json`vẫn phù hợp với nguồn ứng cử trên đĩa: chỉnh sửa nguồn và trường byte đọc `unknown`thay vì đánh giá các byte cũ.
 
 Hình dạng dự kiến:
 
@@ -300,7 +301,7 @@ card = score_candidate(load_candidate("f1_base_64"), Path("/tmp/re45"), run_prog
 card["fields"]["bytes"]["evidence"], card["fields"]["citations"]["evidence"]
 ```
 
-Tạo ra`/tmp/re45`đầu tiên, hoặc vượt qua `None`để sử dụng đối tượng đã thực hiện.`fixtures/candidates/f1_base_64.c`Vì vậy nhân số đọc 100, chạy cùng hai đường, và xem `bytes`quay lại`pass`Trong khi đó`citations`và sau đó thay đổi trích dẫn thành 100 và chạy lại. cả mã và báo cáo phải thay đổi.
+Tạo ra`/tmp/re45`đầu tiên, hoặc vượt qua `None`để sử dụng đối tượng đã thực hiện.`fixtures/candidates/f1_base_64.c`Vì vậy nhân số đọc 100, chạy cùng hai đường, và xem `bytes`quay lại`pass`Trong khi đó`citations`vẫn còn tên 64 trong báo cáo.`bytes`đến`pass`chạy chỉ dưới trình biên dịch được đặt tên trong `code/fixtures/build-record.json`; dưới bất kỳ clang khác, hoặc với `None`, chỉnh sửa của bạn để lại đối tượng đã thực hiện sau và `bytes`đọc `unknown`thay vì so sánh các byte lỗi thời. sau đó thay đổi trích dẫn thành 100 và chạy lại. cả mã và báo cáo phải thay đổi.
 
 ### Lab C: chuỗi nói chuyện với nhà phân tích
 
@@ -316,6 +317,7 @@ Dòng là ở đó, mã là giống nhau, và trường tên đọc DWARF chứ 
 
 ```bash
 python3 code/main.py mcp-serve
+npx tsx code/main.ts mcp-serve
 ```
 
 Đèn 3 dòng, một lần:
@@ -354,6 +356,7 @@ Thử nghiệm và thử nghiệm:
 ```bash
 cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

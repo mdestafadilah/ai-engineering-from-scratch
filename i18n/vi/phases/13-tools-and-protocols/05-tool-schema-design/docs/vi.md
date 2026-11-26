@@ -3,7 +3,7 @@
 > Một công cụ chính xác thất bại lặng lẽ khi mô hình không thể biết khi nào sử dụng nó. Tên gọi, mô tả và hình dạng tham số thúc đẩy sự dao động từ 10 đến 20 điểm phần trăm trong độ chính xác lựa chọn công cụ trên các tiêu chuẩn như StableToolBench và MCPToolBench +. Bài học này đặt tên các quy tắc thiết kế tách biệt một công cụ mô hình chọn một cách đáng tin cậy từ một công cụ mô hình bắn sai.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 
@@ -84,7 +84,7 @@ Quy tắc: nếu `action`argument có hơn ba giá trị, chia công cụ.
 ### Thiết kế tham số
 
 - **Enum every closed set.** `units: "celsius" | "fahrenheit"`Không .`units: string`Enum cho mô hình biết vũ trụ của các giá trị chấp nhận được.
-- **Required vs optional.**Đánh dấu tối thiểu cần thiết. Tất cả các thứ khác là tùy chọn. OpenAI chế độ nghiêm ngặt yêu cầu mọi trường trong`required`; thêm một `is_default: true`quy định trong mã của bạn và để mô hình bỏ qua nó.
+- **Required vs optional.**Đánh dấu tối thiểu cần thiết. Tất cả các thứ khác là tùy chọn. OpenAI chế độ nghiêm ngặt yêu cầu mọi trường trong`required`, để mô hình không thể bỏ qua một. Nhập một trường tùy chọn như một liên kết với `null`và để mô hình gửi đi `null`Khi nó không có giá trị.
 - **Typed IDs.** `note_id: string`Được rồi nhưng thêm một `pattern`(`^note-[0-9]{8}$`) để bắt được những người bị ảo giác.
 - **No overly flexible types.**Tránh `type: any`Mô hình sẽ ảo giác hình dạng.
 - **Describe the field.** `{"type": "string", "description": "ISO 8601 date in UTC, e.g. 2026-04-22"}`Mô tả là một phần của mẫu đơn.

@@ -3,7 +3,7 @@
 > Một đại lý gọi 5 công cụ, 3 máy chủ MCP và 2 đại lý phụ. Anh cần một dấu vết trên tất cả. Các quy ước ngữ nghĩa OpenTelemetry GenAI (chế độ liên tục ổn định trong v1.37 trở lên) là tiêu chuẩn 2026, được hỗ trợ bởi Datadog, Langfuse, Arize Phoenix, OpenLLMetry và AgentOps. Bài học này nêu tên các thuộc tính cần thiết, đi qua hệ thống phân cấp thời gian (công cụ đại lý → LLM → công cụ), và gửi một máy phát phát sóng thời gian stdlib bạn có thể kết nối với bất kỳ nhà xuất khẩu OTel nào.
 
 **Type:** Build
-**Languages:** Python (stdlib, OTel span emitter)
+**Languages:** Python (stdlib, OTel span emitter), TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~75 minutes
 
@@ -150,7 +150,7 @@ Bài học này sẽ mang lại kết quả `outputs/skill-otel-genai-instrument
 | Span | "Timed operation" | A unit of work with a start, end, and attributes |
 | Trace | "Cross-span ancestry" | Tree of spans sharing a trace id |
 | SpanKind | "CLIENT / SERVER / INTERNAL" | Hints about span direction |
-| OTLP | "OpenTelemetry Line Protocol" | Wire format for exporters |
+| OTLP | "OpenTelemetry Protocol" | Wire format for exporters |
 | Opt-in content | "Prompt / completion capture" | Off by default; env var to enable |
 | traceparent | "W3C header" | Propagates trace context across services |
 | Exporter | "Backend-specific shipper" | Component that sends spans to Jaeger / Datadog / etc. |

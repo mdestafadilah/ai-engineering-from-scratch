@@ -3,7 +3,7 @@
 > Tham khảo của bạn chứng minh sự đồng thuận về các bài kiểm tra của bạn, vì vậy sự bình đẳng cần một lưới mà đạt đến mọi cạnh và các byte phù hợp sau khi chuyển đổi che giấu.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ Ba chứng minh mà trường sử dụng là ba chân bạn có thể xây dự
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Với clang trên đường đi, demo biên soạn cả hai cặp ứng cử viên và chạy 92 tế bào cho mỗi. Nó biên soạn lại tám ứng cử viên, tái trình diễn các ứng cử viên chạy, và mint hồ sơ chứng minh. Không có clang nó đọc các đối tượng đã cam kết và báo cáo các tuyên bố hành vi như`unknown`- Tôi không biết.
@@ -371,6 +372,9 @@ Với REA 6.5.0 và Ghidra 12.1.4 được cài đặt:
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 Thứ nhất `analyze_function`Ghidra nhập vào đối tượng trong vài giây. So sánh ID bằng chứng mới với chạy đã thực hiện. cùng các byte dưới cùng một hồ sơ phân tích cho cùng các ID, bởi vì id là một hàm hàm nội dung loại trừ đường dẫn tệp.
@@ -389,6 +393,30 @@ Yêu cầu:
 
 Thành công có nghĩa là hồ sơ chứng minh liệt kê bốn chức năng, mỗi tuyên bố mang theo một ID chứng minh, và `grade_label`thất bại khi một chuỗi nhãn khác nhau.
 
+## Phòng thí nghiệm được xếp hạng
+
+Năm câu hỏi về các thiết bị của bài học này. Tìm mỗi câu trả lời với mã bạn xây dựng, sau đó viết nó vào `code/lab_answers.json`. Viết số như số hoặc như chuỗi hex như `"0x40"`, và danh sách như danh sách JSON.
+
+1. `t1`: percent_change_model(3, 105) trên x86_64.
+2. `t2`: percent_change_model(0, 5) trên x86_64.
+3. `t3`: grade_model(100).
+4. `t4`: số lượng ô trong input_grid().
+5. `t5`: số lượng các tế bào lưới mà mô hình x86_64 bị mắc kẹt.
+
+Hãy kiểm tra câu trả lời của bạn:
+
+```bash
+cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
+python3 code/lab.py
+npx tsx code/lab.ts
+```
+
+Người kiểm tra tính toán mỗi giá trị dự kiến từ `code/main.py`trên các thiết bị đã được thực hiện.`PASS`- `FAIL`hoặc `TODO`cho mỗi nhiệm vụ và điểm số, và nó chỉ thoát khỏi 0 khi tất cả năm vượt qua. `python3 code/lab.py my-answers.json`kiểm tra một tập tin khác. `code/tests/test_lab.py`chứng minh rằng người kiểm tra chấp nhận câu trả lời đúng và từ chối câu trả lời sai.
+
+### Xem nó chạy
+
+- [Inside a Decompiler](https://aiengineeringfromscratch.com/inside-a-decompiler)máy kết thúc với mã giả và lưu trữ nó như suy luận: trang không chứng minh nó. Bài học này là bước biến tuyên bố đó thành một kiểm tra một.
+
 ## Kỹ năng sản xuất
 
 Bài học này sẽ mang lại kết quả `outputs/skill-rebuild-and-prove-equal.md`Sử dụng nó để biến chứng tính chức năng và xây dựng lại một ứng cử viên thành chứng minh hai chân và hồ sơ chứng minh. Kỹ năng này đòi hỏi phải liệt kê trước mã giả, một lưới với mỗi lớp nguy hiểm, che giấu di chuyển cộng với kiểm tra liên tục và một tổng hợp bị đóng lỗi.
@@ -400,6 +428,7 @@ Thử nghiệm và thử nghiệm:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Một chương trình được biên soạn là một tập hợp các bảng chỉ vào nhau. Một trình đọc mà bạn đã viết cho ra hiệu mà bạn có thể kiểm tra byte byte.
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ rea đọc Mach-O qua `inspect_macho`, chạy`otool -h -l`- `nm -gjU`- `dyld_inf
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Dòng demo là `ledger-x86_64-O1.o`và in tiêu đề, phần, biểu tượng, di chuyển, và file offset map. Nó sau đó in bốn hàm byte chuỗi, đọc `ledger-arm64-O1.o`, và in bảng so sánh. Nó kết thúc với tiêu đề chương trình của `tiny-x86_64`- Những dòng dự kiến:
@@ -380,6 +381,30 @@ Yêu cầu:
 
 Thành công có nghĩa là danh sách nhập khẩu, bản đồ phân đoạn và mỗi phạm vi chức năng phù hợp với sản lượng công cụ được chụp, mà không có công cụ chạy trong các thử nghiệm.
 
+## Phòng thí nghiệm được xếp hạng
+
+Năm câu hỏi về các thiết bị của bài học này. Tìm mỗi câu trả lời với mã bạn xây dựng, sau đó viết nó vào `code/lab_answers.json`. Viết số như số hoặc như chuỗi hex như `"0x40"`, và danh sách như danh sách JSON.
+
+1. `t1`: e_shoff của sổ cái-x86_64-O1.o, như một số.
+2. `t2`: st_size of percent_change trong sổ cái-x86_64-O1.o.
+3. `t3`: file offset của .text trong sổ cái-x86_64-O1.o, như hex.
+4. `t4`: tên loại di chuyển trong sổ cái-x86_64-O0.o, sắp xếp, như một danh sách.
+5. `t5`: năm giá trị int tại .rodata+0x14 trong sổ cái-x86_64-O1.o, như một danh sách.
+
+Hãy kiểm tra câu trả lời của bạn:
+
+```bash
+cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
+python3 code/lab.py
+npx tsx code/lab.ts
+```
+
+Người kiểm tra tính toán mỗi giá trị dự kiến từ `code/main.py`trên các thiết bị đã được thực hiện.`PASS`- `FAIL`hoặc `TODO`cho mỗi nhiệm vụ và điểm số, và nó chỉ thoát khỏi 0 khi tất cả năm vượt qua. `python3 code/lab.py my-answers.json`kiểm tra một tập tin khác. `code/tests/test_lab.py`chứng minh rằng người kiểm tra chấp nhận câu trả lời đúng và từ chối câu trả lời sai.
+
+### Xem nó chạy
+
+- [Inside a Decompiler](https://aiengineeringfromscratch.com/inside-a-decompiler)máy chạy bài học này như hai trạm đầu tiên của nó. cuộn đọc tiêu đề của tệp đối tượng giữ `percent_change`, và tủ mở ra`.text`và đọc biểu tượng. Đổi biểu tượng để xem các dữ liệu biểu tượng bảng mang.
+
 ## Bài học: Cây tạo vật
 
 Bài học này sẽ mang lại kết quả `outputs/skill-program-anatomy-elf-from-scratch.md`Sử dụng nó với Claude, Cursor, Codex, OpenClaw, Hermes, hoặc bất kỳ đại lý nào đọc SKILL.md. Khả năng biến một đối tượng được biên soạn hoặc có thể thực hiện được người dùng xây dựng thành một báo cáo bố cục. báo cáo cho phép phạm vi tệp của mỗi cấu trúc, biểu tượng và di chuyển, kiểm tra với đầu ra công cụ được chụp.
@@ -391,6 +416,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
