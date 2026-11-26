@@ -3,7 +3,7 @@
 > سه ارائه دهنده مرزی در سال 2024 در یک حلقه تماس ابزار یکسان جمع شدند و سپس در همه چیز دیگر اختلاف کردند. OpenAI استفاده می کند `tools`و`tool_calls`. استفاده های انسان`tool_use`و`tool_result`بلوک ها`functionDeclarations`و ارتباط هویت منحصر به فرد. این درس سه مورد را کنار هم جدا می کند تا کد که در یک ارائه دهنده ارسال می شود وقتی آن را پورت می کنید شکسته نشود.
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 
@@ -52,12 +52,12 @@
 | Result block | role `tool`, `tool_call_id` | `user` with `tool_result`, `tool_use_id` | `functionResponse` with matching `id` |
 | Force-a-tool | `tool_choice: {type: "function", function: {name}}` | `tool_choice: {type: "tool", name}` | `tool_config: {function_calling_config: {mode: "ANY"}}` |
 | Forbid tools | `tool_choice: "none"` | `tool_choice: {type: "none"}` | `mode: "NONE"` |
-| Strict schema | `strict: true` | schema-is-schema (always enforced) | `responseSchema` at request level |
+| Strict schema | `strict: true` | `strict: true` per tool (opt-in) | `responseSchema` at request level |
 
 ### محدوده ای که واقعاً به آن ها می رسی
 
 - **OpenAI.**128 ابزار در هر درخواست. عمق طرح 5. رشته استدلال <= 8192 بایت. حالت سخت نیاز به هیچ `$ref`نه`oneOf`-بله .`anyOf`-بله .`allOf`با همپوشانی، هر ملک ذکر شده در `required`. .
-- **Anthropic.**۶۴ ابزار در هر درخواست. عمق طرح به طور موثر بدون محدودیت اما محدودیت عملی ۱۰. هیچ پرچم حالت سخت نیست؛ طرح یک قرارداد است و مدل تمایل به مطابق است.
+- **Anthropic.**۶۴ ابزار در هر درخواست. عمق طرح به طور موثر بدون محدودیت اما محدودیت عملی 10. استفاده دقیق از ابزار با اختیار است.`strict: true`بدون آن، طرح یک قرارداد است که مدل تمایل به پیروی از آن دارد، نه یک تضمین.
 - **Gemini.**64 تابع در هر درخواست. انواع طرح ها زیر مجموعه OpenAPI 3.0 هستند (اختلاف کمی از طرح JSON 2020-12). تماس های موازی از دوقلوها 3 به عنوان یک شناسه منحصر به فرد.
 
 ### `tool_choice`رفتار
@@ -94,7 +94,7 @@ OpenAI`parallel_tool_calls: true`(به طور پیش فرض) تماس های م�
 
 - **OpenAI (non-strict).**مدل بازپرداخت`arguments: "{bad json}"`، تجزیه JSON شما شکست می خورد، شما یک پیام خطا تزریق و دوباره تماس بگیرید.
 - **OpenAI (strict).**اعتبارسنجی در زمان رمزگذاری اتفاق می افتد؛ JSON غیرفعال غیرممکن است اما `refusal`می تونه ظاهر بشه
-- **Anthropic.** `input`ممکن است شامل زمینه های غیر منتظره باشد، طرح توصیه ای است.
+- **Anthropic (non-strict).** `input`ممکن است شامل زمینه های غیر منتظره باشد، طرح مشاوره ای است.`strict: true`نمونه گیری به طرح محدود می شود.
 - **Gemini.**ویژگی OpenAPI 3.0: `enum`در زمینه های شی که به طور ساکت نادیده گرفته می شوند، خود را تأیید کنید.
 
 ### الگوی مترجم

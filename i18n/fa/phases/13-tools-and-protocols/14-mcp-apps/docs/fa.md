@@ -3,7 +3,7 @@
 > یک نتیجه تعاملی هنوز یک ابزار MCP و مبادله منابع است. هسته 2026-07-28 باعث می شود که این مبادله مستقل باشد، در حالی که افزونه اپلیکیشن سطح مرورگر sandboxed را اضافه می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
 **Time:** ~75 minutes
 
@@ -265,10 +265,11 @@ t3-ui-sandbox
 ```bash
 cd phases/13-tools-and-protocols/14-mcp-apps
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 
-چهار چیز رو در محصول بررسی کن:
+پنج تا چيز در خروجی رو بررسی کن:
 
 1. هر تماس مستقل است
 2. هر درخواستي که داشته باشه`_meta`توانایی ها
@@ -292,7 +293,7 @@ python3 -m unittest discover code/tests -v
 2. بفرست`Mcp-Name: ui://notes/other.html`با يه بدن که خط زمان رو ميخواد`-32020`. .
 3. منبع را به  تغییر دهید`cacheScope: private`شرایط خاصی برای کاربر که این کار را توجیه می کند را شرح دهید.
 4. اسکریپت رو به `https://static.example.com/app.js`. به اون اصل اضافه کن`resourceDomains`و خطر زنجیره تامین جدید را توضیح بدهیم.
-5. اضافه کردن یک`notes_open`ابزار و مسیر دکمه را کلیک کنید از طریق میزبان. تایید کاربر را در میزبان نگه دارید.
+5. اضافه کنید`notes_open`ابزار و مسیر دکمه را کلیک کنید از طریق میزبان. تایید کاربر را در میزبان نگه دارید.
 
 ## اصطلاحات کلیدی
 

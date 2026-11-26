@@ -3,7 +3,7 @@
 > یک سیستم عامل تولید مجموعه ای از مرزهای است، نه یک توده از ویژگی ها. این سنگ پایانی یک شبیه سازی قابل خواندن در فرآیند را از مشتریان پروتکل، سرور مجوز، sandbox و صادرات تله متری که هنوز به کارگیری واقعی نیاز دارد جدا می کند.
 
 **Type:** Build
-**Languages:** Python (stdlib, in-process simulation)
+**Languages:** Python (stdlib, in-process simulation), TypeScript
 **Prerequisites:** Phase 13 · 01 through 22, using MCP revision `2026-07-28`
 **Time:** ~120 minutes
 
@@ -203,9 +203,10 @@ t3-capstone-chain
 ```bash
 cd phases/13-tools-and-protocols/23-capstone-tool-ecosystem
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
-پنج تا چيز رو بررسی کنيد:
+شش چیز رو بررسی کن:
 
 1. `server/discover`اعلامیه اصلاح`2026-07-28`و تمديد وظایف
 2. آليس ميتونه گزارش رو بخونه و پيدا کنه، در حالي که تماس با باب که از روي نوشتن انجام شده رد ميشه.
