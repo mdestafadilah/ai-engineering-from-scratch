@@ -3,7 +3,7 @@
 > Os dados de alta dimensão têm estrutura.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -198,6 +198,13 @@ pca-axes
 
 ## Construí-lo
 
+O port TypeScript está em `code/dim_reduction.ts`Os demos do MNIST precisam de aprendizado de scikit, por isso só funcionam em Python.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
+
 ### Passo 1: PCA a partir do zero
 
 ```python
@@ -354,6 +361,14 @@ Esta lição produz:
 2. Exerça t-SNE no mesmo subconjunto MNIST com valores de perplexidade de 5, 30 e 100. Descreva como a saída muda.
 
 3. Tomar um conjunto de dados com 50 características onde apenas 5 são informativas (gerar um com `sklearn.datasets.make_classification`) Aplicar PCA e verificar se a curva de variância explicada identifica corretamente que os dados são efetivamente 5D.
+
+### Indicios
+
+**Exercise 1.**Leia `inverse_transform`No`PCA`A classe de componentes e o modelo de cada componente.`reconstruction_error`para os componentes 10, 50 e 200; o erro deve diminuir à medida que o número de componentes aumenta.
+
+**Exercise 2.**- Apto .`sklearn.manifold.TSNE`três vezes no mesmo subconjunto, mudando apenas `perplexity`, e usar o mesmo `random_state`A baixa perplexidade observa poucos vizinhos, por isso, espere pequenos grupos apertados; a alta perplexidade observa mais vizinhos, por isso, espere grupos maiores e mais suaves.
+
+**Exercise 3.**Liga-me .`make_classification(n_features=50, n_informative=5, n_redundant=45)`, adequado`PCA`As características redundantes são combinações lineares das informações, então a curva chega a quase 1,0 em 5 componentes.`n_redundant=0`A curva não se aplania.
 
 ## Termos-chave
 

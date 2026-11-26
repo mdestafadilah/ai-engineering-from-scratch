@@ -3,7 +3,7 @@
 > Os problemas convexos têm um vale, as redes neurais têm milhões, e saber a diferença importa.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 
@@ -18,7 +18,7 @@
 
 A lição 08 ensinou-lhe descida de gradiente, impulso e Adão. Esses optimistas caminham descendo em qualquer superfície. Mas eles não têm garantias.
 
-Mas muitos problemas no aprendizado de máquina são convexos. Regressão linear, regressão logística, SVMs, LASSO, regressão de crista. Para estes, existe algo mais forte: otimização com garantias matemáticas. Um problema convexo tem exatamente um vale. Qualquer algoritmo que caminhe para baixo vai atingir o mínimo global. Não é necessário reiniciar. Não há horários de taxa de aprendizagem. Não há oração.
+Mas muitos problemas no aprendizado de máquina são convexos. Regressão linear, regressão logística, SVMs, LASSO, regressão de cresta. Para estes, existe algo mais forte: a otimização com garantias matemáticas. Um problema convexo não tem valles falsos: cada mínimo local é um mínimo global. Para uma função convexa lisa que tenha um mínimo, converge-se a ela a descida de gradiente com um tamanho adequado de degrau. Não é preciso reiniciar. Não há horários de aprendizagem. Sem oração.
 
 Compreender a convexidade faz três coisas. Primeiro, ele diz quando o seu problema é fácil (convexo) versus difícil (não convexo). Segundo, ele lhe dá ferramentas mais rápidas como o método de Newton para problemas convexos. Terceiro, ele explica conceitos que aparecem em todo o ML: regularização como restrição, dualidade em SVMs, e por que o aprendizado profundo funciona apesar de violar todas as propriedades agradáveis que a convexidade lhe dá.
 
@@ -91,13 +91,13 @@ O teorema central da otimização convexa:
 
 **For a convex function, every local minimum is a global minimum.**
 
-O algoritmo é garantido para convergir para a solução ideal.
+O que significa que a descida de gradiente não pode ficar presa em um mínimo local ruim. Cada mínimo que pode alcançar tem a mesma perda. Para uma função convexa lisa que tem um mínimo, a descida de gradiente com um tamanho de degrau adequado é garantida para convergir para o valor ideal.
 
 ```mermaid
 graph LR
     subgraph "Convex: ONE answer"
         direction TB
-        C1["Loss surface has a single valley"] --> C2["Gradient descent ALWAYS finds the global minimum"]
+        C1["Loss surface has no false valleys"] --> C2["Gradient descent with a suitable step converges to the global minimum"]
     end
     subgraph "Non-convex: MANY traps"
         direction TB
@@ -534,6 +534,18 @@ print(f"Support vectors: {svm.n_support_}")
 4. **Regularization constraint.**Implementar a otimização limitada L1: minimizar $(x-3)^2 + (y-2)^2$Submetido a$\lvert x \rvert + \lvert y \rvert \le 1$. Mostre que a solução tem uma coordenada igual a zero (sparsia da restrição do diamante).
 
 5. **Hessian eigenvalue analysis.**Calcule o Hessiano da função Rosenbrock em (1,1) e em (-1,1). Calcule os valores próprios em ambos os pontos. O que os valores próprios lhe dizem sobre a curvatura no mínimo versus longe dele?
+
+### Indicios
+
+**Exercise 1.**Previnha cada resultado antes de correr .`check_convexity`: numa dimensão, olha para o sinal de$f''(x)$- em duas dimensões, veja os valores próprios do Hessiano.$f(x,y) = xy$, o Hessian tem valores próprios 1 e -1, por isso o verificador deve relatar que não é convexa.
+
+**Exercise 2.**Liga-me .`optimize_gd`E ...`newtons_method`com o gradiente e o Hessiano de $f$O método de Newton resolve um quadrático em um passo.$2/100$Por causa do $50x^2$O termo, então o $y$A direcção se move lentamente.$100x^2$E contar os passos novamente.
+
+**Exercise 3.**Utilização`lagrange_solve`com$g(x,y) = x + 2y - 4$Na resposta, verifique isso.$x + 2y = 4$E isso .$\nabla f = (2(x-3), 2(y-3))$é um múltiplo de $\nabla g = (1, 2)$- Não .
+
+**Exercise 4.**O mínimo não restrito (3, 2) está fora do diamante, então a resposta está em sua fronteira. Use descida de gradiente projetada: dê um passo de gradiente, e depois projetar de volta para o$\lvert x \rvert + \lvert y \rvert \le 1$Verifique se o resultado satisfaz a restrição de igualdade e compare-o com `demo_regularization_geometry`- Não .
+
+**Exercise 5.**Liga-me .`rosenbrock_hessian`em cada ponto e passar o resultado para `hessian_eigenvalues_2d`. Em (1, 1), ambos os valores próprios são positivos e sua relação é muito grande, então o vale é estreito em uma direção e plano na outra.
 
 ## Termos-chave
 

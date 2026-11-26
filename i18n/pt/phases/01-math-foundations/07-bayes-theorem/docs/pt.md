@@ -3,7 +3,7 @@
 > A probabilidade é o que se espera, o teorema de Bayes é o que se aprende.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 Adicionar 1 a cada contagem garante que nenhuma probabilidade seja nunca zero.
 
+Uma palavra que nunca apareceu em nenhuma mensagem de formação não está no vocabulário. `predict`Salta-o, porque não dá provas para nenhuma das duas classes.
+
 ### MAP (Maksimal a posteriori)
 
 A MLE pergunta: quais os parâmetros que maximizam $P(\text{data} \mid \text{parameters})$- Não .
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ O CountVectorizer lida com a tokenização e a construção de vocabulário. Mul
 
 ## Envia-o
 
-A classe NaiveBayes construída aqui demonstra o conjunto completo: tokenization, estimativa de probabilidade com suavização Laplace, previsão de log-space.`code/bayes.py`funciona de ponta a ponta sem dependências além da biblioteca padrão do Python.
+A classe NaiveBayes construída aqui demonstra o conjunto completo: tokenization, estimativa de probabilidade com suavização Laplace, previsão de log-space.`code/bayes.py`executa de ponta a ponta sem dependências além da biblioteca padrão do Python.`code/bayes.ts`utiliza apenas a biblioteca padrão do Node.
 
 ### Precessos conjuntos
 
@@ -450,6 +452,16 @@ Vantagens em relação aos testes A/B frequentistas:
 3. **Add features.**Extenda a classe NaiveBayes para que também use o comprimento da mensagem (curto/longo) como característica ao lado da contagem de palavras. Estimar $P(\text{short} \mid \text{spam})$E ...$P(\text{short} \mid \text{ham})$de dados de treinamento e dobrar-o na pontuação de previsão.
 
 4. **MAP by hand.**Dados os dados observados (7 cabeças em 10 lançamentos de moeda), calcule a estimativa do MAP do viés usando um $\text{Beta}(2,2)$A Comissão deve apresentar um relatório sobre a evolução da situação dos países em desenvolvimento.$7/10$)).
+
+### Indicios
+
+**Exercise 1.**Liga-me .`bayes`uma vez para obter o posterior após o teste 1, então chamá-lo novamente com o posterior como o anterior. `sequential_bayes(prior, likelihood, false_positive_rate, 2)`deve dar o mesmo valor, próximo de 0,5.
+
+**Exercise 2.**Crie um .`NaiveBayes(smoothing=s)`para cada valor, treinar-o nos mesmos dados e imprimir `top_words`Com o smoothing 0, uma palavra que nunca aparece no spam recebe probabilidade 0, então seu log não é definido.
+
+**Exercise 3.**Conte quantas mensagens de spam e ham são curtas, divida pelo número de mensagens em cada classe e adicione o log dessa relação ao resultado em `predict`Verifique se as duas probabilidades para cada classe somam a 1.
+
+**Exercise 4.**Com um$\text{Beta}(\alpha, \beta)$Antes de ser concluída, a estimativa do MAP é $\frac{h + \alpha - 1}{n + \alpha + \beta - 2}$- Coloque-o .$h = 7$- Não .$n = 10$O resultado deve ser entre o MLE (0,7) e o modo anterior (0,5).
 
 ## Termos-chave
 

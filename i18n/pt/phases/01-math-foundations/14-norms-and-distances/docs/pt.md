@@ -3,7 +3,7 @@
 > A função de distância define o que significa "semelhante".
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -102,7 +102,7 @@ L1 e L2 são casos especiais da norma Lp:
 \lVert x \rVert_p = (|x_1|^p + |x_2|^p + \cdots + |x_n|^p)^{1/p}
 ```
 
-Valores diferentes de $p$produzir "bolas de unidade" de diferentes formas (o conjunto de todos os pontos na distância 1 da origem):
+Valores diferentes de $p$Produzir "bolas de unidade" de diferentes formas (o conjunto de todos os pontos a uma distância máxima de 1 da origem; as formas abaixo são as suas fronteiras):
 
 ```
 p=1:    Diamond shape      (corners on axes)
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### Passo 1: Todas as funções normais e de distância
 
-Veja .`code/distances.py`Cada função é construída a partir do zero usando apenas matemática básica Python.
+Veja .`code/distances.py`Cada função é construída a partir do zero usando apenas matemática básica Python.`code/distances.ts`é uma porta TypeScript com as mesmas funções e demos.
 
 ### Passo 2: Os mesmos dados, distâncias diferentes, vizinhos diferentes
 
@@ -483,6 +483,18 @@ Quando ligares .`model.encode(text)`O modelo de incorporação mapeia o texto pa
 4. Calcule a distância de Wasserstein entre [0,5, 0,5, 0,0] e [0, 0, 0,5, 0,5] à mão usando o método CDF. Em seguida, calcule entre [0,25, 0,25, 0,25, 0,25] e [0, 0, 0, 0,5, 0,5]. Qual é maior e por quê?
 
 5. Implemente MinHash para a semelhança aproximada com Jaccard. Gerencie 100 conjuntos aleatórios, compute o Jaccard exato para todos os pares e compare com a aproximação MinHash usando funções de hash 50, 100 e 200.
+
+### Indicios
+
+**Exercise 1.**O vector de diferença é (-3, 2, -3), então, calcular as três normas desse vector com `l1_norm`- Não .`l2_norm`, e `linf_norm`Para a prova, compare o maior.$\lvert d_i \rvert$Com a soma dos quadrados, e comparar a soma dos quadrados com o quadrado da soma dos valores absolutos.
+
+**Exercise 2.**A semelhança cosínica ignora a comprimento, então comece com dois vetores que apontam quase na mesma direção e faça um deles muito mais longo. Para o segundo caso, use dois vetores curtos perto da origem que apontam em direções diferentes, depois verifique ambas as condições com `cosine_similarity`E ...`l2_distance`- Não .
+
+**Exercise 3.**Liga-me .`find_nearest_neighbor(query, dataset, distance_fn)`Uma vez por cada um .`l1_distance`- Não .`l2_distance`- Não .`cosine_distance`, e `mahalanobis_distance`- Não .`demo_different_neighbors`mostra um conjunto de dados onde as métricas discordam, então leia primeiro e depois mude os pontos até que as quatro respostas diferam.
+
+**Exercise 4.**Escreva a soma cumulativa de cada distribuição, adicione as diferenças absolutas das duas somas cumulativas.`wasserstein_1d(p, q)`, então explicar o valor maior por quão longe a massa de probabilidade deve mover.
+
+**Exercise 5.**Para cada função hash, a assinatura MinHash de um conjunto é o valor hash mínimo sobre seus elementos, e a fração de funções hash onde dois conjuntos obtêm as mesmas estimativas mínimas de sua semelhança com Jaccard.`jaccard_similarity`O erro deve ser aproximadamente $1/\sqrt{k}$Para$k$funções hash.
 
 ## Termos-chave
 

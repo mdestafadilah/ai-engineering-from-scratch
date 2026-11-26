@@ -3,7 +3,7 @@
 > Cada sinal é uma soma de ondas sinusais.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -34,7 +34,7 @@ Dado$N$amostras $x[0], x[1], \ldots, x[N-1]$, a Transformação de Fourier Discr
 X[k] = \sum_{n=0}^{N-1} x[n] \, e^{-2\pi i k n/N} \qquad \text{for } k = 0, 1, \ldots, N-1
 ```
 
-Cada um .$X[k]$É um número complexo.$\lvert X[k] \rvert$Diz-lhe a amplitude de frequência .$k$- A fase .$\angle X[k]$Diz-lhe a fase de compensação dessa frequência.
+Cada um .$X[k]$É um número complexo.$\lvert X[k] \rvert$é proporcional à amplitude de frequência $k$Sem normalização, um sino real de amplitude.$A$Que cai exactamente no bin .$k$dá$\lvert X[k] \rvert = AN/2$, então divide por $N/2$Para ler a amplitude.$\angle X[k]$Diz-lhe a fase de compensação dessa frequência.
 
 A principal ideia:$e^{-2\pi i k n/N}$é um fator rotativo em frequência $k$O DFT calcula a correlação entre o sinal e cada um dos $N$Se o sinal contém energia em frequência$k$Se não, é quase zero.
 
@@ -103,7 +103,7 @@ graph TD
     end
 ```
 
-O FFT exige que o comprimento do sinal seja de 2 potências. Na prática, os sinais são empurrados a zero para a próxima potência de 2.
+O radix-2 FFT construído aqui é mais rápido quando o comprimento do sinal é um poder de 2. Sempre que um sub-problema tem comprimento ímpar, ele cai de volta à planície `dft`, por isso os sinais são muitas vezes empurrados a zero para a próxima potência de 2 para a velocidade.`numpy.fft`Os algoritmos de radix mistos são mais rápidos em longitudes com pequenos fatores primos.
 
 ### Análise espectral
 
@@ -113,8 +113,8 @@ O **phase spectrum**É o que é$\angle X[k]$Para a maioria das tarefas de análi
 
 ```math
 \begin{aligned}
-\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \operatorname{Re}(X[k])^2 + \operatorname{Im}(X[k])^2 \\
-\text{Phase at frequency } k: \quad \phi[k] &= \operatorname{atan2}(\operatorname{Im}(X[k]), \operatorname{Re}(X[k]))
+\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \mathop{\mathrm{Re}}(X[k])^2 + \mathop{\mathrm{Im}}(X[k])^2 \\
+\text{Phase at frequency } k: \quad \phi[k] &= \mathop{\mathrm{atan2}}(\mathop{\mathrm{Im}}(X[k]), \mathop{\mathrm{Re}}(X[k]))
 \end{aligned}
 ```
 
@@ -426,7 +426,7 @@ A matriz do espectrograma tem forma (n_frequências, n_time_frames). Cada coluna
 
 ## Envia-o
 
-Corra .`code/fourier.py`para gerar `outputs/prompt-spectral-analyzer.md`- Não .
+Corra .`code/fourier.py`para gerar `outputs/prompt-spectral-analyzer.md`A versão do TypeScript,`code/fourier.ts`, escreve o mesmo ficheiro.
 
 ## Exercícios
 
@@ -439,6 +439,18 @@ Corra .`code/fourier.py`para gerar `outputs/prompt-spectral-analyzer.md`- Não .
 4. **Windowing effects.**Crie um sinal que seja a soma de duas ondas sinusais a 10 Hz e 12 Hz (muito perto). Mostre a 128 Hz por 1 segundo. Calcule o espectro de potência sem janela, janela Hann e janela Hamming. Qual janela torna mais fácil distinguir os dois picos? Por quê?
 
 5. **Positional encoding analysis.**Gerar as codificações posicionais sinusoidais para d_modelo = 128 e max_pos = 512. Para cada par de posições $(p_1, p_2)$, calcular o produto de pontos de suas codificações. Mostrar que o produto de pontos depende apenas de$\lvert p_1 - p_2 \rvert$O que acontece com o produto de pontos à medida que a distância aumenta?
+
+### Indicios
+
+**Exercise 1.**Com 128 amostras em 1 segundo, bin $k$É o que é$k$Hz, então para uma frequência inteira o índice do maior valor em canhões 1 a 63 é a frequência.`generate_signal`E ...`magnitude_spectrum`Depois de adicionar ruído, verifique se o pico está no mesmo lixo enquanto os outros sacos subem.
+
+**Exercise 2.**Use uma potência de dois comprimentos, porque `fft`Divide o sinal em duas partes.`max(abs(a - b))`A taxa de tempo deve aumentar aproximadamente a$N / \log_2 N$- Não .
+
+**Exercise 3.**Para a convolução circular, calcular $y[n] = \sum_k h[k] x[(n-k) \bmod 8]$- por mão$n$= 0, 1 e 2, e comparar os três primeiros valores de `convolve_direct`E ...`convolve_fft`A convulsão linear tem comprimento 4 + 3 - 1 = 6, por isso verifique primeiro se o comprimento 8 já é longo o suficiente.
+
+**Exercise 4.**Utilização`hann_window`- Não .`hamming_window`- Não .`apply_window`, e `power_spectrum`, e contar os picos separados entre 9 e 13 Hz. Tanto 10 Hz quanto 12 Hz completam ciclos inteiros em 1 segundo, de modo que nenhuma janela pode parecer melhor. Repita com 10,5 Hz e 12,5 Hz para ver o vazamento que as janelas reduzem.
+
+**Exercise 5.**Calcule cada codificação com `positional_encoding(pos, 128)`. Compare o produto ponto para posições (0, 10) com o produto ponto para (100, 110): os dois valores devem corresponder a cerca de 1e-10.$\lvert p_1 - p_2 \rvert$Para um fixo$p_1$- Não .
 
 ## Termos-chave
 
