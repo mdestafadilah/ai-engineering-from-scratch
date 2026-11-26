@@ -53,19 +53,19 @@ Bu döngünün her satırı bir böcek yaşayabileceği bir yer.`model(x).softma
 Bir sınıflandırıcı üretir `C`Logit olarak adlandırılan bir görüntü başına sayı. Softmax uygulaması onları olasılık dağılımına dönüştürür:
 
 ```math
-\operatorname{softmax}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
+\mathop{\mathrm{softmax}}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
 ```
 
 Çarşı entropi doğru sınıfın negatif log olasılığını ölçer:
 
 ```math
 \begin{aligned}
-\mathrm{CE}(z, y) &= -\log\left( \operatorname{softmax}(z)_y \right) \\
+\mathrm{CE}(z, y) &= -\log\left( \mathop{\mathrm{softmax}}(z)_y \right) \\
 &= -z_y + \log\left( \sum_j \exp(z_j) \right)
 \end{aligned}
 ```
 
-Sağdaki form sayısal olarak sabit olan (log-sum-exp) PyTorch'ın `nn.CrossEntropyLoss`Softmax + NLL'i bir seferde birleştirir ve doğrudan ham logitleri alır.$\log(\operatorname{softmax}(\operatorname{softmax}(z)))$, anlamsız bir miktar.
+Sağdaki form sayısal olarak sabit olan (log-sum-exp) PyTorch'ın `nn.CrossEntropyLoss`Softmax + NLL'i bir seferde birleştirir ve doğrudan ham logitleri alır.$\log(\mathop{\mathrm{softmax}}(\mathop{\mathrm{softmax}}(z)))$, anlamsız bir miktar.
 
 ### Neden artış işe yarıyor?
 
@@ -100,7 +100,7 @@ Neden işe yarıyor: model, dikenli bir-sıcak hedefleri hatırlamayı bırakır
 
 ### Etiket düzeltme
 
-Karışık bir kuzen.`[0, 0, 1, 0, 0]`, karşı tren`[eps/C, eps/C, 1-eps, eps/C, eps/C]`Küçük bir şey için .`eps`Bu, modelin keyfi keskinliklerle keskin bir şekilde keskin bir şekilde üretmesini engeller ve kalibrasyonu neredeyse hiç bir maliyetle iyileştirir.`nn.CrossEntropyLoss(label_smoothing=0.1)`PyTorch 1.10'dan beri.
+Karışık bir kuzen.`[0, 0, 1, 0, 0]`, karşı tren`[eps/C, eps/C, 1-eps+eps/C, eps/C, eps/C]`Küçük bir şey için .`eps`Bu, modelin keyfi keskin logit üretmesini engeller ve kalibrasyonu neredeyse hiç bir maliyetle iyileştirir.`nn.CrossEntropyLoss(label_smoothing=0.1)`PyTorch 1.10'dan beri.
 
 ### Düzgünlüğü aşan değerlendirme
 
@@ -415,7 +415,7 @@ Bu ders şunları ortaya çıkarır:
 | DataLoader | "The batcher" | Wraps a dataset with shuffling, batching, and (optional) multi-worker loading; gets blamed for half of training bugs |
 | Augmentation | "Random transforms" | Any pixel-level transform at training time that preserves the label; teaches invariances the CNN does not have natively |
 | Mixup / Cutmix | "Mix two images" | Blend both inputs and labels so the classifier learns smooth interpolations instead of hard boundaries |
-| Label smoothing | "Softer targets" | Replace one-hot with (1-eps, eps/(C-1), ...); improves calibration and slightly boosts accuracy |
+| Label smoothing | "Softer targets" | Replace one-hot with (1-eps+eps/C, eps/C, ...); improves calibration and slightly boosts accuracy |
 | Top-k accuracy | "Top-5" | The correct class is in the k highest-probability predictions; used on datasets with genuinely ambiguous classes |
 | Confusion matrix | "Where errors live" | C x C table where entry (i, j) counts images of true class i predicted as j; diagonal is right, off-diagonal tells you what to fix |
 

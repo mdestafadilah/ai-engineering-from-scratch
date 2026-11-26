@@ -45,7 +45,7 @@ cloud = [
 PointNet (Qi et al., 2017) her ikisini de bir fikirle çözdü: her noktaya ortak bir MLP uygulayın, sonra simetrik bir fonksiyonla (maksimum bir havuz) toplayın. Sonuç, sıraya bağlı olmayan sabit boyutlu bir vektördür.
 
 ```math
-f(P) = \max_{p \in P} \operatorname{MLP}(p)
+f(P) = \max_{p \in P} \mathop{\mathrm{MLP}}(p)
 ```
 
 Bu, PointNet'in tüm çekirdeğidir. Daha derin çeşitler (PointNet++, Point Transformer) hiyerarşik örnekleme ve yerel birleştirme ekler, ancak simetrik fonksiyon hilesi değişmez.

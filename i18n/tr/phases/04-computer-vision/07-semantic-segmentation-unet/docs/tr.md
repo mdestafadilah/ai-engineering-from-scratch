@@ -90,7 +90,7 @@ Her ikisi de vahşi bir ortamda ortaya çıkıyor. İlk U-Net için, binaylı da
  ile semantik segmentasyon için$C$sınıflar, model çıkışı `(N, C, H, W)`Hedef `(N, H, W)`Tüm sayılardaki sınıf kimlikleri ile.
 
 ```math
-\text{Loss} = \operatorname*{mean}_{(n, h, w)} \left[ -\log\left( \operatorname{softmax}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy`PyTorch'da bu şekli doğuştan kullanıyor.
@@ -103,7 +103,7 @@ Her ikisi de vahşi bir ortamda ortaya çıkıyor. İlk U-Net için, binaylı da
 
 ```math
 \begin{aligned}
-\operatorname{Dice}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
 \text{Dice}_{\text{loss}} &= 1 - \text{Dice}
 \end{aligned}
 ```
@@ -129,7 +129,7 @@ Ortalama bir sınıf %15'te, dokuz sınıf %85'teyken gizlenir.
 
 ### Giriş çözümü pazarlaması
 
-U-Net'in kodlayıcı çözünürlüğünü dört kat ikiye katlar, bu nedenle giriş 16 ile bölünebilir olmalıdır. Tıp görüntüleri genellikle 512x512 veya 1024x1024'dir.`H * W * C_max`, ve 1024x1024'e 1024 şişek boynuz kanalları ile ön geçiş zaten VRAM'ın gigabaytlarını kullanıyor.
+U-Net'in kodlayıcı çözünürlüğünü dört kat azaltır, bu nedenle atış bağlantıları sadece giriş 16 ile bölünürken sıraya geçiyor. Diğer boyutlara yükleme veya yukarı blokta boyut değiştirme gereklidir (Adım 2). Tıbbi görüntüler genellikle 512x512 veya 1024x1024'dir. Otonom sürücü ürünler 2048x1024'dir.`H * W * C_max`, ve 1024x1024'e 1024 şişek boynuz kanalları ile ön geçiş zaten VRAM'ın gigabaytlarını kullanıyor.
 
 İki standart çözüm yolu:
 1. Girme  işlemi 256x256 kapsamlı ve dikişli kapsamlı kapsamlı kapsamlı kapsamlı.
