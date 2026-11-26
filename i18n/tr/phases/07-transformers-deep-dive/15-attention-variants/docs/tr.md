@@ -1,9 +1,9 @@
 # Dikkat Variantları  Çelişkili Pencere, Çekil, Farklı
 
-> Tam dikkat bir döngüdür. Her simge her simgeyi görür ve hafıza bedelini öder. Dört varians döngünün şeklini eğer ve maliyetin yarısını geri alır.
+> Tam dikkat bir döngüdür. Her simge her simgeyi görür ve hafıza fiyatı öder. Üç farklılık döngünün şeklini eğer ve maliyetin yarısını geri alır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -63,8 +63,8 @@ Farklı dikkat bunu hesaplama yoluyla düzeltir .**two**dikkat haritaları ve ç
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d}) \\
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d}) \\
 \text{DiffAttn} &= (A_1 - \lambda \cdot A_2) V
 \end{aligned}
 ```
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## Yapın
 
-Bakın .`code/main.py`Oyuncak dizisinde tam, SWA, lokal+strided ve farklı dikkatini yan yana gösteren bir sebep maskası karşılaştırıcısı uyguluyoruz.
+Bakın .`code/main.py`, ya da Rust limanı`code/main.rs`Rust versiyonunu çalıştırmak için:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Oyuncak dizisinde tam, SWA, lokal+strided ve farklı dikkatini yan yana gösteren bir sebep maskası karşılaştırıcısı uyguluyoruz.
 
 ### Adım 1: Tam sebep maskası (Başlamalı)
 

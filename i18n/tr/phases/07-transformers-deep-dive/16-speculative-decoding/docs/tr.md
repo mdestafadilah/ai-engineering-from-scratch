@@ -3,7 +3,7 @@
 > Autoregressive dekodlama serilidir. Her token önceki birini bekler. Speküel dekodlama zinciri kırar: ucuz model N tokens taslaklar, pahalı model tüm N bir ileri geçiş doğruluyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -70,7 +70,7 @@ Avantajlar: ikinci bir model yok. Eksiler: eğitimli parametreler ekler; denetim
 
 ### KİÇİN  gizli durumları yeniden kullanarak daha iyi bir çizim
 
-EAGLE-1/2/3 (Li et al., 20242025) taslak modelini, doğrulayıcının son katman gizli durumlarını yudumlayan küçük bir transformatör (genellikle 1 katman) yapar.
+EAGLE-1/2/3 (Li et al., 20242025) taslak modelini, doğrulayıcının son katman gizli durumlarını yudumlayan küçük bir transformatör (tipik olarak 1 katman) yapar. Çizgi, doğrulayıcının özellik temsilini gördüğü için tahminleri doğrulayıcının çıkış dağılımıyla güçlü bir şekilde ilişkilidir. Kabul oranları ~0.6 (vanil) 'den 0.85+'e yükseldi. Bunlar sohbet referansları için bir token oranları, sohbet verilerine eşleşen bir taslak ile eğitilmiştir. Karışık üretim trafiği için, EAGLE-3 için 17 · 05 aşaması planları 0.6 ila 0.8 ile ve alan trafiği daha düşük olabilir.
 
 EAGLE-3 (2025) aday devamları üzerinde ağaç arama ekledi. vLLM ve SGLang gemisi EAGLE-2/3 Llama 3/4 ve Qwen 3 için varsayılan özellik yolu olarak.
 
@@ -91,6 +91,13 @@ Bakın .`code/main.py`Temel spekülatör örneği algoritmi (reddedme adım + ka
 - El kodlanmış bir dağılım üzerinde deterministik-yumuşak maksimum olan "büyük bir model" (böylelikle kabul matematikini analitik olarak doğrulayabiliriz).
 - Büyük modelin bir rahatsızlığı olan bir "öntem modeli".
 - Doğrudan örnekleme ile aynı sınırlı dağılım üreten kabul / reddetme döngüsü.
+
+`code/main.rs`Rust Port'ı aynı fonksiyonlara ve demolara sahip. Sadece standart kütüphaneden kullanır.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Adım 1: reddetme adımı
 

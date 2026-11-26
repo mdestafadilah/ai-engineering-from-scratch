@@ -3,7 +3,7 @@
 > Kaplan 2020 makalesinde: daha büyük model, daha düşük kayıp. 2022 Hoffmann makalesinde: az eğitim aldığınızı söyledi. Hesaplama iki kova  parametreler ve jetonlara ayrılır  ve bölünme açık değildir.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -40,12 +40,12 @@ L(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E
 - $E \approx 1.69$, azaltabilir kayıp tavanı.
 - $A \approx 406$- Evet .$B \approx 411$- Evet .
 
-İki terim birbirine karşı ticaret yaparken ölçerken.$N$sabit hesaplama ($C = 6ND$) ve çözmek için:
+İki terim birbirine karşı ticaret yaparken ölçerken.$N$sabit hesaplama ($C = 6ND$Bu da bir çözüm.$\alpha$ve $\beta$yukarıda, gösterge yaklaşık 0.45'te çıkar $N$ve 0.55 için$D$, böylece tam en iyi oran bütçe ile yavaş yavaş hareket eder .`code/main.py`Bu sayede, bir sabit oranın empirik kuralı ortaya çıkar.$D = 20N$İçeride$C = 6ND$Ve parmak kuralı şöyle:
 
 ```math
 \begin{aligned}
-N_{\text{opt}} &\approx 0.6 \times (C/6)^{0.5} \\
-D_{\text{opt}} &\approx 0.6 \times (C/6)^{0.5} \\
+N_{\text{opt}} &\approx 0.22 \times (C/6)^{0.5} \\
+D_{\text{opt}} &\approx 4.5 \times (C/6)^{0.5} \\
 D_{\text{opt}} / N_{\text{opt}} &\approx 20
 \end{aligned}
 ```
