@@ -3,7 +3,7 @@
 > شما پیام رسان ها، گنجانده ها، خط لوله های RAG، تماس های عملکردی، لایه های ذخیره سازی و محافظین ساخته اید. به طور جداگانه در تعزيل مثل تمرین کردن در مقیاس گیتار بدون اینکه هیچ وقت آهنگ بازی کنم این درس آهنگ است. شما تمام اجزای درس 01-12 رو به یک سرویس آماده تولید متصل می کنید. . نه یه اسباب بازی نه یه نمایش یک سیستم که ترافیک واقعی را اداره می کند، به خوبی شکست می خورد، توکن ها را جریان می دهد، هزینه ها را ردیابی می کند و از اولین ۱۰ هزار کاربر زنده می ماند.
 
 **Type:** Build (Capstone)
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lessons 01-15
 **Time:** ~120 minutes
 **Related:**مرحله 11 · 14 (MCP) برای جایگزینی طرح های ابزار سفارشی با پروتکل مشترک؛ مرحله 11 · 15 (تخزینی سریع) برای کاهش هزینه 50 تا 90 درصد در پیشگام های پایدار. هر دو مورد در هر دسته تولید جدی 2026 انتظار می رود.
@@ -225,8 +225,8 @@ graph TD
 | Queries per user per day | 5 | Product analytics |
 | Avg input tokens per query | 1,500 | Measured (system + context + user) |
 | Avg output tokens per query | 400 | Measured |
-| Input price per 1M tokens | $5.00 | OpenAI GPT-5 pricing |
-| Output price per 1M tokens | $15.00 | OpenAI GPT-5 pricing |
+| Input price per 1M tokens | $2.50 | OpenAI GPT-4o pricing |
+| Output price per 1M tokens | $10.00 | OpenAI GPT-4o pricing |
 | Cache hit rate | 35% | Measured from cache metrics |
 | Effective daily queries | 32,500 | 50,000 * (1 - 0.35) |
 

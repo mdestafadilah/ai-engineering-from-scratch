@@ -101,19 +101,19 @@ MTEB (Masssive Text Embedding Benchmark) v2 100+ کار را در سراسر ب�
 **Cosine similarity**: کوسین زاویه بین دو متری. از -1 (قابل) تا 1 (جهای یکسان) متفاوت است. اندازه را نادیده می گیرد - یک جمله 10 کلمه و یک سند 500 کلمه می تواند 1.0 را به دست آورد اگر آنها به سمت مشابه اشاره کنند. این پیش فرض برای 90٪ موارد استفاده است.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**: محصول داخلی خام دو متری. مشابهی با مشابهی کوسین هنگامی که متری ها عادی می شوند (طول واحد). سریعتر برای محاسبه. گنجانده های OpenAI عادی می شوند، بنابراین محصول نقطه و کوسین رتبه بندی مشابه را می دهند.
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **Euclidean (L2) distance**: فاصله خط مستقیم در فضای بردار. کوچکتر = مشابهتر. حساس به تفاوت های بزرگی. زمانی استفاده کنید که موقعیت مطلق در فضا مهم باشد، نه فقط جهت.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 چه زمانی باید از آن استفاده شود:

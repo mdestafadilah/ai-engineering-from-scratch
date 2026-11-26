@@ -95,19 +95,19 @@ graph LR
 **Cosine similarity**: کوسین زاویه بین دو متری. از -1 (قابل) تا 1 (تماه برابر) می باشد. اندازه را نادیده می گیرد، فقط به جهت اهمیت می دهد. این پیش فرض برای RAG است.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**: محصول داخلی خام. متری های بزرگتر نمره های بالاتر را دریافت می کنند. مفید است هنگامی که حجم اطلاعات را حمل می کند (دستور های طولانی تر ممکن است مرتبط تر باشند).
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **L2 (Euclidean) distance**فاصله خط مستقیم در فضای متری. فاصله کوچکتر = مشابهتر. حساس به تفاوت های بزرگی.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 شباهت کوسین استاندارد است. این اسناد طول های مختلف را با زیبایی اداره می کند زیرا با اندازه عادی می شود. وقتی کسی می گوید " جستجوی ویکتور، " تقریبا همیشه به معنای شباهت کوسین است.
