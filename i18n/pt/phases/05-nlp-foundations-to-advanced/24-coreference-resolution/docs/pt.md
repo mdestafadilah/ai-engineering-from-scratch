@@ -3,7 +3,7 @@
 > "Ela ligou-lhe, ele não respondeu, o médico estava no almoço". Três referências a duas pessoas e ninguém é nomeado.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 
@@ -61,14 +61,14 @@ coref-links
 ```python
 import spacy
 nlp = spacy.load("en_coreference_web_trf")   # experimental model
-doc = nlp("Apple announced new products. The company said they would ship soon.")
+doc = nlp("Apple announced new products. The company said it would ship them soon.")
 for cluster in doc._.coref_clusters:
     print(cluster, "->", [m.text for m in cluster])
 ```
 
 Num documento mais longo, obtém algo como:
-- Cluster 1: [Apple, a empresa, eles]
-- Cluster 2: [novos produtos]
+- Cluster 1: [Apple, a empresa, ele]
+- Cluster 2: [novos produtos, eles]
 
 ### Passo 2: Resolver pronome baseado em regras (ensino)
 
