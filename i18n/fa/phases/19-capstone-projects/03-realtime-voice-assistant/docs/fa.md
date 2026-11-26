@@ -3,7 +3,7 @@
 > یک عامل صدا که احساس درستی دارد، تاخیر پایان تا پایان کمتر از 800ms دارد، می داند که شما چه زمانی صحبت کردن را متوقف کرده اید، در حال کار با بارج-این است و می تواند بدون توقف به یک ابزار زنگ بزند. ریتل، ڤیپی، آژانس های لایو کیت و پیپکت همه در سال 2026 به این بار رسیدند. آنها با شکل مشابهی انجام می دهند: یک ASR جریان، یک ردیاب نوبت، یک LLM جریان، و یک TTS جریان، همه از طریق WebRTC با بودجه های تاخیر پرخاشگر در هر کود. یکی بسازید، WER و MOS و نرخ قطع اشتباه را اندازه گیری کنید و آن را تحت کاهش بسته اجرا کنید.
 
 **Type:** Capstone
-**Languages:** Python (agent + pipeline), TypeScript (web client)
+**Languages:** Python (agent + pipeline), TypeScript (web client, scheduler scaffold)
 **Prerequisites:** Phase 6 (speech and audio), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 17 (infrastructure)
 **Phases exercised:**P6 · P7 · P11 · P13 · P14 · P17
 **Time:** 30 hours
@@ -100,8 +100,9 @@ caller: "what is the weather in tokyo tomorrow"
 [asr  ] partial @280ms: "what is the"
 [asr  ] partial @540ms: "what is the weather"
 [turn ] completion score 0.82 at @820ms; commit
-[llm  ] first token @960ms
-[tool ] weather.tokyo tomorrow -> 68/52 partly cloudy @1140ms
+[llm  ] tool call emitted @880ms
+[tool ] weather.tokyo tomorrow -> 68/52 partly cloudy @940ms
+[llm  ] first token @990ms
 [tts  ] first audio-out @1040ms: "Tokyo tomorrow will be partly cloudy..."
 turn latency: 1040ms user-stop -> audio-out
 ```
