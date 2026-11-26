@@ -90,7 +90,7 @@ flowchart LR
 للتقسيم التجاري مع $C$فصول، إنتاج النموذج هو `(N, C, H, W)`الهدف هو`(N, H, W)`مع أرقام تعريف فئة كاملة. التشابه المتقاطع هو نفس حالة التصنيف، فقط تطبيق في كل موقع فضائي:
 
 ```math
-\text{Loss} = \operatorname*{mean}_{(n, h, w)} \left[ -\log\left( \operatorname{softmax}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy`في (بيتورش) يتعامل مع هذا الشكل بشكل طبيعي، لا حاجة لإعادة تشكيل.
@@ -103,7 +103,7 @@ flowchart LR
 
 ```math
 \begin{aligned}
-\operatorname{Dice}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
 \text{Dice}_{\text{loss}} &= 1 - \text{Dice}
 \end{aligned}
 ```
@@ -129,7 +129,7 @@ L = L_{\text{cross\_entropy}} + \lambda \cdot L_{\text{dice}} \qquad (\lambda \a
 
 ### التداول في حل المدخل
 
-يقلل مبرمج U-Net من النصف من القرار أربع مرات ، لذلك يجب أن تكون المدخل قابلة للقسمة بـ 16. الصور الطبية غالباً ما تكون 512x512 أو 1024x1024.`H * W * C_max`و عند 1024x1024 مع 1024 قناة عنق الزجاجة الممر الأمامي يستخدم بالفعل جيجا بايت من VRAM.
+يقلل مبرمج U-Net من القرار بنصف أربع مرات ، لذلك تتسلسل الاتصالات القصوى بالضبط فقط عندما تكون المدخل قابلة للقسمة بنسبة 16. يحتاج الأحجام الأخرى إلى التدوية أو إعادة الحجم في الكتلة العلوية (الخطوة 2). غالباً ما تكون الصور الطبية 512x512 أو 1024x1024.`H * W * C_max`و عند 1024x1024 مع 1024 قناة عنق الزجاجة الممر الأمامي يستخدم بالفعل جيجا بايت من VRAM.
 
 حلول عمل قياسية:
 1. طلاء المدخل  عملية 256x256 طلاء مع التداخل والخياطة.
