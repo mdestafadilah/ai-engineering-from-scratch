@@ -3,7 +3,7 @@
 > Los modelos espaciales de estado (SSM) y transformadores quieren cosas diferentes. Los transformadores compran calidad a través de la atención a un costo cuadrático. Los SSM compran inferencia en tiempo lineal y memoria constante a través de una recurrencia pero calidad de retraso. Jamba (marzo 2024) y Jamba 1.5 (agosto 2024) de AI21 los ponen en el mismo modelo: 1 capa transformadora por cada 7 capas de Mamba, MoE en cada otro bloque, y una ventana de contexto de 256k que se ajusta a una sola GPU de 80 GB. Mamba-3 (ICLR 2026) aprueba el lado de SSM con espacios de estado de valor complejo y proyecciones MIMO. Esta lección lee ambas arquitecturas de extremo a extremo y explica por qué la receta híbrida ha sobrevivido tres años de escalado cuando los intentos de largo contexto de pure-SSM y pure-Transformer no lo han hecho.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layer-mix calculator)
+**Languages:** Python (stdlib, layer-mix calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model architectures), Phase 10 · 17 (native sparse attention)
 **Time:** ~60 minutes
 
@@ -77,10 +77,10 @@ Las capas de Mamba son ellas mismas conscientes de la posición (a través de la
 
 Para una forma Jamba-1 (32 capas: 28 Mamba + 4 Atención, oculta 4096, 32 cabezas de atención):
 
-- Caché KV (sólo capas de atención): `2 * 4 * 32 * 128 * 256k * 2 = 8.4 GB`En 256k BF16 sólo las 4 capas de atención contribuyen.
+- Caché KV (sólo capas de atención): `2 * 4 * 32 * 128 * 256k * 2 = 16 GB`El Jamba liberado utiliza GQA con 8 cabezas de KV en esas capas, lo que lleva a 4 GB, la cifra en el papel Jamba.
 - Estado del MSS: `28 * hidden * state_size`El estado típico de Mamba es de 16 por característica, oculto 4096: `28 * 4096 * 16 * 2 = 3.7 MB`- ¿Qué?
 
-Comparar con un transformador puro en 32 capas, la misma oculta, MHA completo en 32 cabezas: `2 * 32 * 32 * 128 * 256k * 2 = 128 GB`La reducción de 8 veces en el caché de KV.`2 * 32 * 8 * 128 * 256k * 2 = 32 GB`), el híbrido 1:7 de Jamba con 16 GB es todavía 2 veces más pequeño.
+Comparar con un transformador puro en 32 capas, la misma oculta, MHA completo en 32 cabezas: `2 * 32 * 32 * 128 * 256k * 2 = 128 GB`La reducción de 8 veces en el caché de KV.`2 * 32 * 8 * 128 * 256k * 2 = 32 GB`), un híbrido 1:7 con 32 cabezas de KV en 16 GB es todavía 2 veces más pequeño.
 
 Eso es lo que AI21 significa por "contexto de 256k en una GPU de 80 GB". El caché KV de un transformador puro de MHA completo no encajaría; incluso una línea de base GQA no deja espacio para pesos y activaciones; Jamba sí.
 

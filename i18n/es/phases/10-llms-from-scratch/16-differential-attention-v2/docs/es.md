@@ -3,7 +3,7 @@
 > La atención Softmax distribuye una pequeña cantidad de probabilidad sobre cada token no coincidente. Más de 100 mil tokens que suman el ruido y ahogan la señal. El Transformador Diferencial (Ye et al., ICLR 2025) lo fija calculando la atención como la diferencia de dos softmaxes, restando el suelo de ruido compartido. DIFF V2 (Microsoft, enero 2026) es la reescritura de la pila de producción: coincide con la latencia de decodificación de la línea de base de Transformer, no hay núcleos personalizados, compatible con FlashAttention. Esta lección es de extremo a extremo de V1, con una aplicación de juguete de trabajo de la operación de diferencia que se puede ejecutar en stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 
@@ -16,7 +16,7 @@
 
 ## El problema
 
-La atención estándar de softmax tiene una propiedad matemática que se convierte en un dolor de cabeza operativo a escala.`q`, los pesos de atención son`softmax(qK^T / sqrt(d))`. Softmax nunca puede producir ceros exactos  cada token no coincidente obtiene alguna masa positiva. Esa masa residual es ruido, y se escala con la longitud del contexto. En 128k tokens, incluso si cada token no coincidente obtiene solo el 0.001% de la probabilidad, 127,999 de ellos combinados contribuyen aproximadamente al 12% del total. El modelo tiene que aprender a recorrer un piso de ruido que crece con el contexto.
+La atención estándar de softmax tiene una propiedad matemática que se convierte en un dolor de cabeza operativo a escala.`q`, los pesos de atención son`softmax(qK^T / sqrt(d))`Softmax nunca puede producir ceros exactos: cada token no coincidente obtiene cierta masa positiva. Esa masa residual es ruido, y se escala con la longitud del contexto. En 128k tokens, incluso si cada token no coincidente obtiene solo el 0.0001% de la probabilidad, 127.999 de ellos combinados contribuyen aproximadamente al 13% del total. El modelo tiene que aprender a recorrer un piso de ruido que crece con el contexto.
 
 Empiricamente esto aparece como interferencia de la cabeza de atención: citas alucinadas en RAG de largo contexto, fallos perdidos en el medio en tareas de recuperación de 100k tokens, y degradación sutil de precisión en puntos de referencia de aguja en haystack más allá de 32k. El documento del Transformador Diferencial (arXiv:2410.05258, ICLR 2025) midió la brecha: los Transformadores DIFF alcanzaron una menor perplejidad, una mayor precisión en el contexto largo y menos alucinaciones que las líneas de base del mismo tamaño.
 
@@ -42,15 +42,15 @@ Divide las proyecciones de Q y K de cada cabeza en dos: $Q = (Q_1, Q_2)$y $K = (
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d})
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d})
 \end{aligned}
 ```
 
 Producción:
 
 ```math
-\operatorname{DiffAttn} = (A_1 - \lambda \cdot A_2) V
+\mathop{\mathrm{DiffAttn}} = (A_1 - \lambda \cdot A_2) V
 ```
 
 La subtracción anula cualquier distribución de ruido que comparten los dos mapas. Si ambos mapas tienen un peso aproximadamente uniforme en los 127k tokens no relacionados (que, a partir de una inicialización aleatoria, lo harán), los otros se anulan. La señal  peso máximo en los pocos tokens realmente relevantes  solo se anula si aparece en ambos mapas a la misma magnitud, lo que no ocurre una vez que el modelo se muestre.

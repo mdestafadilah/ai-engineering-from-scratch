@@ -3,7 +3,7 @@
 > Construiste un GPT-2 pequeño desde cero en la Lección 04. Los modelos de fronteras abiertas en 2026 son la misma familia con cinco o seis cambios concretos. RMSNorm en lugar de LayerNorm. SwiGLU en lugar de GELU. RoPE en lugar de posiciones aprendidas. GQA o MLA en lugar de MHA completo. Una mezcla de expertos a escala. Las matemáticas que ya sabes cubren el 95% de ellos. Esta lección lee Llama 3, DeepSeek-V3, Mixtral, Qwen y Gemma lado a lado y nombra la línea exacta donde cada arquitectura diverge.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 
@@ -53,7 +53,7 @@ Todo lo demás (hora de aprendizaje, mezcla de datos, tamaño de lote, longitud 
 LayerNorm restará la media, dividida por std, escalas y cambios.
 
 ```math
-\operatorname{RMSNorm}(x) = \frac{x}{\sqrt{\operatorname{mean}(x^2) + \epsilon}} \cdot \gamma
+\mathop{\mathrm{RMSNorm}}(x) = \frac{x}{\sqrt{\mathop{\mathrm{mean}}(x^2) + \epsilon}} \cdot \gamma
 ```
 
 Ninguna subtracción media. Ningún sesgo. Un matmul menos por token. Zhang y Sennrich (2019) argumentaron que coincide con LayerNorm en la traducción automática mientras es un 10% más rápido.
@@ -79,7 +79,7 @@ Cada Llama, Mistral, Qwen, DeepSeek y Gemma utiliza RoPE. Gemma 2 utiliza un hí
 La MLP de GPT-2 es `x -> gelu(xW1 + b1) -> (...)W2 + b2`. SwiGLU (Shazeer 2020) sustituye la activación por un producto cerrado:
 
 ```math
-\operatorname{SwiGLU}(x) = (xW_1) \cdot \operatorname{sigmoid}(xW_1) \cdot xV
+\mathop{\mathrm{SwiGLU}}(x) = (xW_1) \cdot \mathop{\mathrm{sigmoid}}(xW_1) \cdot xV
 ```
 
 Dos proyecciones en paralelo en lugar de una, cerradas por la activación Swish. Empiricamente más fuerte en la perplejidad por parámetro. Llama 2 lo adoptó, todos lo siguieron. El tamaño oculto del MLP se establece generalmente para que el número total de parámetros coincida con el MLP denso original: si se utilizó GPT-2 `ff_dim = 4 * hidden`, SwiGLU utiliza `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden`¿ Qué ?
