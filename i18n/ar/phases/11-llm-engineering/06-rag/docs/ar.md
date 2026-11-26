@@ -95,19 +95,19 @@ graph LR
 **Cosine similarity**: كوسينز الزاوية بين متجهين. يتراوح من -1 (العكس) إلى 1 (وحيد). يتجاهل الحجم، لا يهتم فقط بالاتجاه. هذه هي الافتراض الافتراضي لـ RAG.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**: المنتج الداخلي الخام. المتجهات الكبيرة تحصل على درجات أعلى. مفيدة عندما يحمل الحجم المعلومات (قد تكون الوثائق أطول أكثر أهمية).
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **L2 (Euclidean) distance**: مسافة خط مستقيم في الفضاء المتجه. مسافة أصغر = أكثر شبيهة. حساسة لفرق الكبيرة.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 تشابه الكوزين هو المعيار. يتعامل مع المستندات من أطول مختلفة بجد لأنه يطبيع من حيث الحجم. عندما يقول شخص ما "البحث عن المتجهات،" يقصدون تقريبا دائما تشابه الكوزين.

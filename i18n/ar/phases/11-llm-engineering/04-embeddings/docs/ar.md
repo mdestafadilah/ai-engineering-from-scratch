@@ -101,19 +101,19 @@ graph LR
 **Cosine similarity**: كوسين زاوية بين متجهين. يتراوح من -1 (العكس) إلى 1 (الجهة المماثلة). يتجاهل الحجم -- جملة 10 كلمات وثيقة 500 كلمة يمكن أن تسجل 1.0 إذا كانت تشير إلى نفس الاتجاه. هذا هو الافتراض المحدد ل90٪ من الحالات الاستخدامية.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**: المنتج الداخلي الخام لمتجهين. متطابق مع التشابه الكوسيني عندما يتم تطبيع المتجهات (طول الوحدة). أسرع للحساب. يتم تطبيع تضمينات OpenAI ، لذلك يعطي منتج النقطة والكوسيني نفس التصنيف.
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **Euclidean (L2) distance**: مسافة خط مستقيم في الفضاء المتجه. أصغر = أكثر مماثلة. حساسة لفرق الكبيرة. استخدم عندما يكون الموقف المطلق في الفضاء مهمًا ، وليس فقط الاتجاه.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 متى تستخدم:
