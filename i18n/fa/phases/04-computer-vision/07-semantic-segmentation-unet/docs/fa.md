@@ -90,7 +90,7 @@ flowchart LR
 برای بخش بندی معنوی با $C$کلاس ها، تولید مدل`(N, C, H, W)`هدفش اينه`(N, H, W)`با شناسه های کلاس عددی کامل. انترپی کراس با مورد طبقه بندی یکسان است، فقط در هر موقعیت فضایی اعمال می شود:
 
 ```math
-\text{Loss} = \operatorname*{mean}_{(n, h, w)} \left[ -\log\left( \operatorname{softmax}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy`در PyTorch این شکل رو به صورت بومی اداره می کنه
@@ -103,7 +103,7 @@ flowchart LR
 
 ```math
 \begin{aligned}
-\operatorname{Dice}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
 \text{Dice}_{\text{loss}} &= 1 - \text{Dice}
 \end{aligned}
 ```
@@ -129,7 +129,7 @@ L = L_{\text{cross\_entropy}} + \lambda \cdot L_{\text{dice}} \qquad (\lambda \a
 
 ### تعادل حل ورودی
 
-کدگر U-Net به نصف رزولوشن چهار برابر کاهش می دهد، بنابراین ورودی باید به 16 تقسیم شود. تصاویر پزشکی اغلب 512x512 یا 1024x1024 هستند. محصولات رانندگی مستقل 2048x1024 هستند. هزینه حافظه U-Net با ۰.۱۰۴ برابر است.`H * W * C_max`، و در 1024x1024 با 1024 کانال گوشه بطری، گذر جلو قبلا از گیگابایت VRAM استفاده می کند.
+کدگر U-Net رزولوشن را چهار برابر کاهش می دهد، بنابراین اتصال های skip دقیقاً زمانی که ورودی با 16 تقسیم می شود، خط می شوند. اندازه های دیگر نیاز به پوشاندن یا تغییر اندازه در بلوک بالا ( مرحله 2) دارند. تصاویر پزشکی اغلب 512x512 یا 1024x1024 هستند. محصولات رانندگی مستقل 2048x1024 هستند. هزینه حافظه U-Net با `H * W * C_max`، و در 1024x1024 با 1024 کانال گوشه بطری، گذر جلو قبلا از گیگابایت VRAM استفاده می کند.
 
 دو راه حل استاندارد:
 1. کاشی ورودی  فرآیند کاشی 256x256 با تعویض و خیاط.
