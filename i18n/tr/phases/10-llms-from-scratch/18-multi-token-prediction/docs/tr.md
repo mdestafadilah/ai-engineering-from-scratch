@@ -3,7 +3,7 @@
 > GPT-2'den Llama 3'e kadar her bir gerileme derecesinde olan LLM, pozisyon başına bir kayıp kazanır. DeepSeek-V3 pozisyon başına ikinci bir kayıp ekledi. Bundan sonra token'ı tahmin et. Ekstra 14B parametreleri (671B modelinde) gradient akışı yoluyla ana modele geri distillendi ve eğitilmiş MTP başları, %80+ kabul ile spekülasyonsal dekodlama taslakçıları olarak sonuçta yeniden kullanıldı. 1.8x jenerasyon geçiş ücretsiz geldi. Bu ders, DeepSeek teknik raporundan sıralı MTP modülü oluşturur, kayıp ve paylaşılan baş parametresi düzenini hesaplar ve neden MTP nedensel zinciri koruduğunu açıklarken Gloeckle et al'ın orijinal paralel MTP'si onu kırdı.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 04 (pre-training a mini GPT), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 
@@ -28,7 +28,7 @@ Bu ders tek bir MTP modülü oluşturur ve sıfırdan D derinliği kaybı.
 
 ### Sıradan MTP tarifi
 
-DeepSeek-V3 ekliyor `D`Ana modelin üzerinde MTP modüller.`k`(çünkü)`k = 1..D`) simgeyi derinlikten tahmin eder .`k` yani, `t_{i+k}`konumdan önce bir önbellek verilmiştir.`i`- Evet .
+DeepSeek-V3 ekliyor `D`Ana modelin üzerinde MTP modüller.`t_{i+1}`Her modül .`k`(çünkü)`k = 1..D`) simgesini tahmin eder .`k`Daha ileri adımlar atmak.`t_{i+k+1}`, konumdan bir ön işaret verilmiştir `i`- Evet .
 
 Modül`k`aşağıdakilerden oluşur:
 
@@ -42,20 +42,20 @@ Eğitim sırasında, pozisyon üzerinden bir önbellek için `i`, derinliklere g
 ```math
 \begin{aligned}
 h_i^{(0)} &= \text{main model backbone at position } i \\
-h_i^{(k)} &= T_k\Big( M_k \cdot \operatorname{concat}\big(\operatorname{RMSNorm}(h_i^{(k-1)}), \operatorname{RMSNorm}(E(t_{i+k}))\big) \Big) \quad \text{for } k \ge 1
+h_i^{(k)} &= T_k\Big( M_k \cdot \mathop{\mathrm{concat}}\big(\mathop{\mathrm{RMSNorm}}(h_i^{(k-1)}), \mathop{\mathrm{RMSNorm}}(E(t_{i+k}))\big) \Big) \quad \text{for } k \ge 1
 \end{aligned}
 ```
 
 Derinlik tahminleri:
 
 ```math
-\text{logits}_{i+k} = \operatorname{Out}(h_i^{(k-1)}) \quad \text{for } k = 1, \ldots, D
+\text{logits}_{i+k+1} = \mathop{\mathrm{Out}}(h_i^{(k)}) \quad \text{for } k = 1, \ldots, D
 ```
 
-Derinlik kaybı , temel gerçeğe karşı çapraz entropi .`t_{i+k}`- ...
+Derinlik kaybı , temel gerçeğe karşı çapraz entropi .`t_{i+k+1}`- ...
 
 ```math
-L_k = \operatorname{CE}(\text{logits}_{i+k}, t_{i+k})
+L_k = \mathop{\mathrm{CE}}(\text{logits}_{i+k+1}, t_{i+k+1})
 ```
 
 Derinlikler boyunca eklem kaybı:
@@ -70,9 +70,9 @@ L_{\text{MTP}} = \frac{\lambda}{D} \sum_{k=1}^{D} L_k
 
 Gloeckle'nin orijinal paralel MTP'sinde D çıkış başları vardı, her biri doğrudan `h_i^(0)`Her baş tahmin ediyor .`t_{i+k}`Bu trenler iyi, ama tahminler birbirine bağlı değil.`head_1`Yardımcı çıkış .`head_2` kafalar paralel ateş eder.
 
-DeepSeek-V3'ün dizaynı devamlı inşa ediliyor.`h_i^(k)`-`h_i^(k-1)`artı gerçek bir sonraki simge yerleştirme `E(t_{i+k})`Bu sebepli zinciri korur: tahmin etmek .`t_{i+k+1}`, derinlik modülü `k+1`Ne olduğunu görüyor.`t_{i+k}`Bu, yapısal olarak bir autoregressive dekoder'in kendi çıkışını tüketmesine benzer.
+DeepSeek-V3'ün dizaynı devamlı inşa ediliyor.`h_i^(k)`-`h_i^(k-1)`artı gerçek bir sonraki simge yerleştirme `E(t_{i+k})`Bu sebepli zinciri korur: tahmin etmek .`t_{i+k+1}`, derinlik modülü `k`Ne olduğunu görüyor.`t_{i+k}`Bu, yapısal olarak bir autoregressive dekoderin kendi çıkışını nasıl tükettiğine benzer, bu da MTP modüllerini spekülasyonsal dekodlama taslavu olarak doğrudan kullanılabilir hale getirir.
 
-Sonuç: besin `h_i^(k-1)`ve taslağı`t_{i+k}`modülüne`k+1`, bir tahmin edin .`t_{i+k+1}`Tekrarlıyorum. Bu tam olarak EAGLE tarzı bir taslak, eğitimli MTP modülü kullanarak taslak ağ. DeepSeek-V3 ilk MTP modülü üzerinde %80+ kabul ve ~1.8x hızlanma rapor ediyor.
+Sonuç: besin `h_i^(k-1)`ve taslağı`t_{i+k}`modülüne`k`, bir tahmin edin .`t_{i+k+1}`Tekrarlıyorum. Bu tam olarak EAGLE tarzı bir taslak, eğitimli MTP modülü kullanarak taslak ağ. DeepSeek-V3 ilk MTP modülü üzerinde %80+ kabul ve ~1.8x hızlanma rapor ediyor.
 
 ### Parametre muhasebe
 
@@ -141,7 +141,7 @@ Ana modelin çıkış projesi tekrar kullanın.
 
 ### Adım 5: Derinlik kaybı
 
-Softmax'ın (logits) karşı karşıya geçiş sırasında yeraltı gerçeği simgesi karşı karşıya geçmesi`k`- Deniz derinliklerinde toplanıp `lambda / D`Ölçekleme faktörü.
+Softmax'ın (logits) karşı karşıya geçiş sırasında yeraltı gerçeği simgesi karşı karşıya geçmesi`k+1`- Deniz derinliklerinde toplanıp `lambda / D`Ölçekleme faktörü.
 
 ### Adım 6: Parametre muhasebe
 
@@ -176,18 +176,18 @@ Bu ders bize çok yararlı .`outputs/skill-mtp-planner.md`. Eğitim öncesi bir 
 
 2. D = 1 MTP modülü olan yoğun 70B modeli için (goyduğu 8192, 80 katman) parametreler üstünü hesaplayın. DeepSeek-V3 rapor ettiği 14B üstünü karşılaştırın. DeepSeek'in sayısının neden daha yüksek olduğunu açıklayın: MTP transformatör bloku aynı MoE yapısını miras alır ve modül başına parametreler sayısını yükseltir.
 
-3. Oyuncakta D=2 uygulamak: ikinci bir MTP modülü ekle$h^{(1)}$ve tahmin ediyor.`t_{i+2}`- Ortak kayıp ve parametreler hesaplamaları DeepSeek kağıdının 19-21 denklemlerine uygun olduğunu kontrol edin.
+3. Oyuncakta D=2 uygulamak: ikinci bir MTP modülü ekle$h^{(1)}$ve tahmin ediyor.`t_{i+3}`- Ortak kayıp ve parametreler hesaplamaları DeepSeek kağıdının 19-21 denklemlerine uygun olduğunu kontrol edin.
 
 4. Oyuncakları paralel MTP'ye (Gloeckle tarzı) değiştirin: D çıkış başlıklarını ana gizli durumun üstüne ekleyin, her biri farklı bir sıyrıtı öngörür.
 
-5. Eğlence tarzında bir taslak olarak eğitimli MTP modülü kullanın: önermek için k modülünü çağırın `t_{i+k}`Bu taslak tokenlerinin kabul oranını, baş modelin beklenen bir dizi üzerinde tahminlerine göre ölçün. Oyuncak üzerinde %50+'e ulaşırsanız, empiri MTP-as-draft özelliğini yeniden üretmiş olursunuz.
+5. Eğlence tarzında bir taslak olarak eğitimli MTP modülü kullanın: önermek için k modülünü çağırın `t_{i+k+1}`Bu taslak tokenlerinin kabul oranını, baş modelin beklenen bir dizi üzerinde tahminlerine göre ölçün. Oyuncak üzerinde %50+'e ulaşırsanız, empiri MTP-as-draft özelliğini yeniden üretmiş olursunuz.
 
 ## Anahtar Terimler
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
 | MTP module | "Extra loss block" | A small transformer block plus projection that predicts a token `k` positions ahead of the main model |
-| Prediction depth | "Which offset" | The integer `k` such that module `k` predicts `t_{i+k}` from prefix through position `i` |
+| Prediction depth | "Which offset" | The integer `k` such that module `k` predicts `t_{i+k+1}` from prefix through position `i` (the main model is depth 0 and predicts `t_{i+1}`) |
 | Parallel MTP | "Gloeckle-style" | D independent heads on the same backbone hidden state, no conditional chain |
 | Sequential MTP | "DeepSeek-V3 style" | Each module conditions on the previous depth's hidden state plus the next token's embedding; preserves causal chain |
 | Shared output head | "Reuse the main head" | The MTP modules call the main model's LM head, not a separate output projection |

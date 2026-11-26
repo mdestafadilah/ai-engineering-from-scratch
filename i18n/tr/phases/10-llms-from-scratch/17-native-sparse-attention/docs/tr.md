@@ -3,7 +3,7 @@
 > 64k tokenlerde dikkat, çözme gecikme sürecinin %70-80'ini tüketir. Her açık model laboratuvarın bunu düzeltmek için bir planı var. DeepSeek'in NSA (ACL 2025 en iyi kağıdı) sıkıştığı bir şey: üç paralel dikkat dalı  sıkıştırılmış kaba tanelerli jetonlar, seçici olarak saklanan ince tanelerli jetonlar ve yerel bağlam için kaydırıcı pencereler  öğrenilmiş bir kapıdan birleştirilmiştir. Hardware-ağır (kernel dostu), doğuştan eğitimlenebilir (doğrudan eğitimde çalışır, çıkarma sırasında bağlanmaz) ve 64k dekodlarda tam dikkat kalitesini eşleştirirken veya yenirken FlashAttention'dan daha hızlı çalışır. Bu ders üç dalı sonundan sonuna kadar inşa eder ve neden kısıtlılığın sonundan sonuna kadar farklılaştırılabileceğini gösterir.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 12 (KV cache, flash-attention), Phase 7 · 15 (attention variants), Phase 10 · 16 (differential attention)
 **Time:** ~60 minutes
 
@@ -46,7 +46,7 @@ Her sorgu için NSA, KV önbellekinin üç farklı görünümüne karşı dikkat
 
 Seçim adımları (top-k blokları) ayrıdır. Diskret işlemler gradient akışını kırar. Önceki nadir dikkat çalışmaları ya seçimi (yasaklama eğitimi) üzerinden geriye atladı veya sonuçta gerçek nadirlik vermeyen sürekli gevşeklemeler kullanıldı.
 
-NSA bunu atlıyor: sıkıştırılmış dal dikkat tüm dizide farklılaştırılabilir kaba tohumlu bir dikkat. Top-k işlevi, baskı dalının en yüksek dikkat puanlarını kullanarak hangi ince tohumlu blokları yüklemek istediğini seçer. Gradiyentler sıkıştırılmış dal puanları (bütün sıkıştırılmış çıkış ve seçim mantığı etki eden) üzerinden akıyor ve seçilen blokların nihai çıkışa katkısı da farklılaştırılabilir. Farklı olmayan `top_k`İşlem ileri hesaplama grafikinde bir işlemi yok. Sadece hangi blokların hafızadan yüklendiğini kontrol eder.
+NSA bunu atlıyor: sıkıştırılmış dal dikkat tüm dizide farklılaştırılabilir kaba tohumlu bir dikkat. Top-k işlevi, baskı dalının en yüksek dikkat puanlarını kullanarak hangi ince tohumlu blokları yüklemek istediğini seçer. Gradyentler, blokların seçimi yoluyla değil, sıkıştırılmış dalın kendi çıkışı yoluyla sıkıştırılmış dal puanlarına ulaşır. Seçilen bloklar içinde, seçilen anahtarlar ve değerler üzerinde dikkat sıradan ilgi, bu nedenle son çıkışa katkısı da farklılaştırılabilir. - Evet .`top_k`indeks seçimi kendiliğinden gradient elde etmez: sadece hafıza'dan hangi blokların yüklendiğini kontrol eder.
 
 Bu nedenle NSA'nın eğitim öncesi end-to-end kullanılabilmesi için kullanılabilir. Model, üç dalın üzerinden bilgiyi birlikte yönlendirmeyi öğrenir ve sonuçta söz verilen hızlandırmayı gerçekleştirecek nadir bir kalıp üretir.
 

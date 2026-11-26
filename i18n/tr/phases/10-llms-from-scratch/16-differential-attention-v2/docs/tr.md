@@ -3,7 +3,7 @@
 > Softmax dikkat, eşleşmeyen her token üzerinde küçük bir olasılık yayar. 100 bin'den fazla token, bu gürültü toplar ve sinyali boğar. Farklı Transformer (Ye et al., ICLR 2025) dikkatini iki softmax farkı olarak hesaplayarak, paylaşılan gürültü zemini çıkararak düzeltir. DIFF V2 (Microsoft, Ocak 2026) üretim yığınının yeniden yazılmasıdır: Decode latensiyle baseline Transformer'a eşleşen, özel çekirdekler olmayan, FlashAttention uyumlu. Bu ders, Stdlib Python'da çalıştırabileceğiniz fark işlevi uygulaması ile V1'den V2'ye kadar sonundan sonuna kadar.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 
@@ -16,7 +16,7 @@
 
 ## Sorun
 
-Standart softmax dikkat, matematik özelliklerine sahip ve bu da ölçekte bir operasyonal baş ağrısına dönüşür.`q`, dikkat ağırlıkları `softmax(qK^T / sqrt(d))`Softmax asla tam sıfırlar üretemez  her eşleşmeyen token bazı pozitif kütle elde eder. O kalan kütle gürültüdür ve bağlam uzunluğu ile ölçebilir. 128k jetonlarda, her eşleşmeyen jeton sadece % 0.001% olasılığı alırsa bile, bunların toplamının yaklaşık % 127.999'ünü birleştirir.
+Standart softmax dikkat, matematik özelliklerine sahip ve bu da ölçekte bir operasyonal baş ağrısına dönüşür.`q`, dikkat ağırlıkları `softmax(qK^T / sqrt(d))`Softmax asla tam sıfırlar üretemez: her eşleşmeyen token bazı pozitif kütle elde eder. Bu kalan kütle gürültüdür ve bağlam uzunluğu ile ölçebilir. 128k tokenlerde, her eşleşmeyen token sadece % 0.0001 olasılığı alırsa bile, bunların toplamının yaklaşık % 13'ünü toplamda 127.999'ü sağlar.
 
 Empirik olarak bu dikkat başı müdahalesi olarak ortaya çıkar: uzun bağlamlı RAG'de halüsinasyonlu alıntılar, 100k işaretini almak görevlerinde ortalama başarısızlıklar ve 32k'den fazla iğne-haystack referanslarında ince doğruluk bozulması. Farklı Transformatör kağıdı (arXiv:2410.05258, ICLR 2025) boşluğu ölçtü: DIFF Transformatörler daha düşük karmaşıklığa, daha yüksek uzun bağlam doğruluğuna ve aynı boyutdaki temel çizgilerden daha az halüsinasyona sahipti.
 
@@ -42,15 +42,15 @@ Her başın Q ve K projeksiyonlarını iki bölüme ayırın: $Q = (Q_1, Q_2)$ve
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d})
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d})
 \end{aligned}
 ```
 
 Çıktı:
 
 ```math
-\operatorname{DiffAttn} = (A_1 - \lambda \cdot A_2) V
+\mathop{\mathrm{DiffAttn}} = (A_1 - \lambda \cdot A_2) V
 ```
 
 Kısıtlama, iki haritada paylaşılan herhangi bir gürültü dağılımını iptal eder. Her iki haritada 127k bağlantısız simgeler üzerinde yaklaşık aynı ağırlık varsa (herhangi bir rastgele başlangıçta geçer), bunlar iptal edilir.
