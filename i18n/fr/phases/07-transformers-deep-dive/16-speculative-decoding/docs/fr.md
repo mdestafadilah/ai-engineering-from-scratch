@@ -3,7 +3,7 @@
 > Le décoding autorégressif est sériel. Chaque jeton attend le précédent. Le décoding spéculatif rompt la chaîne: un modèle bon marché rédige N jetons, le modèle cher vérifie tous N en un seul passe avant. Lorsque le projet est correct, vous payez un gros avant pour N générations.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -70,7 +70,7 @@ Avantages: pas de deuxième modèle. inconvénients: ajoute des paramètres entr
 
 ### L'AIGLE  meilleur dessin en réutilisant les états cachés
 
-EAGLE-1/2/3 (Li et al., 20242025) fait du modèle de projet un minuscule transformateur (typiquement 1 couche) qui ingère les états cachés de la dernière couche du vérificateur.
+EAGLE-1/2/3 (Li et al., 20242025) fait du modèle de projet un minuscule transformateur (typiquement 1 couche) qui absorbe les derniers états cachés de la couche du vérificateur. Parce que le projet voit la représentation des caractéristiques du vérificateur, ses prédictions sont fortement corrélées avec la distribution de sortie du vérificateur. Les taux d'acceptation passent de ~0,6 (vanille) à 0,85+. Ce sont des taux par jeton sur les benchmarks de chat, avec un projet formé sur les données de chat correspondantes. Pour le trafic de production mixte, la phase 17 · 05 prévoit 0,6 à 0,8 pour EAGLE-3, et le trafic de domaine peut être inférieur.
 
 EAGLE-3 (2025) a ajouté la recherche d'arbres sur les continuations candidates. vLLM et SGLang ont utilisé EAGLE-2/3 comme voie de spécification par défaut pour Llama 3/4 et Qwen 3.
 
@@ -91,6 +91,13 @@ Regardez !`code/main.py`Nous mettons en œuvre l' algorithme de prélèvement de
 - Un " grand modèle " qui est un déterminisme-softmax sur une distribution codée à la main (donc nous pouvons vérifier l'acceptation mathématique analytique).
 - Un "modèle de projet" qui est une perturbation du grand modèle.
 - Une boucle d'acceptation/déni qui produit la même distribution marginale que l'échantillonnage direct.
+
+`code/main.rs`Le nombre aléatoire diffère de celui de Python, mais les conclusions imprimées sont les mêmes.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Étape 1: étape de rejet
 

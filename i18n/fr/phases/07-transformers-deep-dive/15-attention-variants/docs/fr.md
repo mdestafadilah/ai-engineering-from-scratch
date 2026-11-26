@@ -1,9 +1,9 @@
 # Attention Variantes  Fenêtre coulissante, épargne, différentielle
 
-> Chaque jeton voit chaque jeton, et la mémoire paie le prix.
+> Toutes les étiquettes sont un cercle, chaque jeton voit chaque jeton et la mémoire paie le prix.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -63,8 +63,8 @@ L' attention différentielle résout cela en calculant **two**cartes d'attention
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d}) \\
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d}) \\
 \text{DiffAttn} &= (A_1 - \lambda \cdot A_2) V
 \end{aligned}
 ```
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## Faites-le
 
-Regardez !`code/main.py`Nous mettons en œuvre un comparateur de masques causaux qui montre l'attention totale, SWA, locale + stridée et différentielle côte à côte sur une séquence de jouets.
+Regardez !`code/main.py`, ou son port de Rust `code/main.rs`Pour exécuter la version Rust:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Nous mettons en œuvre un comparateur de masques causaux qui montre l'attention totale, SWA, locale + stridée et différentielle côte à côte sur une séquence de jouets.
 
 ### Étape 1: masque causal complet (ligne de base)
 

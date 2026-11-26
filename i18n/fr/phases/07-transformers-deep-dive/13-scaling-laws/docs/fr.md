@@ -3,7 +3,7 @@
 > Le papier de Kaplan 2020 disait: plus grand modèle, moins de perte. Le papier de Hoffmann 2022 disait: vous étiez sous-entraînés.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -40,12 +40,12 @@ L(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E
 - $E \approx 1.69$, le plafond irréductible de perte.
 - $A \approx 406$- Je suis là .$B \approx 411$- Je suis désolé .
 
-Deux termes sont négociés l'un contre l'autre à mesure que vous étaliez.$N$à calcul fixe ($C = 6ND$) et résoudre:
+Deux termes sont négociés l'un contre l'autre à mesure que vous étaliez.$N$à calcul fixe ($C = 6ND$Il est possible de trouver des solutions.$\alpha$et $\beta$ci-dessus, les exponents sortent à environ 0,45 pour $N$et 0,55 pour $D$, de sorte que le ratio optimal exact dérive lentement avec le budget; `code/main.py`Les deux premières approches de l'appareil, qui mesurent directement l'optimal, mettent les deux exponents à environ 0,5.$D = 20N$dans $C = 6ND$et la règle générale est la suivante:
 
 ```math
 \begin{aligned}
-N_{\text{opt}} &\approx 0.6 \times (C/6)^{0.5} \\
-D_{\text{opt}} &\approx 0.6 \times (C/6)^{0.5} \\
+N_{\text{opt}} &\approx 0.22 \times (C/6)^{0.5} \\
+D_{\text{opt}} &\approx 4.5 \times (C/6)^{0.5} \\
 D_{\text{opt}} / N_{\text{opt}} &\approx 20
 \end{aligned}
 ```
