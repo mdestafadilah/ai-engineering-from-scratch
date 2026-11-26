@@ -3,7 +3,7 @@
 > Bir demo modelinin tek bir sözleşmesi vardır: bir giriş, bir model çağrı ve bir çıkış. Bağlantıyı paylaşmadan önce her bir bölümde bir sınır koyun.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -76,6 +76,8 @@ Server kontrollerini maliyet sırasıyla koyun:
 
 | Failed check | HTTP status | Error code |
 |--------------|-------------|------------|
+| No `Content-Length` header | 411 Length Required | `length_required` |
+| `Content-Length` is not a number | 400 Bad Request | `bad_length` |
 | Body over 4,096 bytes | 413 Content Too Large | `body_too_large` |
 | Body stops before `Content-Length` bytes arrive | 408 Request Timeout | `request_timeout` |
 | Content type is not JSON | 415 Unsupported Media Type | `unsupported_media_type` |
@@ -205,12 +207,14 @@ Kod bir dosyadır.`code/main.py`Önce kendi testini yap:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Self test, onaylayıcıyı, token kovalarını, akış biçimini ve bir gerçek HTTP geri dönüş yolculuğunu kontrol eder. Serveri ücretsiz bir limanda başlatır, üç talep gönderir, sunucuyu durdurur ve çıkıyor.
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Açık .`http://127.0.0.1:8000`Bir tarayıcıda. Sunucuyu durdurmak için Ctrl + C tıklayın.
@@ -476,6 +480,7 @@ Bir erişim simgesi gerektirmek için, set `DEMO_ACCESS_TOKEN`Bu sayfada, simge 
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Testleri yapın:
