@@ -3,7 +3,7 @@
 > A transfusão mistura representações contínuas e discretas. Show-o (Xie et al., agosto 2024) vai pelo outro lado: tokens de texto usam previsão causal do próximo token, tokens de imagem usam difusão discreta mascarada no espírito do MaskGIT. Ambos sentam-se dentro de um transformador com uma máscara híbrida de atenção. O resultado unifica VQA, texto-para-imagem, inpainting e geração de modalidade mista em uma espinha dorsal, um tokenizer por modalidade, uma formulação de perda (next-token estendido para previsão mascarada). Esta lição segue o design Show-o  por que a difusão discreta mascarada é um gerador de imagem paralelo, em poucos passos  e contrasta com Transfusão e Emu3.
 
 **Type:** Learn
-**Languages:** Python (stdlib, masked-discrete-diffusion sampler)
+**Languages:** Python, TypeScript (stdlib, masked-discrete-diffusion sampler)
 **Prerequisites:** Phase 12 · 13 (Transfusion)
 **Time:** ~120 minutes
 
@@ -11,7 +11,7 @@
 
 - Explicar a difusão discreta mascarada: o cronograma que mascara os tokens uniformemente e então pede ao transformador para recuperá-los.
 - Compare a descodificação de imagem paralela (Show-o, MaskGIT) com a descodificação de imagem autoregressiva (Chameleon, Emu3) em velocidade e qualidade.
-- Nomear as três tarefas que o Show-o realiza num único ponto de controlo: T2I, VQA, pintura de imagem.
+- Nomear as quatro tarefas que o Show-o realiza num único ponto de controlo: geração de texto, VQA, T2I, pintura de imagem.
 - Escolha um cronograma de enmascaramento (cosinoso, linear, truncado) e racionalize o seu efeito sobre a qualidade da amostra.
 
 ## O problema
