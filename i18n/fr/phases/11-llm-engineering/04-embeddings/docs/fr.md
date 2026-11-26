@@ -101,19 +101,19 @@ Compte tenu de deux vecteurs intégrés, trois façons de mesurer leur similitud
 **Cosine similarity**Le cossin est l'angle entre deux vecteurs. Il va de -1 (opposé) à 1 (direction identique). Ignore la magnitude - une phrase de 10 mots et un document de 500 mots peuvent obtenir 1,0 si ils pointent dans la même direction. C'est la valeur par défaut pour 90% des cas d'utilisation.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**Le produit intérieur brut de deux vecteurs. Identique à la similitude cosine lorsque les vecteurs sont normalisés (longueur d'unité). Plus rapide à calculer.
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **Euclidean (L2) distance**: distance en ligne droite dans l'espace vectoriel. Plus petit = plus similaire. sensible aux différences de magnitude. Utilisez lorsque la position absolue dans l'espace est importante, pas seulement la direction.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 Quand utiliser lequel:
