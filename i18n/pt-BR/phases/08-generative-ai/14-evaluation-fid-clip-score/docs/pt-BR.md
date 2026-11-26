@@ -3,7 +3,7 @@
 > Cada quadro de classificação de modelos geracionais cita o FID, a pontuação CLIP e uma taxa de vitória de uma arena de preferência humana. Cada número tem um modo de falha que um pesquisador determinado pode jogar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 
@@ -27,7 +27,7 @@ Heusel et al. (2017). Passo:
 
 1. Extrair recursos Inception-v3 (2048-D) para N imagens reais e N geradas.
 2. Aplique um Gaussian a cada piscina: média de cálculo $\mu_r, \mu_g$e covariância $\Sigma_r, \Sigma_g$- Não .
-3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \operatorname{Tr}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$- Não .
+3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \mathop{\mathrm{Tr}}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$- Não .
 
 Interpretação: Distância de Fréchet entre dois Gaussianos multivariados no espaço de características.
 

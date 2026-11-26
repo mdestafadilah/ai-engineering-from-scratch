@@ -3,7 +3,7 @@
 > Um autoencoder simples comprime e reconstrui. Ele memorizou. Não gera. Adicione um truque  forçar o código para parecer Gaussian  e você obtém um amostragem. Esse truque único, a reparameterization de $z = \mu + \sigma \cdot \epsilon$, é por isso que cada modelo de imagem de difusão latente e de correspondência de fluxo que você usa em 2026 tem um VAE na entrada.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 
@@ -23,7 +23,7 @@ Em 2026 os VAEs raramente enviam independentemente  eles foram superados pela di
 
 **Autoencoder.** $z = \text{encoder}(x)$- Não .$\hat{x} = \text{decoder}(z)$, perda = $\lVert x - \hat{x} \rVert^2$- Espaço de código não estruturado.
 
-**VAE encoder.**As saídas de dois vetores: $\mu(x)$E ...$\log \sigma^2(x)$Estes definem$q(z \mid x) = \mathcal{N}(\mu, \operatorname{diag}(\sigma^2))$- Não .
+**VAE encoder.**As saídas de dois vetores: $\mu(x)$E ...$\log \sigma^2(x)$Estes definem$q(z \mid x) = \mathcal{N}(\mu, \mathop{\mathrm{diag}}(\sigma^2))$- Não .
 
 **Reparameterization trick.**Amostragem de $q(z \mid x)$Não é diferenciável. Reescrever a amostra como $z = \mu + \sigma \cdot \epsilon$onde$\epsilon \sim \mathcal{N}(0, I)$Agora .$z$é uma função determinista de $(\mu, \sigma)$+ um ruído não-parâmetro  gradientes fluem através `μ`E ...$\sigma$- Não .
 
@@ -99,7 +99,7 @@ def sample(dec, z_dim, rng):
 - **Posterior collapse.**- Dispositivos de termo KL$q(z \mid x) \to \mathcal{N}(0, I)$tão agressivamente que$z$Não tem informações sobre $x$- Correcção: β- anulação (iniciada $\beta=0$, rampa para 1), bits livres, ou saltar o KL em dimensões inativas.
 - **Blurry samples.**A probabilidade do decodificador gaussiano implica a reconstrução do MSE, que é Bayes-ótima para L2 (a média)  a média de um conjunto de dígitos plausíveis é um dígito confuso.
 - **β too large, too early.**Veja o colapso posterior.$\beta \approx 0.01$e a rampa.
-- **Latent dim too small.**16-D funciona para MNIST, 256-D para ImageNet 2562, 2048-D para ImageNet 10242. O VAE da Diffusão Estavel comprime 512×512×3 → 64×64×4 (32x fator de amostra descendente em área espacial, 32x em canais).
+- **Latent dim too small.**16-D funciona para MNIST, 256-D para ImageNet 2562, 2048-D para ImageNet 10242. VAE da Stable Diffusion comprime 512×512×3 → 64×64×4 (8x downsample por lado, 64x em área espacial; canais vão de 3 para 4, então cerca de 48x menos valores no geral).
 
 ## Usá-lo
 
