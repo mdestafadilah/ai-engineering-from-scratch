@@ -95,19 +95,19 @@ Dadas duas vetores, como você mede a semelhança?
 **Cosine similarity**O cosino do ângulo entre dois vetores varia de -1 (oposto) a 1 (identico).
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**Os vectores maiores obtêm pontuações mais altas. Úteis quando a magnitude transporta informações (documentos mais longos podem ser mais relevantes).
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **L2 (Euclidean) distance**A distância é igual a: distância de linha reta no espaço vetorial. Distância menor = mais semelhante.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 A semelhança cosínica é o padrão. trata documentos de diferentes comprimentos graciosamente porque normaliza em magnitude. Quando alguém diz "busca vetorial", quase sempre se refere à semelhança cosínica.
