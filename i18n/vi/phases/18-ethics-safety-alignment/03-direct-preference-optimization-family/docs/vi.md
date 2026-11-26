@@ -3,7 +3,7 @@
 > Rafailov et al. (2023) cho thấy tối ưu của RLHF có hình thức đóng về dữ liệu ưu tiên, vì vậy bạn có thể bỏ qua mô hình phần thưởng rõ ràng và tối ưu hóa chính sách trực tiếp. Sự hiểu biết đó đã sinh ra một gia đình  IPO, KTO, SimPO, ORPO, BPO  mỗi người sửa chữa một chế độ thất bại của DPO. Năm 2026, các thuật toán sắp xếp trực tiếp sẽ vận chuyển nhiều chuyến chạy sau đào tạo hơn PPO. Nhưng đường cong tối ưu hóa quá mức từ Bài học 2 vẫn áp dụng: DAA không thoát khỏi Goodhart, họ chỉ di chuyển đến nơi nó cắn.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 
@@ -53,7 +53,7 @@ Có thể sai gì?
 
 - Sự chênh lệch phần thưởng ngầm `beta * (log(pi/pi_ref)_w - log(pi/pi_ref)_l)`Một sự ưu tiên nhỏ có thể tạo ra một khoảng cách lớn tùy tiện.
 - Các ổ đĩa mất chọn và từ chối log-prob trong các hướng đối lập. nó có thể đẩy được chọn log-prob tuyệt đối xuống miễn là bị từ chối rơi nhanh hơn.
-- Tích thích ngoài phân phối (cặp hiếm hiếm so với cặp hiếm hiếm) tạo ra những phần thưởng ngầm tùy ý.
+- Các ưu tiên không phân phối (cặp đôi khi cả hai câu trả lời đều hiếm trong chính sách tham chiếu) tạo ra những phần thưởng ngầm tùy ý.
 
 ### IPO (Azar et al., 2024)
 
