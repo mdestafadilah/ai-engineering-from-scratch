@@ -3,7 +3,7 @@
 > بیشتر ژنراتورها حرکت ميکنن$z$به هر لایه در همان زمان. StyleGAN آن را به سمت جداگانه: نقشه اول$z$به یک واسطه$w$، پس از آن * تزریق *$w$این تغییر تنها فضا را از بین برد و چهره های عکاسی واقعی را برای هفت سال متوالی یک مشکل حل شده ساخت.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
@@ -26,7 +26,7 @@
 **AdaIN.**
 
 ```math
-\operatorname{AdaIN}(x, y) = y_{\text{scale}} \cdot \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x)} + y_{\text{bias}}
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 کجا$y_{\text{scale}}$و$y_{\text{bias}}$از پیش بینی های مرتبط با$w$. به طور معمول در هر نقشه ویژگی، سپس تغییر سبک. " سبک " در اینجا آمار درجه اول و دوم نقشه ویژگی است.

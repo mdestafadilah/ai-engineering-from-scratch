@@ -3,7 +3,7 @@
 > هر نمره ای که در هر مدل تولید شده است، FID، CLIP و نرخ پیروزی را از یک میدان ترجیح انسانی ذکر می کند. هر عدد دارای حالت شکست است که یک محقق تعیین کننده می تواند بازی کند. اگر شما حالت شکست را نمی دانید، نمی توانید از یک بازی پیشرفت واقعی را تشخیص دهید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 
@@ -27,7 +27,7 @@ Heusel et al. (2017).
 
 1. ویژگی های Inception-v3 (2048-D) را برای N تصاویر واقعی و N تولید کنید.
 2. يه گاسين رو به هر حوضچه ي حسابي بگيريم$\mu_r, \mu_g$و همتای$\Sigma_r, \Sigma_g$. .
-3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \operatorname{Tr}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$. .
+3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \mathop{\mathrm{Tr}}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$. .
 
 تفسیر: فاصله فرشیت بین دو گاسین چند متغیر در فضای ویژگی. پایینتر = توزیع های مشابه تر.
 
