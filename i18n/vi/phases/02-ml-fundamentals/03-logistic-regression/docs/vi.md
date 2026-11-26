@@ -3,7 +3,7 @@
 > Sự lùi lại hậu cần cong một đường thẳng vào một đường cong S để trả lời câu hỏi có hay không với xác suất.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -86,7 +86,7 @@ Tại sao điều này hiệu quả:
 - Khi nào $y=0$và $p$là gần 0: $\log(1) = 0$, do đó tổn thất gần 0 (đúng, chi phí thấp)
 - Khi nào $y=0$và $p$gần 1 .$\log(0)$tiếp cận vô hạn âm, do đó mất mát là rất lớn (sai, chi phí cao)
 
-Chức năng mất mát này là ngọc cho sự lùi hậu cần, đảm bảo một mức tối thiểu toàn cầu duy nhất.
+Chức năng mất mát này là ngọc để hồi quy hậu cần, vì vậy mỗi mức tối thiểu địa phương là mức tối thiểu toàn cầu và sự giảm gradient không thể bị mắc kẹt trong một dữ liệu xấu.
 
 ### Sự giảm dần về hậu cần
 
@@ -503,6 +503,7 @@ Việc thực hiện từ đầu của bạn tạo ra cùng ranh giới quyết 
 
 Bài học này mang lại:
 - `code/logistic_regression.py`- Lập ngược hậu cần từ đầu với các metrics
+- `code/main.rs`- cùng mã trong Rust, chỉ có STDlib.`rustc --edition 2021 code/main.rs && ./main`- Tôi không biết.
 
 ## Các bài tập
 

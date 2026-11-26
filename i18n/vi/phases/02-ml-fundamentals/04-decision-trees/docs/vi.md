@@ -3,7 +3,7 @@
 > Một cây quyết định chỉ là một biểu đồ lưu lượng, nhưng một khu rừng của chúng là một trong những công cụ mạnh nhất trong ML.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -104,7 +104,7 @@ Cách tiếp cận tham lam này không đảm bảo cây tối ưu trên toàn 
 
 ### Điều kiện dừng
 
-Không ngừng, cây phát triển cho đến khi mỗi lá sạch (một mẫu mỗi lá).
+Không có điều kiện dừng lại, cây phát triển cho đến khi mỗi lá là tinh khiết hoặc không có chia tách có thể tách các mẫu của nó, thường xuống đến một mẫu đơn lẻ cho mỗi lá.
 
 **Pre-pruning**ngăn chặn cây trước khi nó phát triển đầy đủ:
 - Độ sâu tối đa: dừng chia khi cây đạt độ sâu nhất định
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-Nhìn xem`code/trees.py`cho việc thực hiện đầy đủ với tất cả các phương pháp hỗ trợ.
+Nhìn xem`code/trees.py`cho việc thực hiện đầy đủ với tất cả các phương pháp hỗ trợ. `code/trees.ts`là một cổng TypeScript với các chức năng và demo tương tự.`npx tsx code/trees.ts`- Tôi không biết.
 
 ## Sử dụng nó
 
