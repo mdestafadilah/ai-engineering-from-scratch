@@ -1,9 +1,9 @@
 # توجه متغیرات  پنجره ای، فرسایش، تفاوت
 
-> توجه کامل یک دایره است. هر نماد هر نماد را می بیند، و حافظه قیمت را می پردازد. چهار نوع شکل دایره را خم می کنند و نیمی از هزینه را بازمی آورند.
+> توجه کامل یک دایره است. هر نماد هر نماد را می بیند، و حافظه قیمت را می پردازد. سه نوع شکل دایره را خم می کنند و نیمی از هزینه را بازمی آورند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -63,8 +63,8 @@ positions 0-7          positions 0-7, W=4
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d}) \\
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d}) \\
 \text{DiffAttn} &= (A_1 - \lambda \cdot A_2) V
 \end{aligned}
 ```
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## آن را بسازید
 
-ببین`code/main.py`ما یک مقارن ماسک علت را اجرا می کنیم که تمام، SWA، محلی+درسته و توجه فرقی را در یک سری بازی به هم نشان می دهد.
+ببین`code/main.py`، یا بندر رستش`code/main.rs`. براي اجرا کردن نسخه رست:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`ما یک مقارن ماسک علت را اجرا می کنیم که تمام، SWA، محلی+درسته و توجه فرقی را در یک سری بازی به هم نشان می دهد.
 
 ### مرحله ی اول: ماسک کامل علت (بزنس)
 
