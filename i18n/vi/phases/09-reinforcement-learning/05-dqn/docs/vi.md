@@ -3,7 +3,7 @@
 > 2013: Mnih đào tạo một mạng học Q trên các pixel nguyên liệu, đánh bại mọi đại lý RL cổ điển trên bảy trò chơi Atari. 2015: mở rộng đến 49 trò chơi, được xuất bản trên Nature, đã kích hoạt thời đại RL sâu. DQN là học Q cộng với ba thủ thuật làm cho việc gần gũi chức năng ổn định.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 
@@ -72,7 +72,7 @@ class ReplayBuffer:
         return rng.sample(self.buf, batch)
 ```
 
-~ 50.000 dung lượng cho Atari; 5.000 đủ cho môi trường đồ chơi của chúng tôi.
+~106 dung lượng cho Atari, như trong DQN ban đầu (nó thu thập 50.000 chuyển đổi trước khi bắt đầu học); 5.000 đủ cho môi trường đồ chơi của chúng tôi.
 
 ### Bước 2: một mạng Q nhỏ (MLP thủ công)
 

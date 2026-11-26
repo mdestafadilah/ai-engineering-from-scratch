@@ -3,7 +3,7 @@
 > Con người không thể viết một chức năng phần thưởng cho "đáp ứng trợ lý tốt", nhưng họ có thể so sánh hai phản ứng và chọn một tốt hơn. Đáp lại mô hình phần thưởng cho những so sánh đó, sau đó RL mô hình ngôn ngữ chống lại nó. Christiano 2017. InstructGPT 2022.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment), Phase 9 · 08 (PPO)
 **Time:** ~45 minutes
 
@@ -113,7 +113,7 @@ def rlhf_step(theta, ref, w, prompt, rng, eps=0.2, beta=0.1, lr=0.05):
 
 ### Bước 4: Kiểm tra KL
 
-Đường trung bình đường$\mathrm{KL}(\pi_\theta \Vert \pi_{\text{ref}})$Nếu nó trượt qua`~5-10`Chính sách đã trôi dạt xa khỏi $\pi_{\text{SFT}}$ thấp hơn $\beta$Đây là chẩn đoán hàng đầu trong RLHF thực.
+Đường trung bình đường$\mathrm{KL}(\pi_\theta \Vert \pi_{\text{ref}})$Nếu nó trượt qua`~5-10`(khi trả lời KL trong nats, tổng cộng trên token, đơn vị TRL ghi chép) chính sách đã trôi xa từ $\pi_{\text{SFT}}$: hoặc $\beta$là quá thấp (tăng nó để rút lại chính sách) hoặc phần thưởng hack bắt đầu. Đây là chẩn đoán hàng đầu trong RLHF thực.
 
 ### Bước 5: công thức sản xuất với TRL
 
