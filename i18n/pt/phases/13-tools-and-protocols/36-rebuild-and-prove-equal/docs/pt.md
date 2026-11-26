@@ -3,7 +3,7 @@
 > Passar os testes prova concordância com os testes, por isso a igualdade precisa de uma grade que atinja todas as bordas e bytes que correspondem após a mascaragem da realocação.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ As três provas que o campo usa são as três pernas que você pode construir. P
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Com o clang no caminho, a demonstração compila os dois pares de candidatos e executa 92 células para cada um.`unknown`- Não .
@@ -371,6 +372,9 @@ Com rea 6.5.0 e Ghidra 12.1.4 instaladas:
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 O primeiro .`analyze_function`Ghidra importa o objeto. Compare os novos IDs de evidência com a execução comprometida. Os mesmos bytes sob o mesmo perfil de análise dão os mesmos IDs, porque o id é um hash de conteúdo que exclui o caminho do arquivo.
@@ -389,6 +393,30 @@ Requisitos:
 
 O sucesso significa que o registro de prova enumera quatro funções, cada alegação carrega um ID de prova, e `grade_label`falha quando uma linha de rótulos difere.
 
+## Laboratório de graduação
+
+Cinco perguntas sobre os dispositivos desta lição.`code/lab_answers.json`Escrever números como números ou como cadeias hexáceas como `"0x40"`, e listas como listas JSON.
+
+1. `t1`: percent_change_model(3, 105) em x86_64.
+2. `t2`: percent_change_model(0, 5) em x86_64.
+3. `t3`: grade_model(100).
+4. `t4`: o número de células na input_grid().
+5. `t5`: o número de células da grade onde o modelo x86_64 se encontra em armadilhas.
+
+Verifique as suas respostas:
+
+```bash
+cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
+python3 code/lab.py
+npx tsx code/lab.ts
+```
+
+O verificador calcula cada valor esperado a partir de `code/main.py`- O que é que é?`PASS`- Não .`FAIL`ou `TODO`Para cada tarefa e uma pontuação, e sai de 0 apenas quando os cinco passarem. `python3 code/lab.py my-answers.json`Verifica outro ficheiro.`code/tests/test_lab.py`prova que o verificador aceita as respostas certas e rejeita as erradas.
+
+### Veja como corre.
+
+O [Inside a Decompiler](https://aiengineeringfromscratch.com/inside-a-decompiler)Mas, como é verdade, a máquina termina com um pseudocódio e arquivou como inferido: a página não o prova.
+
 ## Habilidade de saída
 
 Esta lição produz`outputs/skill-rebuild-and-prove-equal.md`. Utilize-o para transformar a evidência de função e a reconstrução de um candidato em uma prova de duas pernas e um registro de prova. A habilidade requer a listagem antes do pseudocódio, uma grade com cada classe de perigo, mascagem de realocação mais uma verificação constante e um agregado fechado em falha.
@@ -400,6 +428,7 @@ Execute a demonstração e a suite de testes:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
