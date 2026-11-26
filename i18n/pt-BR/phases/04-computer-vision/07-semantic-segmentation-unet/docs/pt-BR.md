@@ -90,7 +90,7 @@ Para uma primeira U-Net, bilinear é mais seguro.
 Para segmentação semântica com $C$classes, o modelo de saída é `(N, C, H, W)`O alvo é o`(N, H, W)`A entropia cruzada é idêntica ao caso de classificação, apenas aplicada em cada posição espacial:
 
 ```math
-\text{Loss} = \operatorname*{mean}_{(n, h, w)} \left[ -\log\left( \operatorname{softmax}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy`A PyTorch lida com esta forma de forma nativa.
@@ -103,7 +103,7 @@ A perda de dados resolve isto, otimizando diretamente a sobreposição entre a m
 
 ```math
 \begin{aligned}
-\operatorname{Dice}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
 \text{Dice}_{\text{loss}} &= 1 - \text{Dice}
 \end{aligned}
 ```
@@ -129,7 +129,7 @@ A média da UO oculta uma classe a 15% quando outras nove são a 85%.
 
 ### Comércio de resolução de entrada
 
-O codificador da U-Net reduz a resolução em quatro vezes, de modo que a entrada deve ser divisível por 16.`H * W * C_max`, e em 1024x1024 com 1024 canais de garganta, a passagem avançada já usa gigabytes de VRAM.
+O codificador da U-Net reduz a resolução em quatro vezes, de modo que as conexões de skip se alinham exatamente apenas quando a entrada é divisível por 16. Outros tamanhos precisam de engarrafamento ou o redimensionamento no bloco superior (passo 2).`H * W * C_max`, e em 1024x1024 com 1024 canais de garganta, a passagem avançada já usa gigabytes de VRAM.
 
 Dois métodos de solução padrão:
 1. Tela de entrada processar 256x256 de telhas com sobreposição e costura.
