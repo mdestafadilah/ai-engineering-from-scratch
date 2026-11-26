@@ -3,7 +3,7 @@
 > Sự chú ý Softmax phân tán một số lượng nhỏ xác suất trên mỗi token không phù hợp. Hơn 100k token mà tiếng ồn cộng lên và nhấn chìm tín hiệu. Differential Transformer (Ye et al., ICLR 2025) sửa chữa nó bằng cách tính toán sự chú ý như là sự khác biệt của hai softmax, trừ được sàn tiếng ồn chung. DIFF V2 (Microsoft, tháng 1 năm 2026) là bản viết lại sản xuất: phù hợp với độ trễ giải mã với Transformer dòng cơ sở, không có lõi tùy chỉnh, tương thích với FlashAttention. Bài học này là từ đầu đến cuối V1, với một trò chơi thực hiện của hoạt động khác biệt bạn có thể chạy trong stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 
@@ -16,7 +16,7 @@
 
 ## Vấn đề
 
-Sự chú ý softmax tiêu chuẩn có tính chất toán học biến thành một cơn đau đầu hoạt động trên quy mô.`q`, trọng lượng chú ý là `softmax(qK^T / sqrt(d))`. Softmax không bao giờ có thể tạo ra những con số không chính xác  mỗi token không phù hợp có một số khối lượng tích cực. khối lượng dư thừa đó là tiếng ồn, và nó cân bằng với chiều dài ngữ cảnh. Tại các token 128k, ngay cả khi mỗi token không phù hợp chỉ có 0,001% xác suất, 127.999 trong số chúng kết hợp đóng góp khoảng 12% tổng cộng. Mô hình phải học cách định tuyến xung quanh một tầng tiếng ồn phát triển với ngữ cảnh.
+Sự chú ý softmax tiêu chuẩn có tính chất toán học biến thành một cơn đau đầu hoạt động trên quy mô.`q`, trọng lượng chú ý là `softmax(qK^T / sqrt(d))`Softmax không bao giờ có thể tạo ra những con số không chính xác: mỗi token không phù hợp nhận được một số khối lượng tích cực. khối lượng dư thừa đó là tiếng ồn, và nó cân bằng với chiều dài ngữ cảnh. Ở các token 128k, ngay cả khi mỗi token không phù hợp chỉ nhận được 0.0001% xác suất, 127.999 trong số chúng kết hợp đóng góp khoảng 13% tổng cộng. Mô hình phải học cách định tuyến xung quanh một tầng tiếng ồn phát triển với ngữ cảnh.
 
 Về cơ bản, điều này xuất hiện như sự can thiệp của đầu chú ý: các trích dẫn ảo giác trong RAG trong bối cảnh dài, thất bại trong giữa trong các nhiệm vụ lấy lại 100k token, và sự suy giảm độ chính xác tinh tế trên các tiêu chuẩn kim cương trong đống cỏ sau 32k. Bức giấy biến đổi khác biệt (arXiv:2410.05258, ICLR 2025) đo khoảng cách: DIFF Transformers đạt độ bối rối thấp hơn, độ chính xác ngữ cảnh dài cao hơn và ít ảo giác hơn so với các đường cơ sở cùng kích thước.
 
@@ -42,15 +42,15 @@ Chia các dự đoán Q và K của mỗi đầu thành hai: $Q = (Q_1, Q_2)$và
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d})
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d})
 \end{aligned}
 ```
 
 Tạo ra:
 
 ```math
-\operatorname{DiffAttn} = (A_1 - \lambda \cdot A_2) V
+\mathop{\mathrm{DiffAttn}} = (A_1 - \lambda \cdot A_2) V
 ```
 
 Việc trừ bỏ bất kỳ phân phối tiếng ồn nào mà hai bản đồ chia sẻ. Nếu cả hai bản đồ có trọng lượng tương tự trên các token không liên quan 127k (mà họ sẽ, khi khởi đầu ngẫu nhiên), thì chúng sẽ hủy bỏ. tín hiệu  trọng lượng đỉnh trên vài token thực sự liên quan  chỉ hủy bỏ nếu nó xuất hiện trong cả hai bản đồ với cùng một cường độ, điều mà nó sẽ không làm khi mô hình được đào tạo.

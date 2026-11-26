@@ -3,7 +3,7 @@
 > Giai đoạn 7 · Bài học 16 chứng minh toán học: quy tắc từ chối Leviathan bảo tồn phân phối xác minh chính xác. Bài học này là quan điểm tập hợp đào tạo về việc giải mã đầu cơ sản xuất năm 2026. EAGLE-3 biến mô hình dự thảo từ một ước tính rẻ thành một mạng lưới nhỏ được xây dựng riêng được đào tạo trên các trạng thái ẩn của người xác minh, sau đó thêm một vòng kiểm tra thời gian đào tạo phù hợp với phân phối tàu và suy luận của nó. Kết quả: tăng tốc từ 3x đến 6.5x, chấp nhận tỷ lệ trên 0,9 trên mỗi token trên chat, không có sự thỏa hiệp phân phối. Mỗi đống suy luận sản xuất vào năm 2026 đều gửi theo mặc định.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 16 (speculative decoding math), Phase 10 · 12 (inference optimization)
 **Time:** ~75 minutes
 
@@ -70,6 +70,8 @@ Truyển chứng mở rộng cache KV của người xác minh bằng `N`Nếu t
 | EAGLE-2 | EAGLE-1 + dynamic draft tree | 0.80-0.88 | 3-4× | ~60B tokens |
 | EAGLE-3 | Multi-layer feature fusion + TTT | 0.88-0.92 | 3.5-6.5× | ~60-200B tokens |
 | Lookahead | No draft (Jacobi iteration) | N/A | 1.3-1.6× | None |
+
+- `α`Cột là tỷ lệ chấp nhận mỗi token dọc theo con đường được chấp nhận, trên các tiêu chuẩn trò chuyện, với một bản thảo được đào tạo dựa trên dữ liệu trò chuyện phù hợp. Đó là băng thông trên. Giai đoạn 10 · 25 trích dẫn 0,82 cho EAGLE-3 từ một thiết lập khác, và Giai đoạn 17 · 05 lên kế hoạch triển khai sản xuất với 0,6 đến 0,8 trên trò chuyện chung.`α`trên giao thông của riêng bạn trước khi bạn chọn `N`- Tôi không biết.
 
 Trong sản xuất năm 2026, vLLM và SGLang mặc định là EAGLE-3 khi có sẵn, EAGLE-2 nếu không. TensorRT-LLM có con đường Medusa nhanh nhất cho các mô hình công cộng Meta và NVIDIA. llama.cpp cung cấp vanilla draft cho việc triển khai CPU.
 
