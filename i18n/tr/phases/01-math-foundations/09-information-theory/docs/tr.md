@@ -3,7 +3,7 @@
 > Bilgi teorisi sürpriz ölçümleri. Kayıp fonksiyonları buna dayanıyor.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 
@@ -202,7 +202,7 @@ I(X;Y) &= H(X) - H(X \mid Y) \\
 2. MI puanı ile sıralama özellikleri.
 3. Yukarıdakiları tut .$k$Özellikler.
 
-Bu özellik ve hedef arasındaki herhangi bir ilişki için çalışır - doğrusal, doğrusal olmayan, tek sesli veya değil. Korrelasyon sadece doğrusal ilişkileri yakalar. MI her şeyi yakalar.
+Bu özellik ve hedef arasındaki herhangi bir ilişki için çalışır - doğrusal, doğrusal olmayan, monoton veya değil. Pearson korelasyonu sadece doğrusal ilişkileri yakalar. MI herhangi bir bağımlılığı yakalar, ancak sonlu verilerle tahminine yeterli örnekler ve mantıklı bir binman gerekir.
 
 | Method | Detects | Computational cost | Handles categorical? |
 |--------|---------|-------------------|---------------------|
@@ -460,6 +460,16 @@ Neyi sıfırdan inşa ettin ?`torch.nn.CrossEntropyLoss()`Şimdi eğitim sıras�
 3. KL farklılığının simetrik olmadığını göster.$P$ve $Q$ve hesaplama.$D_{KL}(P \Vert Q)$ve $D_{KL}(Q \Vert P)$Neden farklı olduklarını açıkla.
 
 4. Bir dizi belirti tahmininin karmaşıklığını hesaplayan bir işlev oluşturun. (true_token_index, predicted_logits) çiftlerinin bir listesini vererek, sıradanın karmaşıklığını geri gönderin.
+
+### İpuçlar
+
+**Exercise 1.**Arama .`entropy`26 eşit olasılık ile sonuçlandırılmalıdır.$\log_2 26 \approx 4.70$Gerçek harf frekansları birer gerektirmez, bu yüzden entropi daha düşük olmalı.
+
+**Exercise 2.**Hesaplama`softmax`O zaman $-\ln$1'de olasılık oranı ile karşılaştırın.`cross_entropy_loss(1, logits)`; her ikisi de 3.06'ya yakın olmalıdır. Kayıp sadece 1. sınıf için logit diğer iki sınıftan çok daha büyük olduğunda 0'ya yaklaşır.
+
+**Exercise 3.**Örneğin farklı şekillerde iki küçük dağılım kullanın $P = [0.9, 0.1]$ve $Q = [0.5, 0.5]$, ve aramak`kl_divergence`İki değer farklı olmalıdır, çünkü her yön log oranını farklı bir dağılımla ağırlaştırır.
+
+**Exercise 4.**Her çift için hesaplayın.`cross_entropy_loss(true_token_index, predicted_logits)`, ortalamayı al ve onu `perplexity`- Üniforma kayıtlarına bak .$V$Token: karmaşıklık $V$- Evet .
 
 ## Anahtar Terimler
 

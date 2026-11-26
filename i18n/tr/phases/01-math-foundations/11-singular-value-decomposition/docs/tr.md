@@ -55,7 +55,7 @@ Matris için $A$şekli ile$m \times n$- ...
 & \quad \Sigma \text{ is } m \times n, \text{ diagonal (singular values on the diagonal)} \\
 & \quad V \text{ is } n \times n, \text{ orthogonal } (V^T V = I) \\[6pt]
 & \text{The singular values } \sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > 0 \\
-& \text{where } r = \operatorname{rank}(A)
+& \text{where } r = \mathop{\mathrm{rank}}(A)
 \end{aligned}
 ```
 
@@ -147,7 +147,7 @@ Eckart-Young-Mirsky teoremi , en iyi$\text{rank-}k$$A$(Frobenius ve spektral nor
 & \quad \Sigma_k \text{ is } k \times k \quad \text{(top-left } k \times k \text{ block of } \Sigma\text{)} \\
 & \quad V_k \text{ is } n \times k \quad \text{(first } k \text{ columns of } V\text{)} \\[6pt]
 & \text{Approximation error} = \sigma_{k+1} \quad \text{(in spectral norm)} \\
-& \phantom{\text{Approximation error}} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
+& \text{Approximation error} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
 \end{aligned}
 ```
 
@@ -519,6 +519,18 @@ Bu ders şunları ortaya çıkarır:
 4. Her konu 5 ilişkili terimlere sahiptir. Ses ekleyin. SVD uygulayın ve üst 3 tek kelime değerinin diğerlerinden çok daha büyük olduğunu doğrulayın. 3 boyutlu gizli alanı belgeleri projelendir ve aynı konu kümesinden gelen belgeleri birlikte kontrol edin.
 
 5. Temiz bir düşük sıralama matrisi (seviye 3, boyut 50x40) oluşturun ve farklı seviyelerde Gaussian gürültüsü ekleyin ($\sigma$= 0,1, 0,5, 1,0,2.0) Her gürültü seviyesine göre, en uygun kesim seviyesini tarayarak bul$k$1 ila 40 arasında ve temiz matris karşısında yeniden yapılandırma hatasını ölçmek.$k$gürültü seviyesiyle ilgili değişiklikler.
+
+### İpuçlar
+
+**Exercise 1.**Hesaplama$A^T A$, kendi değerlerini ve kendi vektörlerini elde ederek `np.linalg.eigh`Tek değerler kendi değerlerin kare köküdür.$U \Sigma V^T$Yeniden inşaat$A$ve hatayı  ile karşılaştır`svd_from_scratch`ve `np.linalg.svd`- Evet .
+
+**Exercise 2.**Arama .`truncated_svd`Her bir sıra için, resmini yeniden inşa edin.`reconstruct`ve kullanmak`compression_ratio(m, n, k)`Sayfa büyüdükçe göreceli hatası düşmelidir ve açık bloklar görmediğiniz ilk sıra cevap olacaktır.
+
+**Exercise 3.**Kayıp hücreleri işaretleyin, sıradaki ortalama ile doldurun, sonra 3 seviyesinin yaklaşımını yeniden oluşturun `truncated_svd`ve `reconstruct`. Sonra sonucu ölçün: derecelendirme aralığı dışında tahminleri sayın ve bilinen bir hücrede en büyük değişimi basın. 3 sıra yaklaşım hiçbir özelliği garanti etmez, bu nedenle geçerli derecelendirme gerekirse tahminleri aralığına ayırın.
+
+**Exercise 4.**Her konuyu yüksek sayılarla 5 kelimeyle bir blok verin, sonra küçük gürültü ekleyin. Tek kelime değerlerini basın: ilk 3'ün 4'üncüsünden çok daha büyük olması gerekir.
+
+**Exercise 5.**Temiz matrisi 50x3 ve 3x40 rastgele matrisin ürünü olarak yapın, sonra her biri için gürültü ekleyin $\sigma$Her biri için .$k$, sıraları karşılaştır .$k$Temiz matrisle yeniden inşa etmek; en iyisini bekle $k$Düşük gürültü için 3'e yakın, yüksek gürültü için daha küçük.
 
 ## Anahtar Terimler
 

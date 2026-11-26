@@ -53,7 +53,7 @@ Step 10000: Expected distance from origin ~ 100 (sqrt(10000))
 
 **In 2D**, yürüyüş yukarı, aşağı, sola veya sağa doğru aynı olasılıkla hareket eder.$\sqrt{n}$Skalalama, kökenden uzaklıkta geçer.
 
-**Why $\sqrt{n}$?**Her adım aynı olasılıkla +1 veya -1'dir.$n$Adımlar, pozisyon $S_n = X_1 + X_2 + \cdots + X_n$her biri$X_i$- Evet .$\pm 1$. Her adımın farkı 1 ve adımlar bağımsızdır, bu yüzden $\operatorname{Var}(S_n) = n$. Standart sapma = $\sqrt{n}$Merkez sınır teoremi ile,$S_n / \sqrt{n}$standart normal bir dağılım ile birleşti.
+**Why $\sqrt{n}$?**Her adım aynı olasılıkla +1 veya -1'dir.$n$Adımlar, pozisyon $S_n = X_1 + X_2 + \cdots + X_n$her biri$X_i$- Evet .$\pm 1$. Her adımın farkı 1 ve adımlar bağımsızdır, bu yüzden $\mathop{\mathrm{Var}}(S_n) = n$. Standart sapma = $\sqrt{n}$Merkez sınır teoremi ile,$S_n / \sqrt{n}$standart normal bir dağılım ile birleşti.
 
 Bu ...$\sqrt{n}$Skalalama ML'de her yerde görünür. SGD gürültü ölçekleri 1/sqrt(batch_size olarak yerleştirilmiştir.$\sqrt{d}$- Karek kök bağımsız rastgele eklemlerin imzası.
 
@@ -121,7 +121,7 @@ ML'de karşılaştığınız zincirlerin çoğu her iki şartı da karşılar.
 
 **Absorbing states.**Bir devlet içine girdiğin zaman asla çıkmazsan, onu içine alıyorsun.$P[i][i] = 1$Markov zincirlerini terminal durumlarla modellemenin içine alıyor. Sonlanan bir oyun, çırpınan bir müşteri, metin sonundaki bir token'e çarpan bir token dizisi.
 
-**Mixing time.**Düzgün dağılım zincirinin "yaklaşması" için kaç adım var? Formal olarak, düzgünlüğün toplam değişim mesafesine kadar adım sayısı bir eşiğin altında düşer.$P$(1 eksi ikinci en büyük öz değeri) karıştırma süresini kontrol eder.
+**Mixing time.**Düzgün dağılım zincirinin "yaklaşması" için kaç adım var? Formal olarak, sabitliğin toplam değişim mesafesine kadar adım sayısı bir eşiğin altında düşer.$P$(1 eksi öz değerden başka en büyük öz değer büyüklüğü 1) karıştırma zamanını kontrol eder.
 
 ### Dil Modelleri ile Bağlantı
 
@@ -436,6 +436,18 @@ Tüm bu bağlantıların anahtar anlayışı: Stochastic süreçler sadece teori
 4. **Compare Langevin dynamics at different temperatures.**İki tane kuyu potansiyelinden örnek$U(x) = (x^2 - 1)^2$Düşük sıcaklıkta örnekler bir kuyunun içinde toplanır. Yüksek sıcaklıkta, her iki kuyunun arasında karışan kritik sıcaklığı bulurlar.
 
 5. **Implement the forward diffusion process.**1 boyutlu bir sinyalle başlayın (örneğin sinüs dalgası). Sıcak bir gürültü programı ile 100 adımdan fazla gürültü ekleyin. Sinyalın saf gürültüye nasıl düştüğünü gösterin. Sonra süreci tersine çeviren basit bir denoizer uygulayın (hətta tahmin edilen gürültüyü sadece çıkarırsa dahi saf bir şey).
+
+### İpuçlar
+
+**Exercise 1.**Arama .`random_walk_1d(10000, seed=i)`1000 tohum için ve her son pozisyonunu tutun. ortalamanın 0'ya yakın olup olmadığını kontrol edin, standart sapma 100'e yakın olup olmadığını ve son pozisyonların yaklaşık% 68'inin -100 ile 100 arasında olduğunu kontrol edin.
+
+**Exercise 2.**Her kelime çiftini sayın, sonra her satırı toplamına bölün, böylece her satır 1'e kadar eklenir. Matrisi `MarkovChain(transition_matrix, state_names)`Ve aramak .`simulate`Çıkışınızdaki her kelime çiftinin de korpusda oluştuğunu kontrol edin.
+
+**Exercise 3.**Daha kötü bir noktayı olasılık ile kabul et .$\exp(-\Delta / T)$ve kat kat .$T$Her adımda 0.99 gibi bir faktörle. En az bildiğiniz bir fonksiyon üzerinde test edin ve cevaplarınızı ince bir şebekede arama ile kontrol edin.
+
+**Exercise 4.**- Değişiklik .$4x(x^2 - 1)$, o yüzden bunu `langevin_dynamics(grad_U, x0, dt, temperature, n_steps)`- Sınırın altında .$x = 0$1 yüksekliği var, bu yüzden işaretini sayın.$x$Temperatürlerin değişmesi için 0,05'den 1'e kadar ve sayının hızla yükselmeye başladığı sıcaklık için bak.
+
+**Exercise 5.**Arama .`diffusion_forward(signal, 100)`ve hesaplama.$\bar{\alpha}$Son aşamada $(1 - \beta_t)$- Eğer ...$\bar{\alpha}$0'dan uzakta, sinyal henüz saf gürültü değil, bu yüzden yükselt.`beta_end`Önce denoiserinizi gerçek gürültü ile test edin .$(x_t - \sqrt{1 - \bar{\alpha}_t} \epsilon)/\sqrt{\bar{\alpha}_t}$Orijinal sinyalini tam olarak geri vermeli.
 
 ## Anahtar Terimler
 

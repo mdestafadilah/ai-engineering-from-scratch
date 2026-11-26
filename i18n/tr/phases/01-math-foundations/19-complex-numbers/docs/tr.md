@@ -3,7 +3,7 @@
 > -1'in kare kökü hayal edici değil. Dönüşümlerin, frekansların ve sinyal işleme yarısının anahtarıdır.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -105,7 +105,7 @@ Düzende herhangi bir nokta, kökeninden uzaklığı ve pozitif gerçek eksiden 
 \begin{aligned}
 z &= r (\cos\theta + i \sin\theta) \\[4pt]
 \text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
-\theta &= \operatorname{atan2}(b, a) \quad \text{(phase, or argument)}
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
 \end{aligned}
 ```
 
@@ -250,7 +250,7 @@ Günah ve cos çiftleri, karmaşık eksponensallerin gerçek ve hayalsel parçal
 | Multiplication | $(ac-bd) + (ad+bc)i$ | Rotate and scale |
 | Conjugate | $a - bi$ | Reflect over real axis |
 | Magnitude | $\sqrt{a^2 + b^2}$ | Distance from origin |
-| Phase | $\operatorname{atan2}(b, a)$ | Angle from positive real axis |
+| Phase | $\mathop{\mathrm{atan2}}(b, a)$ | Angle from positive real axis |
 | Division | multiply by conjugate | Reverse rotation and rescale |
 | Power | $r^n e^{in\theta}$ | Rotate $n$ times, scale by $r^n$ |
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## Gönder
 
-Çık .`code/complex_numbers.py`üretmek için`outputs/skill-complex-arithmetic.md`- Evet .
+Çık .`code/complex_numbers.py`veya `npx tsx code/complex_numbers.ts`üretmek için`outputs/skill-complex-arithmetic.md`- Evet .
 
 ## Egzersizler
 
@@ -440,6 +440,18 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 5. **Rotation matrix equivalence.**10 rastgele açı ve 10 rastgele nokta için, karmaşık çarpımın 2x2 döngü matrisinde matris-vektor çarpımı ile aynı sonucu verdiğini kontrol edin.
 
+### İpuçlar
+
+**Exercise 1.**Ürünü genişletmek için $i^2 = -1$, sonra üst ve altını eşleşik ile çarparak bölünür .$1 + 3i$Ürünü kontrol edin .`Complex(2, 3) * Complex(4, -1)`: onun `magnitude()`İki büyüklüğün ürünü olmalıdır ve onun `phase()`iki aşamanın toplamına eşit olmalıdır.
+
+**Exercise 2.**İşe devam et .`euler(math.pi / 6)`Bu sayede, bu değerin en yüksek seviyesinin 1'de kalıp en yüksek seviyesinin 30 derece büyüdüğünü kontrol etmeniz gerekir.
+
+**Exercise 3.**Zaman noktalarını  ile yazın .$t = n/32$Ve aramak .`dft`Sadece 0 ila 15 arası kutulara bak, çünkü üst yarısı aynalı bir görüntü.$k$Amplitude sinüs için$A$- Evet .$AN/2$Bin 3'de 16'nin ve Bin 7'de 8'in olacağını bekle.
+
+**Exercise 4.**Arama .`roots_of_unity(8)`Ve kökleri ekleyin: toplamın büyüklüğü 0'ya yakın olmalıdır. Her kökü önceki kökle bölün ve her sonuç eşit olup olmadığını kontrol edin.`euler(2 * math.pi / 8)`- Evet .
+
+**Exercise 5.**Dönüş matrisi [[cos t, -sin t], [sin t, cos t]]. Her açı ve nokta için hesaplayın `euler(t) * Complex(x, y)`ve matris ürünü, sonra en büyük mutlak farkı kaydet.$10^{-15}$- Evet .
+
 ## Anahtar Terimler
 
 | Term | What it means |
@@ -448,7 +460,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 | Imaginary unit | The number $i$, defined by $i^2 = -1$. Not imaginary in the philosophical sense -- it is a rotation operator |
 | Complex plane | The 2D plane where the x-axis is real and the y-axis is imaginary. Also called the Argand plane |
 | Magnitude (modulus) | The distance from the origin: $\sqrt{a^2 + b^2}$. Written as $\lvert z \rvert$ |
-| Phase (argument) | The angle from the positive real axis: $\operatorname{atan2}(b, a)$. Written as $\arg(z)$ |
+| Phase (argument) | The angle from the positive real axis: $\mathop{\mathrm{atan2}}(b, a)$. Written as $\arg(z)$ |
 | Conjugate | The mirror image across the real axis: conjugate of $a + bi$ is $a - bi$ |
 | Polar form | Expressing $z$ as $r e^{i\theta}$ instead of $a + bi$. Makes multiplication easy |
 | Euler's formula | $e^{i\theta} = \cos\theta + i \sin\theta$. Connects exponentials to trigonometry |

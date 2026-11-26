@@ -3,7 +3,7 @@
 > Çözüm$Ax = b$Matematikte hâlâ sinir ağınızı çalıştıran en eski problem.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -219,7 +219,7 @@ Cholesky, LU'dan iki kat daha hızlı ve depolama alanının yarısını gerekti
 - En az bir konveks fonksiyonun Hessian'ı simetrik pozitif kesin.
 - $A^T A$her zaman simetrik pozitif yarı belirlenmiş.
 
-Gaussian süreçlerinde çekirdek matrisini faktörleştiriyorsunuz.$K$Cholesky ile konuşup sonra çöz.$K \alpha = y$Cholesky faktörü ayrıca sınırlı olasılığın log-determinansını verir:$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$- Evet .
+Gaussian süreçlerinde çekirdek matrisini faktörleştiriyorsunuz.$K$Cholesky ile konuşup sonra çöz.$K \alpha = y$Cholesky faktörü ayrıca sınırlı olasılığın log-determinansını verir:$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$- Evet .
 
 ### En az kare: Ax = b'nin tam çözümü olmadığı zaman
 
@@ -385,7 +385,7 @@ Bu dersdeki her yöntem üretim ML'de yer almaktadır:
 
 **Ridge regression.**Ekler $\lambda I$- ...$X^T X$- Düzenlenmiş sistem .$(X^T X + \lambda I) w = X^T y$Her zaman Cholesky'den çözülebilir çünkü$X^T X + \lambda I$simetrik pozitif olarak tanımlanmıştır.$\lambda > 0$- Evet .
 
-**Gaussian processes.**Önceden tahmin ortalaması çözülmeyi gerektirir .$K \alpha = y$nerede$K$Bu da çekirdek matrisidir.$K$Bu, standart yaklaşımdır.$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$- Evet .
+**Gaussian processes.**Önceden tahmin ortalaması çözülmeyi gerektirir .$K \alpha = y$nerede$K$Bu da çekirdek matrisidir.$K$Bu, standart yaklaşımdır.$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$- Evet .
 
 **Neural network initialization.**Ortogonal başlangıç, derin ağlarda sinyal çökmesini önlerken sütunları ortonomik olan ağırlık matrislerini oluşturmak için QR parçalanmasını kullanır.
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 Bu ders şunları ortaya çıkarır:
 - `code/linear_systems.py`Gaussian ortadan kaldırma, LU parçalanma, Cholesky parçalanma, en az kare ve kıyıs geri dönüşü baştan başlayan uygulamalar içerir.
+- `code/linear_systems.ts`Bu, küçük sıfırdan referans çözücülerine karşı karşılaştırılır, çünkü TypeScript'in NumPy'si yoktur.
 - Normal denklemlerin ve sklearn'ın Hattı Gerileme'nin aynı ağırlıkları ürettiğini gösteren bir çalışma göstergesi
 
 ## Egzersizler
@@ -559,6 +560,18 @@ Bu ders şunları ortaya çıkarır:
 4. 100x100 rastgele simetrik pozitif belirlenmiş matris için konjugat gradient algoritmasını uygulayın. 1e-8 toleransına doğru kaç iterasyon gerekiyor.$n$İterasyonlar.
 
 5. Cholesky çözücü ile LU çözücü ile zaman ayır .`np.linalg.solve`10'ın, 50'nin, 200'nin, 500'ün ölçüsündeki simetrik pozitif belirlenmiş matrisler üzerinde.
+
+### İpuçlar
+
+**Exercise 1.**Arama .`gaussian_elimination(A, b)`O zaman ...`lu_decompose(A)`Ardından `lu_solve(P, L, U, b)`O zaman ...`np.linalg.solve(A, b)`Her cevabı kontrol et .`np.allclose(A @ x, b)`ve üç cevabı karşılaştır `np.allclose`- Evet .
+
+**Exercise 2.**Kullanım`least_squares_normal`Normal denklemler için ve diğer yöntemler için üç NumPy işlevi için.`w_true`- Ben de .`condition_number(X.T @ X)`- Evet .`condition_number(X)`: ilk ikinci kare, normal denklemler en çok hassaslığı kaybeder.
+
+**Exercise 3.**Yukarıdaki bir durum numarasını bekleyin .$10^{9}$- Çözmek için `np.linalg.solve`ve ile`ridge_regression(A, b, 0.01)`, sonra karşılaştır `np.linalg.norm(x)`Her iki kalıntı da küçük olabilir, ancak düzenlenmeden çözünürlük genellikle çok büyük girişlere sahiptir.
+
+**Exercise 4.**Simetrik pozitif kesin matris yapın `B @ B.T + n * np.eye(n)`, böylece her öz değeri pozitif.`conjugate_gradient`, sonra son kalan normunun 1e-8'den aşağı olup olmadığını ve sayının en fazla 100 olduğunu kontrol et.
+
+**Exercise 5.**Aynı şeyi kullan `B @ B.T + n * np.eye(n)`Üç çözücü için matrisler ve zaman her çözücü ile `time.perf_counter`Cholesky'nin LU'nun yaklaşık yarısını kullanması gerekiyor, bu yüzden oran daha büyük boyutlarda en net olur.
 
 ## Anahtar Terimler
 

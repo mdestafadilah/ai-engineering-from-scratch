@@ -3,7 +3,7 @@
 > Yüksek boyutlu verilerin yapısı vardır. Doğru açıdan bakarak bulabilirsiniz.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -198,6 +198,13 @@ pca-axes
 
 ## Yapın
 
+TypeScript portu çalıştırıldı `code/dim_reduction.ts`MNIST demoları scikit öğrenmesi gerekiyor, bu yüzden sadece Python'da çalışıyorlar.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
+
 ### Adım 1: PCA sıfırdan
 
 ```python
@@ -354,6 +361,14 @@ Bu ders şunları ortaya çıkarır:
 2. t-SNE'yi aynı MNIST alt kümesi üzerinde 5, 30 ve 100'lik karmaşıklık değerleriyle çalıştırın. Çıktılık değişimi nasıl açıklayın.
 
 3. Sadece 5'i bilgilendirici olan 50 özellikten oluşan bir veri kümesi alın (bir tane `sklearn.datasets.make_classification`). PCA uygulayın ve açıklanan varyansa eğri verilerin aslında beş boyutlu olduğunu doğru bir şekilde belirlediğini kontrol edin.
+
+### İpuçlar
+
+**Exercise 1.**Oku `inverse_transform`- ... ...`PCA`sınıfı ve her bir bileşen sayısına uygun bir model.`reconstruction_error`10, 50 ve 200 bileşen için; hata bileşen sayısı arttıkça azalmalıdır.
+
+**Exercise 2.**Uygunluk`sklearn.manifold.TSNE`Aynı alt kümede üç kez, sadece değişen `perplexity`, ve aynı şeyi kullan `random_state`Düşük karmaşıklık birkaç komşuya bakıyor, bu yüzden küçük sıkı grupları bekleyin; yüksek karmaşıklık daha fazla komşuya bakıyor, bu yüzden daha büyük, daha düzgün grupları bekleyin.
+
+**Exercise 3.**Arama .`make_classification(n_features=50, n_informative=5, n_redundant=45)`, uygun`PCA`Bu nedenle, eğrilik 5 bileşende neredeyse 1.0'a ulaşır.`n_redundant=0`: diğer 45 özellik bağımsız gürültüdür ve eğri düzleşmez.
 
 ## Anahtar Terimler
 

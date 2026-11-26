@@ -113,7 +113,7 @@ Bir matrisin sırası = doğrusal bağımsız sütun sayısı = doğrusal bağı
 
 | Situation | Rank | What it means for ML |
 |-----------|------|---------------------|
-| Full rank $(\text{rank} = \min(m, n))$ | Maximum possible | Unique least-squares solution exists. Model is well-conditioned. |
+| Full rank $(\text{rank} = \min(m, n))$ | Maximum possible | With at least as many rows as columns (full column rank), the least-squares solution is unique. With fewer rows than columns, infinitely many solutions fit exactly. |
 | Rank deficient $(\text{rank} < \min(m, n))$ | Below maximum | Features are redundant. Infinitely many weight solutions. Regularization needed. |
 | Rank 1 | 1 | Every column is a scaled copy of one vector. All data lies on a line. |
 | Near rank-deficient (small singular values) | Numerically low | Matrix is ill-conditioned. Tiny input noise causes large output changes. Use SVD truncation or ridge regression. |
@@ -123,10 +123,10 @@ Bir matrisin sırası = doğrusal bağımsız sütun sayısı = doğrusal bağı
 Proje vectörü **a**vektörüne**b****a****b**- ...
 
 ```math
-\operatorname{proj}_b(a) = \frac{a \cdot b}{b \cdot b} \, b
+\mathop{\mathrm{proj}}_b(a) = \frac{a \cdot b}{b \cdot b} \, b
 ```
 
-Geri kalan $(a - \operatorname{proj}_b(a))$ ile diktir$b$Bu ortogonal parçalanma en az karelik yerleşimlerin temelini oluşturur.
+Geri kalan $(a - \mathop{\mathrm{proj}}_b(a))$ ile diktir$b$Bu ortogonal parçalanma en az karelik yerleşimlerin temelini oluşturur.
 
 Projection her yerde ML'de:
 - Düzsel gerileme gözlemlerden sütun alanına olan mesafeyi en aza indirir.
@@ -146,7 +146,7 @@ graph LR
 
 **Example:** $a = [3, 4]$- Evet .$b = [1, 0]$
 
-$\operatorname{proj}_b(a) = (3 \cdot 1 + 4 \cdot 0) / (1 \cdot 1 + 0 \cdot 0) \cdot [1, 0] = 3 \cdot [1, 0] = [3, 0]$
+$\mathop{\mathrm{proj}}_b(a) = (3 \cdot 1 + 4 \cdot 0) / (1 \cdot 1 + 0 \cdot 0) \cdot [1, 0] = 3 \cdot [1, 0] = [3, 0]$
 
 Y bileşenini düşüren projeksiyon, en basit biçimindeki boyutların azalmasıdır.
 
@@ -449,6 +449,20 @@ LoRA özel bir değinime layık. Ağır dil modellerini düşük sıralama matri
 5. 2 sıralı 3x3 bir matris oluşturun. `rank()`Sonra sütunların hangi geometrik nesneyi kapsadığını açıklayın.
 6. [1, 2, 3] vektörünü [1, 1, 1] üzerine projekt edin.
 
+### İpuçlar
+
+**Exercise 1.**Başlayın .`cosine_similarity`, değerini -1 ile 1 arasında tut, sonra ark cosinus al ve radyanları dereceye çevir.`Vector([1, 0])`ve `Vector([0, 1])`90 ver ve kendi başına bir vektör 0 verir.
+
+**Exercise 2.**İki ölçek faktörünü 2x2 matrisinin diyagonalına koy ve diğer iki hücreye 0 koy. [1, 1] için sonuç [2, 3] olmalıdır.
+
+**Exercise 3.**5 vektörden her çift için (iki çift) kozin benzerliğini hesaplayın ve en büyük değerini tutun.
+
+**Exercise 4.**Kullanım`gram_schmidt`Üç bağımsız vektör üzerinde hesaplayın.`dot`her çift için ve `magnitude`Her vektör için.`1e-9`, çünkü yüzen nokta tam sıfır vermez.
+
+**Exercise 5.**Üçüncü satır veya sütun ilk iki sayının toplamını yapın, böylece bir yön tekrarlanır. `rank()`2'yi geri göndermeli ve sütunlar bir düzlemden bir uçuruma geçmelidir.
+
+**Exercise 6.**Ölçüyü hesapla $\frac{a \cdot b}{b \cdot b}$ve kat kat .$b$Ya da çağırabilirsin.`project_onto`Geri kalanı kontrol et .$a$- proje, [1, 1, 1] ile 0'lu bir nokta ürünü vardır.
+
 ## Anahtar Terimler
 
 | Term | What people say | What it actually means |
@@ -462,3 +476,17 @@ LoRA özel bir değinime layık. Ağır dil modellerini düşük sıralama matri
 | Projection | "The shadow" | The component of one vector in the direction of another |
 | Basis | "The coordinate axes" | A minimal set of independent vectors that span the space |
 | Orthonormal | "Perpendicular unit vectors" | Vectors that are mutually perpendicular and each have length 1 |
+
+## Özet
+
+| Formula | Meaning |
+|---------|---------|
+| $a \cdot b = \sum_i a_i b_i$ | Dot product. It measures alignment and is the core of attention scores and cosine similarity |
+| $\cos\theta = \frac{a \cdot b}{\lvert a\rvert \lvert b\rvert}$ | Angle between vectors. 1 is the same direction, 0 is orthogonal |
+| $\lvert a\rvert = \sqrt{a \cdot a}$ | Vector magnitude (length) |
+| $y = Ax, y_i = \sum_j A_{ij} x_j$ | Matrix-vector product. A neural-network layer applies it to every input |
+| $\text{proj}_b a = \frac{a \cdot b}{b \cdot b} b$ | Projection of $a$ onto $b$, the part of $a$ along $b$ |
+| $b^\perp = a - \text{proj}_b a$ | Component of $a$ perpendicular to $b$, used in Gram-Schmidt |
+| $\text{rank}(A) \leq \min(m,n)$ | Rank, the number of independent columns. It decides if $Ax = b$ has a solution |
+| $\Delta W = BA$, $B$ is 4096×16, $A$ is 16×4096 | Low-rank update. LoRA replaces a 4096×4096 update (16M parameters) with two rank-16 factors (131K parameters) |
+| Orthonormal basis: $\lvert v_i\rvert = 1, v_i \cdot v_j = 0$ | Stable, reversible transformations such as whitening and QR decomposition |

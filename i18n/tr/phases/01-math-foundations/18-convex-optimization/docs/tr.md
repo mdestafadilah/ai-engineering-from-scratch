@@ -3,7 +3,7 @@
 > Konves sorunlarının tek bir vadisi var, sinir ağlarının milyonlarca.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 
@@ -18,7 +18,7 @@
 
 Ders 08'de, gradient düşüşü, momentum ve Adam'ı öğrendiniz. Bu optimizörler herhangi bir yüzeyde aşağıya doğru yürürler. Ama hiçbir garanti yok. Konves olmayan bir manzarada gradient düşüşü kötü bir yerel minimumda düşebilir, bir sedil noktasına sıkışabilir veya sonsuza dek sallanabilir. Neural ağlar konvessi olmayan ve başka bir alternatif olmadığı için yine de kullandınız.
 
-Ancak makine öğreniminde birçok sorun eğri. Düzgün gerileme, lojistik gerileme, SVM, LASSO, kıyı gerileme. Bunlar için daha güçlü bir şey var: matematiksel garantilerle optimize. eğri bir sorunun tam olarak bir vadisi vardır. Aşağıya doğru yürüyen herhangi bir algoritma küresel minimum'a ulaşır. Tekrar başlatma gerekmez. Öğrenme oranı programları yoktur. Dua yok.
+Ama makine öğreniminde birçok sorun konveks. Düzsel gerileme, lojistik gerileme, SVM, LASSO, kıyılar gerileme. Bu kişiler için daha güçlü bir şey var: matematik garantileri ile optimizasyon. Bir konveks problemin yanlış vadileri yoktur: her yerel minimum küresel minimum. En az bir derecede yumuşak bir konveks fonksiyon için, uygun bir adım boyutu ile gradient düşüşü ona yaklaşıyor. Yeniden başlatmaya gerek yok. Öğrenme oranı programı yok. Dua yok.
 
 Konvessiyet'i anlamak üç şey yapar. Birincisi, size sorununuz kolay (konves) ile sert (konvessi olmayan) olduğunda söyler. İkincisi, konves problemleri için Newton'un yöntemi gibi daha hızlı araçlar verir. Üçüncüsü, ML'de ortaya çıkan kavramları açıklar: düzenlenme bir kısıtlama, SVM'lerde çiftelik ve derin öğrenmenin neden her güzel konvessiyetin verilmesine rağmen çalışması.
 
@@ -91,13 +91,13 @@ Konves optimizasyonunun merkezi teoremi:
 
 **For a convex function, every local minimum is a global minimum.**
 
-Bu da gradient düşüşü tuzağa düşebileceğinden, herhangi bir aşağı yamaç yolu aynı cevaba yol açar.
+Bu, gradient düşüşünün kötü bir yerel minimumda sıkışamayacağı anlamına gelir. Başlayabileceği her minimum aynı kayba sahiptir.
 
 ```mermaid
 graph LR
     subgraph "Convex: ONE answer"
         direction TB
-        C1["Loss surface has a single valley"] --> C2["Gradient descent ALWAYS finds the global minimum"]
+        C1["Loss surface has no false valleys"] --> C2["Gradient descent with a suitable step converges to the global minimum"]
     end
     subgraph "Non-convex: MANY traps"
         direction TB
@@ -534,6 +534,18 @@ print(f"Support vectors: {svm.n_support_}")
 4. **Regularization constraint.**L1 kısıtlı optimizasyonu uygulayın: en aza indirmek $(x-3)^2 + (y-2)^2$$\lvert x \rvert + \lvert y \rvert \le 1$. Çözümün sıfır eşit bir koordinatının olduğunu göster (elmas kısıtlamasından ayırt edicilik).
 
 5. **Hessian eigenvalue analysis.**Rosenbrock fonksiyonunun Hessian'ı (1,1) ve (-1,1) ile hesaplayın.
+
+### İpuçlar
+
+**Exercise 1.**Koşmadan önce her sonucu tahmin et .`check_convexity`Bir boyutta, $f''(x)$Hessian'ın öz değerlerine iki boyutta bakın.$f(x,y) = xy$, Hessian'ın öz değerleri 1 ve -1'dir, bu yüzden kontrolcü, konveks olmadığını bildirmelidir.
+
+**Exercise 2.**Arama .`optimize_gd`ve `newtons_method`                        $f$Newton'un yöntemi bir adımla bir kare çözür.$2/100$Çünkü $50x^2$term, yani $y$Yön yavaş hareket eder.$100x^2$Ve adımları tekrar sayın.
+
+**Exercise 3.**Kullanım`lagrange_solve`- Evet .$g(x,y) = x + 2y - 4$Cevabı verip kontrol et.$x + 2y = 4$Ve bu da ...$\nabla f = (2(x-3), 2(y-3))$$\nabla g = (1, 2)$- Evet .
+
+**Exercise 4.**Sınırsız minimum (3, 2) elmasın dışında, bu nedenle cevap onun sınırında.$\lvert x \rvert + \lvert y \rvert \le 1$Sonuç eşitlik ile kısıtlama karşılıyor mu kontrol edin ve karşılaştırın `demo_regularization_geometry`- Evet .
+
+**Exercise 5.**Arama .`rosenbrock_hessian`Her noktada sonuçları `hessian_eigenvalues_2d`. (1, 1)'de her iki öz değer de pozitif ve oranları çok büyüktür, bu nedenle vadisi bir yönde dar ve diğerinde düz.
 
 ## Anahtar Terimler
 

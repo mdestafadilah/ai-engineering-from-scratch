@@ -3,7 +3,7 @@
 > Grafikler ilişkilerin veri yapısıdır. Eğer verileriniz bağlantılı ise, grafik teorisine ihtiyacınız var.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-03 (linear algebra, matrices)
 **Time:** ~90 minutes
 
@@ -83,7 +83,7 @@ D[i][j] &= 0 \quad \text{for } i \ne j
 \end{aligned}
 ```
 
-Üçgen örneği için: $D = \operatorname{diag}(2, 2, 2)$Çünkü her düğüm diğer iki düğümle bağlantılıdır.
+Üçgen örneği için: $D = \mathop{\mathrm{diag}}(2, 2, 2)$Çünkü her düğüm diğer iki düğümle bağlantılıdır.
 
 Derece, düğüm önemi hakkında size bilgi verir. Yüksek derece = merkez düğümü. Bir ağın derece dağılımı yapısını ortaya çıkarır. Sosyal ağlar güç yasalarını izler (beçik merkezler, birçok yaprak düğümü).
 
@@ -266,6 +266,9 @@ class Graph:
     def degree(self, node):
         return len(self.adj[node])
 
+    def weighted_degree(self, node):
+        return sum(self.adj[node].values())
+
     def adjacency_matrix(self):
         import numpy as np
         A = np.zeros((self.n, self.n))
@@ -278,7 +281,7 @@ class Graph:
         import numpy as np
         D = np.zeros((self.n, self.n))
         for i in range(self.n):
-            D[i][i] = self.degree(i)
+            D[i][i] = self.weighted_degree(i)
         return D
 
     def laplacian(self):
@@ -480,6 +483,18 @@ nerede$\hat{A} = A + I$(kısıtlılık ve kendi kendini döngüler) ve $\hat{D}$
 4. **Build a 2-layer message passing network.**Farklı ağırlık matrisleri ile iki kez mesaj geçirme uygulayın. 2 turdan sonra her düğümün 2 hop komşusundan bilgi olduğunu gösterin.
 
 5. **Analyze a real-world graph.**Karate Kulübü grafikini kullanın (34 düğüm, 78 kenar). Derece dağılımını, Laplakya öz değerlerini ve spektral kümeler oluşturmayı hesaplayın.
+
+### İpuçlar
+
+**Exercise 1.**Egzersizden alınan formülü kullanın. Dışarı çıkış kenarları olmayan bir düğüm puanını tüm düğümlerle eşit olarak paylaşmalıdır veya toplam 1'den aşağı düşmelidir.`pagerank(graph)`- Evet .
+
+**Exercise 2.**İki klise oluşturun .`add_edge`Bir kenarla bağla ve aramaya.`spectral_clustering(graph, k=2)`Her klik bir etiket aldığını kontrol edin.`laplacian()`, iki grup birleştikçe büyüyen.
+
+**Exercise 3.**Öncelik sırasını `heapq`Her ağırlığı 1 yapın ve her Dijkstra mesafesinin bu düğümün BFS katmanına eşit olduğunu kontrol edin`bfs(graph, start)`- Evet .
+
+**Exercise 4.**Kimlik matrisini  olarak kullanın .`features`, böylece her sütun bir düğüm işaretler ve uygulayın `message_passing`Sonra düğümler için sıradaki sıfır dışı girişler$v$Hangi düğümlerin ulaştığını göster $v$Bu seti, ilk arama genişliğinden 2 mesafede olan düğümlerle karşılaştırın.
+
+**Exercise 5.** `networkx.karate_club_graph()`Kısayol listesi ve düğüm özelliğinde yerin doğruluğunu verir `club`Kütülerin kopyasını bir `Graph`Ve 34 düğüm ve 78 kenarın olup olmadığını kontrol et.`spectral_clustering`- ... ...`club`değerleri değiştirilmesine izin verin.
 
 ## Anahtar Terimler
 

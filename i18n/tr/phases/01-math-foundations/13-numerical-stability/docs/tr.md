@@ -3,7 +3,7 @@
 > Dalga geçiş noktası, sızdırıcı bir soyutlama.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -173,7 +173,7 @@ Bu numara ML'de her yerde görünebilir:
 Softmax logitleri olasılıklara dönüştürür:
 
 ```math
-\operatorname{softmax}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
+\mathop{\mathrm{softmax}}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
 ```
 
 Bu hile olmadan, [100, 101, 102] logitleri aşırı akışa neden olur:
@@ -184,7 +184,7 @@ exp(101) = 7.31e43
 exp(102) = 1.99e44
 sum      = 2.99e44
 
-These overflow float32 (max ~3.4e38)? No, 2.69e43 < 3.4e38? Actually:
+2.69e43 > 3.4e38, the float32 maximum, so every term overflows.
 exp(88.7) is already at the float32 limit.
 exp(100) = inf in float32.
 ```
@@ -353,7 +353,7 @@ Layer 50: values in [0, inf]
 Normalleştirme modernleştiriciler ve her katman üzerinde yeniden ölçeklendirme aktivasyonları:
 
 ```math
-\operatorname{LayerNorm}(x) = \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x) + \epsilon} \cdot \gamma + \beta
+\mathop{\mathrm{LayerNorm}}(x) = \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x) + \epsilon} \cdot \gamma + \beta
 ```
 
 - Evet .`epsilon`(genellikle 1e-5) tüm aktivasyonlar aynı olduğunda sıfırla bölünmeyi engeller.`gamma`ve `beta`Ağın ihtiyaç duyduğu herhangi bir ölçekini geri getirmesine izin verin.
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-Bakın .`code/numerical.py`Tüm kenar durumları gösterilen tam uygulamalar için.
+Bakın .`code/numerical.py`Tüm kenar durumları gösterilen tam uygulamalar için.`code/numerical.ts`Aynı fonksiyon ve demo ile bir TypeScript portu.
 
 ## Gönder
 
@@ -579,6 +579,18 @@ Bu istikrarlı uygulamalar eğitim döngüsünün oluşturulmasında 3. aşamada
 4. **Gradient checking a neural network layer.**Tek bir çizgi katmanı uygula `y = Wx + b`ve analitik geriye geçişini.`numerical_gradient`3x2 ağırlık matrisinin doğruluğunu kontrol etmek için.
 
 5. **Loss scaling experiment.**float16 ile eğitim simülasyonu: [1e-9, 1e-3 aralığında rastgele gradientler oluşturun, float16'a dönüştürün ve hangi fraksiyon sıfır haline geldiğini ölçün.
+
+### İpuçlar
+
+**Exercise 1.**Üç değerini  ile dönüştür`np.float32`Onları düzeltmeden önce, sonra aramak.`variance_naive`ve `welford_variance`- Yaklaşık bir değer .$10^{12}$float32'de 1'den çok daha büyük bir mesafe var, bu yüzden saf sonuç 0.6667'den uzak ve Welford sonucu yakın olmasını bekleyin.
+
+**Exercise 2.**Başlayın .`x = np.float32(1.0)`Ve yarıya kadar kes .`np.float32(1.0) + x != np.float32(1.0)`. Her değerini float32'de tut ve son değerini karşılaştır.`numpy.finfo(numpy.float32).eps`, yani $2^{-23}$- Evet .
+
+**Exercise 3.**Önce her cevabı tahmin et.$n$eşit değerler $c$Sonuç şu:$c + \ln n$Bir büyük değer için, sonuç bu değerle yakın. -1000 yakın değerler için, sonuç yakın $-1000 + \ln n$,`logsumexp_naive`Devamı`-inf`Çünkü her eksponensal 0'a düşüyor.
+
+**Exercise 4.**- Evet .$y = Wx + b$Kayıplarla.$L$,  için eğrilik$W$                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             $x$- Kayıpları düzeltme fonksiyonu olarak sarın .$W$- Arayın .`numerical_gradient`, ve her iki sonucu da `check_gradient`- Evet .
+
+**Exercise 5.**Büyüklükleri bir log ölçeğinde örnekleyin .`10 ** np.random.uniform(-9, -3, n)`ve dönüştürmek için `np.float16`. Float16 değerleri yaklaşık olarak aşağıda tutamaz .$6 \times 10^{-8}$Bu nedenle, değerlerin yaklaşık dörtte biri ölçeklendirmeden önce sıfır olur ve 1024 ile çarpıldıktan sonra neredeyse hiç olmaz.
 
 ## Anahtar Terimler
 

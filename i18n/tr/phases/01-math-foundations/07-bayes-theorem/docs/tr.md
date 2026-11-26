@@ -3,7 +3,7 @@
 > Muhtemelen beklediğiniz şeyle ilgili Bayes teoremi de öğrendiğiniz şeyle ilgili.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 Her saymaya 1 eklemek, hiç bir olasılığın asla sıfır olmadığını sağlar.
 
+Hiçbir eğitim mesajında hiç görünmeyen bir kelime sözlükte bulunmuyor. `predict`- Hayır, hayır. - Hayır, hayır.
+
 ### Maksimum a posteriori (MAP)
 
 MLE soruyor: hangi parametrelerin en üst düzeyde olması $P(\text{data} \mid \text{parameters})$- Ne ?
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ Aynı algoritma. CountVectorizer, işaretleme ve kelime birikimi oluşturmayı h
 
 ## Gönder
 
-Burada inşa edilen NaiveBayes sınıfı tüm hattı gösterir: tokenizasyon, Laplace düzleştirmesi ile olasılık tahminleri, log- uzay tahminleri.`code/bayes.py`Python'un standart kütüphanesi dışında hiçbir bağımlılık olmadan son-son çalıştırılır.
+Burada inşa edilen NaiveBayes sınıfı tüm hattı gösterir: tokenizasyon, Laplace düzleştirmesi ile olasılık tahminleri, log- uzay tahminleri.`code/bayes.py`Python'un standart kütüphanesi dışında hiçbir bağımlılık olmadan son-son çalıştırılır.`code/bayes.ts`Sadece Node standart kütüphanesi kullanıyor.
 
 ### Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte Birlikte
 
@@ -450,6 +452,16 @@ Sıklıklı A/B testlerine göre avantajlar:
 3. **Add features.**NaiveBayes sınıfını, kelimeler sayısının yanında bir özellik olarak mesaj uzunluğu (kısık/uzun) kullanmak için genişlet. Tahmin $P(\text{short} \mid \text{spam})$ve $P(\text{short} \mid \text{ham})$Eğitim verilerinden alın ve tahmin puanına katlayın.
 
 4. **MAP by hand.**Görülen verileri göz önüne alarak (7 başlık 10 para atışında) bir $\text{Beta}(2,2)$(MLE tahminine karşılaştırın)$7/10$)
+
+### İpuçlar
+
+**Exercise 1.**Arama .`bayes`1 testi sonrasında bir kez geriye dönmek için, sonra geriye dönmeyi öncü olarak tekrar çağırın.`sequential_bayes(prior, likelihood, false_positive_rate, 2)`0.5'e yakın aynı değer vermeli.
+
+**Exercise 2.**Bir tane oluştur .`NaiveBayes(smoothing=s)`Her değer için aynı verilere göre çalıştırın ve yazdırın.`top_words`0. düzeltmekle spam'de hiç görünmeyen bir kelime 0 olasılığı elde eder, bu yüzden logu tanımlanmaz.
+
+**Exercise 3.**Kaç spam ve ham mesajının kısa olduğunu hesaplayın, her sınıfdaki mesaj sayısına bölün ve bu oranın logunu puanlara ekleyin `predict`Her sınıf için iki olasılığın 1'e kadar olduğunu kontrol et.
+
+**Exercise 4.**Bir $\text{Beta}(\alpha, \beta)$Daha önce, MAP tahminleri $\frac{h + \alpha - 1}{n + \alpha + \beta - 2}$- İçeri koy .$h = 7$- Evet .$n = 10$; sonuç MLE (0.7) ile önceki mod (0.5) arasında olmalıdır.
 
 ## Anahtar Terimler
 

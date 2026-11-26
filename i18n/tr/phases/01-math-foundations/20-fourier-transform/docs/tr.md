@@ -3,7 +3,7 @@
 > Her sinyal sinüs dalgalarının toplamıdır. Fourier dönüşümü hangisini söyler.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -34,7 +34,7 @@ Verilmiştir .$N$örnekler $x[0], x[1], \ldots, x[N-1]$, Diskret Fourier Transfo
 X[k] = \sum_{n=0}^{N-1} x[n] \, e^{-2\pi i k n/N} \qquad \text{for } k = 0, 1, \ldots, N-1
 ```
 
-Her biri .$X[k]$Bu karmaşık bir sayıdır.$\lvert X[k] \rvert$frekans amplitudu size söyler.$k$- Fase .$\angle X[k]$Bu frekansın faz geçişini gösterir.
+Her biri .$X[k]$Bu karmaşık bir sayıdır.$\lvert X[k] \rvert$frekans amplituduna orantılıdır $k$Normalleşme olmadan, genişliğin gerçek sinüsü.$A$Bu tam olarak bin ' e düşer .$k$ver .$\lvert X[k] \rvert = AN/2$, o yüzden böl $N/2$Amplitudu okumak için.$\angle X[k]$Bu frekansın faz geçişini gösterir.
 
 Anahtar bilgi:$e^{-2\pi i k n/N}$frekansında dönen bir fazördür.$k$DFT , sinyal ve her bir sinyal arasındaki ilişkiyi hesaplar .$N$Eğer sinyal frekanslı bir enerji içerirse$k$Eğer bu değilse, sıfırın yakınında.
 
@@ -103,7 +103,7 @@ graph TD
     end
 ```
 
-FFT, sinyal uzunluğunun 2'lik bir güç olması gerektiğini gerektirir.
+Burada oluşturulan radix-2 FFT sinyal uzunluğu 2'nin gücü olduğunda en hızlıdır. Bir alt sorunun eşsiz uzunluğu olduğunda, düzine geri düşer.`dft`, yani sinyaller genellikle hız için 2'nin bir sonraki gücüne sıfır olarak doldurulur.`numpy.fft`Karışık radikal algoritmaları ile herhangi bir uzunlukla çalışırlar, ancak küçük ilk faktörlerle uzunluklarda en hızlılar.
 
 ### Spektral analiz
 
@@ -113,8 +113,8 @@ FFT, sinyal uzunluğunun 2'lik bir güç olması gerektiğini gerektirir.
 
 ```math
 \begin{aligned}
-\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \operatorname{Re}(X[k])^2 + \operatorname{Im}(X[k])^2 \\
-\text{Phase at frequency } k: \quad \phi[k] &= \operatorname{atan2}(\operatorname{Im}(X[k]), \operatorname{Re}(X[k]))
+\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \mathop{\mathrm{Re}}(X[k])^2 + \mathop{\mathrm{Im}}(X[k])^2 \\
+\text{Phase at frequency } k: \quad \phi[k] &= \mathop{\mathrm{atan2}}(\mathop{\mathrm{Im}}(X[k]), \mathop{\mathrm{Re}}(X[k]))
 \end{aligned}
 ```
 
@@ -426,7 +426,7 @@ Spektrogram matrisinin şekli vardır (n_frequencies, n_time_frames). Her sütun
 
 ## Gönder
 
-Çık .`code/fourier.py`üretmek için`outputs/prompt-spectral-analyzer.md`- Evet .
+Çık .`code/fourier.py`üretmek için`outputs/prompt-spectral-analyzer.md`TypeScript sürümü,`code/fourier.ts`, aynı dosyayı yazıyor.
 
 ## Egzersizler
 
@@ -439,6 +439,18 @@ Spektrogram matrisinin şekli vardır (n_frequencies, n_time_frames). Her sütun
 4. **Windowing effects.**Bir sinyal oluşturun ki bu sinyal 10 Hz ve 12 Hz (çok yakın) iki sinüs dalgasının toplamıdır. 128 Hz'de 1 saniye boyunca örnek alın. Pencere olmayan güç spektrumu, Hann pencere ve Hamming pencereyi hesaplayın. Hangi pencere iki zirveyi ayırt etmenin en kolayını sağlar?
 
 5. **Positional encoding analysis.**D_model = 128 ve max_pos = 512 için sinusoidal pozisyon kodlamaları oluşturun.$(p_1, p_2)$, kodlamalarının nokta ürünü hesaplar.$\lvert p_1 - p_2 \rvert$- Uzaklık arttıkça nokta ürünü ne olur?
+
+### İpuçlar
+
+**Exercise 1.**128 numune ile 1 saniye boyunca bin $k$- Evet .$k$Hz, yani tam sayı frekansı için 1 ila 63 kutulardaki en büyük değer indeksi frekansdır.`generate_signal`ve `magnitude_spectrum`Ses ekledikten sonra, diğer kutular yükselirken zirve aynı kutuda olup olmadığını kontrol et.
+
+**Exercise 2.**İki uzunluklu bir güç kullanın, çünkü `fft`- Siyalı ikiye ayırır.`max(abs(a - b))`Zaman oranı yaklaşık olarak $N / \log_2 N$- Evet .
+
+**Exercise 3.**Dört dönüklik için hesaplayın.$y[n] = \sum_k h[k] x[(n-k) \bmod 8]$el ile $n$= 0, 1 ve 2 ve 'nin ilk üç değerini karşılaştırın.`convolve_direct`ve `convolve_fft`Düzsel kıvrım uzunluğu 4 + 3 - 1 = 6'dur, bu yüzden önce 8'in uzunluğu yeterince uzun olup olmadığını kontrol edin.
+
+**Exercise 4.**Kullanım`hann_window`- Evet .`hamming_window`- Evet .`apply_window`ve`power_spectrum`10 Hz ve 12 Hz her ikisi de 1 saniye içinde tüm döngüleri tamamlar, bu nedenle hiçbir pencere en iyi görünmez olabilir. Pencerelerin sızdırılmasını azaltmak için 10.5 Hz ve 12.5 Hz ile tekrarlayın.
+
+**Exercise 5.**Her kodlamayı  ile hesaplayın`positional_encoding(pos, 128)`. Konumlar (0, 10) için nokta ürünü ile (100, 110) için nokta ürünü karşılaştırın: iki değer yaklaşık 1e-10 ile eşleşmelidir.$\lvert p_1 - p_2 \rvert$Bir tane sabit .$p_1$- Evet .
 
 ## Anahtar Terimler
 
