@@ -3,7 +3,7 @@
 > La démo de produit de GPT-4o en mai 2024 a été perturbateur non pas à cause du modèle sous-jacent mais à cause de la forme du produit  une interface vocale où vous parlez, le modèle voit ce que voit la caméra, et il parle en moins de 250 ms. L'écosystème ouvert a passé le reste de 2024 et 2025 à courir pour atteindre cette surface de produit. Qwen2.5 Omni (mars 2025) est la conception ouverte de référence: un Thinker (grand transformateur générateur de texte) plus un Talker (transformateur générateur de parole parallèle), relié par des jetons de parole en streaming. Mini-Omni l'a simplifié, Moshi a correspondu à sa latence, GLM-4-Voice l'a étendu au chinois. Cette leçon explique l'architecture Thinker-Talker et le budget de latence qui permet de diffuser en temps réel le dialogue.
 
 **Type:** Build
-**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop)
+**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop), TypeScript
 **Prerequisites:** Phase 12 · 19 (audio-LLMs), Phase 12 · 16 (any-to-any)
 **Time:** ~180 minutes
 
@@ -12,7 +12,7 @@
 - Divisez le pipeline d'inférence en Thinker (réflexion par texte) et Talker (synthèse de la parole) et expliquez pourquoi le streaming parallèle fonctionne.
 - Calculer le budget de temps à premier octet audio (TTFAB) pour une interaction de conversation, composante par composante.
 - Décrivez la position alignée dans le temps de TMRoPE en codant à travers la vision, l'audio et le texte dans le Thinker.
-- Nombre des trois modes de conversation en temps réel: demi-duplex, tour à tour, plein-duplex.
+- Nombrez les deux modèles de conversation en temps réel, demi-duplex et plein-duplex, et expliquez comment la prise de tour VAD conduit la transmission demi-duplex.
 
 ## Le problème
 
@@ -85,7 +85,7 @@ Pour une interaction de streaming typique:
 - Décodeur résiduel-VQ: 30 ms.
 - Décode de forme d'onde de parole: 50-80 ms.
 
-TTFAB total: 320-510 ms à 7B, 600-900 ms à 70B. La qualité frontalière signifie généralement 70B+; d'où l'écart de latence frontalière.
+TTFAB total: 320-490 ms à 7B, 600-900 ms à 70B. La qualité frontalière signifie généralement 70B+; d'où l'écart de latence frontalière.
 
 ### Mathématiques du taux de jetons
 

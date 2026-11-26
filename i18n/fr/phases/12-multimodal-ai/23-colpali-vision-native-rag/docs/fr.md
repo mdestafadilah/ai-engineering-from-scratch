@@ -3,7 +3,7 @@
 > Le RAG traditionnel analyse les PDF en texte, les divise en morceaux, les intègre en morceaux, les stocke en vecteurs. Chaque étape perd un signal: le OCR supprime les données du graphique, le déchiquetage rompt les lignes de table, les emblèmes de texte ignorent les chiffres. ColPali (Faysse et coll., juillet 2024) a posé la question la plus simple: pourquoi extraire du tout du texte ? Embed l'image de page directement via PaliGemma, utiliser l'interaction tardive de style ColBERT pour la récupération, et garder tous les lignes, les chiffres, les polices et le signal de formatage du document. Les critères de référence publiés: une précision de bout en bout de 20 à 40% supérieure à celle du texte-RAG sur les documents riches en visuels. ColQwen2, ColSmol et VisRAG ont étendu le schéma. Cette leçon lit la thèse de RAG et construit un minuscule index ColPali.
 
 **Type:** Build
-**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer)
+**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer), TypeScript
 **Prerequisites:** Phase 11 (LLM Engineering — RAG basics), Phase 12 · 05 (LLaVA)
 **Time:** ~180 minutes
 
@@ -95,10 +95,10 @@ Aucun OCR, les chiffres, les graphiques, les polices, la mise en page vont tous 
 
 Un rapport financier de 50 pages avec 729 correctifs par page et 128 dimensions intégrées:
 
-- ColPali: 50 * 729 * 128 * 4 octets = ~ 18 Mo brut, ~ 4 Mo après PQ.
+- ColPali: 50 * 729 * 128 * 4 octets = ~ 18 Mo brut, ~ 2,3 Mo après 8x PQ.
 - RAC texte: 50 morceaux * 768-dim * 4 octets = ~ 150 kB.
 
-ColPali est ~ 30 fois plus de stockage par document. À l'échelle, OPQ / PQ le réduit à ~ 5-10 fois, généralement tolérable.
+ColPali est ~ 120x plus de stockage par document brut. À l'échelle, 8x OPQ / PQ le réduit à ~ 15x, généralement tolérable.
 
 ### Quand le texte-RAG gagne toujours
 
