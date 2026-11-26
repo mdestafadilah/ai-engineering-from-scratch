@@ -3,7 +3,7 @@
 > يقوم جهاز تشفير السيارات العادي بتقليص ثم بإعادة تشكيل. يتذكر. لا يولد. أضف خدعة واحدة  اضغط على الرمز ليظهر غوسيان  وستحصل على عينة. هذه الخدعة الوحيدة، إعادة تشكيل$z = \mu + \sigma \cdot \epsilon$ولهذا السبب كل نموذج تصوير متساوٍ للتنشر الخفيف والتي تستخدمها في عام 2026 لديه VAE عند المدخل.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 
@@ -23,7 +23,7 @@
 
 **Autoencoder.** $z = \text{encoder}(x)$،$\hat{x} = \text{decoder}(z)$، الخسارة = $\lVert x - \hat{x} \rVert^2$-المكان غير المهيكلي
 
-**VAE encoder.**النتائج اثنين من المتجهات: $\mu(x)$و$\log \sigma^2(x)$هذه تحدد$q(z \mid x) = \mathcal{N}(\mu, \operatorname{diag}(\sigma^2))$. . .
+**VAE encoder.**النتائج اثنين من المتجهات: $\mu(x)$و$\log \sigma^2(x)$هذه تحدد$q(z \mid x) = \mathcal{N}(\mu, \mathop{\mathrm{diag}}(\sigma^2))$. . .
 
 **Reparameterization trick.**أخذ العينات من$q(z \mid x)$لا يمكن التمييز. أعيد كتابة العينة على النحو$z = \mu + \sigma \cdot \epsilon$أين$\epsilon \sim \mathcal{N}(0, I)$الآن$z$هو وظيفة تحديدية من$(\mu, \sigma)$بالإضافة إلى ضجيج غير معين  تدفق التدرج `μ`و$\sigma$. . .
 
@@ -99,7 +99,7 @@ def sample(dec, z_dim, rng):
 - **Posterior collapse.**محركات قيادة المدة$q(z \mid x) \to \mathcal{N}(0, I)$بفعالية كبيرة$z$لا يحمل أي معلومات عن$x$. إصلاح: التخفيض β (بدء $\beta=0$، الرمب إلى 1), بثات حرّة، أو تخطي KL على الأبعاد غير النشطة.
 - **Blurry samples.**احتمالات القيادة الجاوسي تشير إلى إعادة بناء MSE ، وهو مطلوب بايز ل L2 (المتوسط)  متوسط مجموعة من الأرقام المثيرة للصدق هو رقم غامض. تحديد: القيادة المفصلة (VQ-VAE ، NVAE) ، أو استخدام VAE فقط كمُخترع وتوزيع كومة على الاختفاء (هذا ما يفعله Diffusion Stable).
 - **β too large, too early.**انظر الانهيار اللاحق.$\beta \approx 0.01$و الرامب
-- **Latent dim too small.**يعمل 16-D لـ MNIST ، 256-D لـ ImageNet 2562 ، 2048-D لـ ImageNet 10242. VAE من Stable Diffusion يضغط على 512 × 512 × 3 → 64 × 64 × 4 (32x عامل النموذج إلى أسفل في المساحة الفضائية ، 32x في القنوات).
+- **Latent dim too small.**يعمل 16-D لـ MNIST ، 256-D لـ ImageNet 2562 ، 2048-D لـ ImageNet 10242. VAE من Stable Diffusion يضغط على 512 × 512 × 3 → 64 × 64 × 4 (8x downsample لكل جانب ، 64x في المساحة الفضائية ؛ القنوات تذهب من 3 إلى 4 ، لذلك حوالي 48x أقل قيمًا بشكل عام).
 
 ## استخدمها
 

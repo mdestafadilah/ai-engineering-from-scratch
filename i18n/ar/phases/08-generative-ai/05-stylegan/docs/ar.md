@@ -3,7 +3,7 @@
 > معظم المولدات تتحرك$z$في كل طبقة في نفس الوقت. ستايلجان تقسيمها إلى جانبها: الخريطة الأولى$z$إلى مركز متوسط $w$، ثم * حقن * $w$هذا التغيير الوحيد فك الفضاء الخفيف وجعل الوجهات الصورية حقيقية مشكلة حل لسبع سنوات متتالية.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
@@ -26,7 +26,7 @@ Karras et al. (2019, NVIDIA) اقترح: توقف عن التغذية $z$مبا�
 **AdaIN.**
 
 ```math
-\operatorname{AdaIN}(x, y) = y_{\text{scale}} \cdot \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x)} + y_{\text{bias}}
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 أين$y_{\text{scale}}$و$y_{\text{bias}}$تأتي من توقعات متقاربة$w$. تعاديل لكل خريطة ميزة، ثم إعادة التصميم. "السلسلة" هنا هي الإحصاءات من الدرجة الأولى والثانية من خريطة ميزة.
