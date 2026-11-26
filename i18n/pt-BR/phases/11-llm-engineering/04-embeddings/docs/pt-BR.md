@@ -101,19 +101,19 @@ Dados dois vetores de incorporação, três formas de medir o quão semelhantes 
 **Cosine similarity**O cosino do ângulo entre dois vetores varia de -1 (oposto) a 1 (direção idêntica). Ignora a magnitude - uma frase de 10 palavras e um documento de 500 palavras podem obter 1,0 se apontam na mesma direção. Esta é a padrão para 90% dos casos de uso.
 
 ```math
-\operatorname{cosine\_sim}(a, b) = \frac{\operatorname{dot}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **Dot product**O produto interno bruto de dois vetores. Identico à semelhança cosínica quando os vetores são normalizados (longoura de unidade). Mais rápido para calcular. Os incorporados do OpenAI são normalizados, então o produto ponto e o cosínio dão a mesma classificação.
 
 ```math
-\operatorname{dot}(a, b) = \sum_i a_i b_i
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **Euclidean (L2) distance**A distância é de linha reta no espaço vetorial. menor = mais semelhante. sensível às diferenças de magnitude.
 
 ```math
-\operatorname{L2}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 Quando utilizar:
