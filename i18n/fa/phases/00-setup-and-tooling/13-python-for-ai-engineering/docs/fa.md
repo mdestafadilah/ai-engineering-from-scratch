@@ -3,7 +3,7 @@
 > بیشتر کد در این دوره از همان مجموعه کوچک از زبان های پایتون استفاده می کند. این مجموعه را قبل از اینکه درس ریاضی و مدل به آن بستگی داشته باشد، اینجا یاد بگیرید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Dev Environment, Python Environments
 **Time:** ~120 minutes
 
@@ -821,6 +821,7 @@ print([round(v, 3) for v in standardize((4.0, 700.0))])
 
 ```bash
 python3 phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.py
+npx tsx phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.ts
 ```
 
 ```text
@@ -1028,6 +1029,18 @@ NumPy دو شکل را از ابعاد آخر به ابعاد اول مقایس�
 3. بنویس`stream_records(path)`، یک ژنراتور که یک تولید می کند`Record`از یک فایل CSV به طور همزمان یک فایل از 200 هزار ردیف بسازید.`stream_records`و`load_records`با`tracemalloc`. .
 4. بنویس`matvec(matrix, vector)`در پیتون خالص و در NumPy. هر دو را با اندازه گیری کنید`best_time`برای اندازه های 4, 64 و 1024. اندازه ای را پیدا کنید که NumPy در دستگاه شما سریع تر می شود.
 5. اسکن ساخت رو از "کونتسپت" بنويسيد.`ast.parse`و`ast.walk`در هر پرونده در `phases/*/*/code/*.py`. پرونده هاي موجود رو بشمار`ast.ListComp`،`ast.Yield`و`ast.With`، و شمارش رو با ميز مقایسه کن
+
+### اشاره ها
+
+**Exercise 1.**واردات`run_demo`از`code/main.py`و بهش بگين`seed=7`و با`seed=8`، سپس هر دو نتیجه را با  چاپ کنید`format_report`. ارزش های ناشی از داده های تصادفی تغییر می کنند. اندازه های تقسیم تنها به `n`و`test_fraction`، تا همونطوري که هستي بمونن
+
+**Exercise 2.**ابتدا یک کپی از لیست را مرتب کنید، سپس عنصر وسط را برای طول های عجیب و متوسط دو عنصر وسط را برای طول های جفت بگیرید. نتیجه خود را با `statistics.median`در لیست هایی مثل`[3, 1, 2]`و`[4, 1, 3, 2]`هر دو باید اعداد مشابهی را ارائه دهند.
+
+**Exercise 3.**بخون`load_records`در`code/main.py`و قدم تحليلش رو نگه دار، اما`yield`هر کدام`Record`به جای اضافه کردنش به یه لیست استفاده کنید`save_records`با`make_dataset(200_000)`برای ساخت پرونده، سپس مقایسه کنید`peak_bytes(lambda: load_records(path))`با`peak_bytes(lambda: sum(1 for _ in your_generator(path)))`. ژنراتور باید در داخل دستگاه تماس مصرف شود ، یا`peak_bytes`تنها اندازه گیری های ایجاد آن است.
+
+**Exercise 4.**استفاده کنید`dot`به عنوان مدل برای نسخه خالص پایتون و آن را یک بار برای هر ردیف صدا کنید، سپس استفاده کنید `np.array(matrix) @ np.array(vector)`براي NumPy.وقت هم با هم`best_time`و یک ردیف جدول را برای هر اندازه چاپ کنید؛ دو نتیجه باید قبل از مقایسه زمان ها برابر باشند.
+
+**Exercise 5.**هر پرونده رو با `Path.read_text`، با آن را تجزیه کنید`ast.parse`و استفاده`any(isinstance(node, ast.ListComp) for node in ast.walk(tree))`برای آزمایش یک ساخت، هر فایل را یک بار بشمارید، چون جدول در مفهوم فایل ها را می شمرد.
 
 ## اصطلاحات کلیدی
 
