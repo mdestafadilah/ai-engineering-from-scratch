@@ -3,7 +3,7 @@
 > يرمي A2C كل عملية تنفيذ بعد تحديث واحد. يلف PPO تراجع السياسة في نسبة أهمية خفضة حتى تتمكن من القيام بأكثر من 10 حقائق على نفس البيانات دون انفجار السياسة. Schulman et al. (2017). لا يزال الخوارزمية الافتراضية للسياسة-الترقي في عام 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 
@@ -32,13 +32,13 @@ r_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid
 **The clipped surrogate.**
 
 ```math
-L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min\left( r_t(\theta) A_t, \operatorname{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
+L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min\left( r_t(\theta) A_t, \mathop{\mathrm{clip}}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
 ```
 
 شروطين:
 
 - إذا كانت الميزة$A_t > 0$و يحاول النسبة أن تنمو$1 + \epsilon$، المقطوعة تسطح التراجع  لا تدفع عمل جيد أبعد من $+\epsilon$فوق الاحتمالات القديمة
-- إذا كانت الميزة$A_t < 0$و يحاول النسبة أن تنمو$1 - \epsilon$(ما يعني أننا سنجعل خطوة سيئة أكثر احتمالا مقارنة مع تقليصها المقطوعة) ، كليب كابس التراجع  لا يدفع خطوة سيئة أسفل $-\epsilon$. . .
+- إذا كانت الميزة$A_t < 0$و يحاول النسبة انخفاضها$1 - \epsilon$(ما يعني أننا سنجعلها أقل عرضة للعمل السيء من السياسة القديمة) ، المقطع يُسطح التراجع: لا تدفع عمل سيء أكثر من$-\epsilon$أقل من الاحتمال القديم
 
 - نعم`min`يتعامل الاتجاه الآخر: إذا تحرك النسبة في الاتجاه * المفيد * ، فإنك لا تزال تحصل على التراجع (لا وجود قطع على الجانب الذي سيؤذيك).
 
@@ -195,7 +195,7 @@ Refuse `K > 30` or `ε > 0.3` (unsafe trust region). Refuse any PPO run without 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
 | Importance ratio | "r_t(θ)" | $\pi_\theta(a \mid s) / \pi_{\text{old}}(a \mid s)$; deviation from the policy that collected the data. |
-| Clipped surrogate | "PPO's main trick" | $\min(r \cdot A, \operatorname{clip}(r, 1-\epsilon, 1+\epsilon) \cdot A)$; flat gradient past the clip on beneficial side. |
+| Clipped surrogate | "PPO's main trick" | $\min(r \cdot A, \mathop{\mathrm{clip}}(r, 1-\epsilon, 1+\epsilon) \cdot A)$; flat gradient past the clip on beneficial side. |
 | Trust region | "TRPO / PPO intent" | Limit each update's KL to guarantee monotone improvement. |
 | KL penalty | "Soft trust region" | Alternative PPO: $L - \beta \cdot \mathrm{KL}(\pi_\theta \Vert \pi_{\text{old}})$. Adaptive $\beta$. |
 | Clip fraction | "How often clipping triggers" | Diagnostic — should be 0.1-0.3; outside means mistuned. |
