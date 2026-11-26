@@ -3,7 +3,7 @@
 > CLIP (2021) de OpenAI demostró ser una idea lo suficientemente grande como para impulsar los próximos cinco años: alinear un codificador de imágenes y un codificador de texto en el mismo espacio vectorial utilizando solo pares ruidosos de captura de imágenes web y una pérdida de contraste. Cero etiquetas supervisadas. 400 millones de pares. El espacio de incorporación resultante hace una clasificación de tiro cero, recuperación de imágenes y texto y se conecta a cada VLM 2026 como su torre de visión. SigLIP 2 (2025) sustituyó a softmax por sigmoid y se amplió más allá de CLIP a menor costo. Esta lección recorre las matemáticas de InfoNCE a sigmoid loss pairwise y construye el paso de entrenamiento en stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 
@@ -66,7 +66,7 @@ Softmax necesita toda la matriz de similitud en sincronización. En el entrenami
 SigLIP sustituye softmax por sigmoide con base en elementos: para cada par `(i, j)`, la pérdida es una clasificación binaria de "es que estos son el par de coincidencia?" las etiquetas de clase positiva son la diagonal, todo lo demás es negativo.
 
 ```math
-L = -\frac{1}{N} \sum_{(i, j)} \Big[ y_{ij} \log \operatorname{sigmoid}(S[i,j]) + (1-y_{ij}) \log \operatorname{sigmoid}(-S[i,j]) \Big]
+L = -\frac{1}{N} \sum_{(i, j)} \Big[ y_{ij} \log \mathop{\mathrm{sigmoid}}(S[i,j]) + (1-y_{ij}) \log \mathop{\mathrm{sigmoid}}(-S[i,j]) \Big]
 ```
 
 `y_ij = 1`si`i == j`Cada GPU calcula su bloque local y sumas. SigLIP 2 escala para lotes de 32k-512k a bajo costo donde CLIP necesitaría proporcionalmente más comunicación.
