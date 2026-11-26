@@ -3,7 +3,7 @@
 > Le MCP moderne n'a pas de poignée de main et aucune session de protocole. Chaque requête doit contenir suffisamment de métadonnées pour être comprise, autorisée, rouverte et retestée par elle-même.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

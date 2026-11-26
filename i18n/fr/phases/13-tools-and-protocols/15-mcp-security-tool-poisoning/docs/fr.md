@@ -3,7 +3,7 @@
 > L'appartenance à un État ne signifie pas être sans confiance, mais chaque demande expose les preuves dont un serveur et une passerelle ont besoin pour valider l'appel de manière indépendante.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~60 minutes
 
@@ -248,6 +248,7 @@ Le modèle démarre après qu'un adaptateur HTTP ait analysé le corps JSON et l
 ```bash
 cd phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

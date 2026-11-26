@@ -3,7 +3,7 @@
 > Un fichier de code octal est un programme plus les notes du compilateur à ce sujet, et cette leçon construit les lecteurs qui montrent quelles notes chaque conteneur conserve.
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ Exécutez la démo:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie est un rapport JSON. Pour chaque pyc il donne les deux en-têtes, le fichier et `grade`Les données de base sont les données de chaque classe, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base, les données de base et les données de base.`javap`Pour chaque construction de Wasm, il donne des sections, des types, des fonctions, des contenus de la section nominale et les`wasm-objdump`Il donne pour l'assemblage l'en-tête CLI, les flux, le nombre de lignes de table, les méthodes et l'accord System.Reflection.Metadata. Il se termine par la table de conservation et la liste des interprètes trouvés sur `PATH`- Je suis désolé .
@@ -378,6 +379,7 @@ Exécutez la démo et la suite déterministe:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Le MCP sans État ne signifie pas que chaque opération doit être terminée dans une seule demande. L'extension officielle Tasks donne à un travail de longue durée une poignée durable explicite. Un serveur peut retourner cette poignée à partir de `tools/call`, n' importe quelle instance peut répondre `tasks/get`, et les données du client arrivent par le biais de `tasks/update`sans réanimer les sessions de protocole.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ Le travailleur avance explicitement au lieu de dormir dans un fil de fond. Cela 
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

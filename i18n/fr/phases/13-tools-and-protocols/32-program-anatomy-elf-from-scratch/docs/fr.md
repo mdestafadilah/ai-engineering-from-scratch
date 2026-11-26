@@ -3,7 +3,7 @@
 > Un programme compilé est un ensemble de tables qui pointent les unes vers les autres. Un lecteur que vous avez écrit donne une sortie que vous pouvez vérifier octet par octet.
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ Exécutez le lecteur bibliothécaire standard:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La démo est là .`ledger-x86_64-O1.o`et imprime son en-tête, sections, symboles, relocations, et la carte de décalage de fichier. Il imprime ensuite les quatre chaînes de fonction en octets, lit `ledger-arm64-O1.o`, et imprime la table de comparaison.`tiny-x86_64`- Les lignes attendues:
@@ -380,6 +381,30 @@ Les exigences:
 
 Le succès signifie que la liste d'importation, la carte de segment et chaque gamme de fonctions sont en accord avec la sortie de l'outil capturée, sans exécution d'outil pendant les tests.
 
+## Laboratoire qualifié
+
+Cinq questions sur les fixations de cette leçon.`code/lab_answers.json`. Écrivez les nombres comme des chiffres ou comme des chaînes hexagonale comme `"0x40"`, et les listes comme des listes JSON.
+
+1. `t1`: e_shoff du livre-x86_64-O1.o, en tant que numéro.
+2. `t2`: st_size de changement de pourcentage dans le registre-x86_64-O1.o.
+3. `t3`: le fichier de .text décalé dans le registre-x86_64-O1.o, en hex.
+4. `t4`: noms de types de relocalisation dans le registre-x86_64-O0.o, triés, en tant que liste.
+5. `t5`: les cinq valeurs int à .rodata+0x14 dans le registre-x86_64-O1.o, comme une liste.
+
+Vérifiez vos réponses:
+
+```bash
+cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
+python3 code/lab.py
+npx tsx code/lab.ts
+```
+
+Le vérificateur calcule chaque valeur attendue à partir de `code/main.py`Il imprime`PASS`- Je suis là .`FAIL`ou `TODO`pour chaque tâche et un score, et il sort de 0 seulement quand les cinq passent. `python3 code/lab.py my-answers.json`Il vérifie un autre dossier. `code/tests/test_lab.py`prouve que le vérificateur accepte les bonnes réponses et rejette les mauvaises.
+
+### Je le vois courir.
+
+Le [Inside a Decompiler](https://aiengineeringfromscratch.com/inside-a-decompiler)La machine exécute cette leçon comme ses deux premières stations.`percent_change`, et l' armoire s' ouvre .`.text`et lit le symbole. Éteignez les symboles pour voir quels faits la table des symboles porte.
+
 ## Leçon d'artisanat
 
 Cette leçon produit `outputs/skill-program-anatomy-elf-from-scratch.md`. Utilisez-le avec Claude, Cursor, Codex, OpenClaw, Hermes ou tout agent qui lit SKILL.md. La compétence transforme un objet compilé ou exécutable que l'utilisateur a intégré dans un rapport de mise en page. Le rapport donne la gamme de fichiers de chaque structure, symbole et relocalisation, vérifiée contre la sortie de l'outil capturé.
@@ -391,6 +416,7 @@ Exécutez la démo et la suite déterministe:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

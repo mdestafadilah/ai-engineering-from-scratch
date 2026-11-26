@@ -3,7 +3,7 @@
 > Un outil correct échoue silencieusement lorsque le modèle ne sait pas quand l'utiliser. Le nom, les descriptions et les formes de paramètres entraînent des fluctuations de 10 à 20 points de pourcentage dans la précision de sélection des outils sur des repères tels que StableToolBench et MCPToolBench+.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 
@@ -84,7 +84,7 @@ Règle générale: si le `action`Si l'argument a plus de trois valeurs, divisez 
 ### Conception des paramètres
 
 - **Enum every closed set.** `units: "celsius" | "fahrenheit"`- Je ne sais pas .`units: string`Les enums indiquent au modèle l'univers des valeurs acceptables.
-- **Required vs optional.**Marquez le minimum nécessaire. Tout le reste est facultatif.`required`; ajouter un `is_default: true`La convention dans votre code et laissez le modèle l'omettre.
+- **Required vs optional.**Marquez le minimum nécessaire. Tout le reste est facultatif.`required`, le modèle ne peut pas en omettre un.`null`et laissez le modèle envoyer `null`quand il n'a aucune valeur.
 - **Typed IDs.** `note_id: string`C' est bon mais ajoutez un `pattern`(le secteur de l'énergie)`^note-[0-9]{8}$`) pour attraper des identités hallucinées.
 - **No overly flexible types.**Évitez`type: any`Le modèle va halluciner des formes.
 - **Describe the field.** `{"type": "string", "description": "ISO 8601 date in UTC, e.g. 2026-04-22"}`La description fait partie de la demande du modèle.

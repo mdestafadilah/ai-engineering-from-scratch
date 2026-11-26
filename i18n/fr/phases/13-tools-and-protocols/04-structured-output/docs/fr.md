@@ -3,7 +3,7 @@
 > " Demandez au modèle gentiment de retourner JSON " échoue 5 à 15% du temps, même sur les modèles frontaliers. Les sorties structurées comblent ce fossé avec le décoding restreint: le modèle est littéralement empêché d'émettre un jeton qui violerait le schéma.`responseSchema`, l'IA de Pydantic `output_type`, et Zod's `.parse`Cette leçon construit le validateur de schéma et les apprenants de contrat en mode strict utiliseront pour chaque pipeline d'extraction de production.
 
 **Type:** Build
-**Languages:** Python (stdlib, JSON Schema 2020-12 subset)
+**Languages:** Python, TypeScript (stdlib, JSON Schema 2020-12 subset)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

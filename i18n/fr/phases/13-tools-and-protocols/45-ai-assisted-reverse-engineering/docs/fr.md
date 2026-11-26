@@ -3,7 +3,7 @@
 > La reconstruction d'un modèle est une revendication avec un rapport joint, et cette leçon construit le harnais qui marque à la fois contre les octets, les runs, et DWARF que vous possédez.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 35 (evidence, confidence, and unknowns), Phase 13 · 36 (rebuild and prove equal)
 **Time:** ~140 minutes
 
@@ -218,9 +218,10 @@ Deux rangées méritent un second coup d'œil.`f1_safe_div`Le code conserve le c
 ```bash
 cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
-Avec le clang sur le chemin, la démo compile chaque candidat avec les drapeaux de fichier, construit huit programmes différentiels, exécute 92 cellules et 256 entrées corpuses à travers chacune, lit le DWARF, vérifie chaque citation et imprime la carte.`grid`et `fuzz`champs lus `unknown`, et tout jugement aussi.
+Avec le clang sur le chemin, la démo compile chaque candidat avec les drapeaux de fichier, construit huit programmes différentiels, exécute 92 cellules et 256 entrées corpus à travers chacune, lit le DWARF, vérifie chaque citation et imprime la carte.`grid`et `fuzz`champs lus `unknown`Un autre clang que le compilateur de fichiers enregistré en`code/fixtures/build-record.json`La comparaison en octets sur les objets engagés ne laisse que la comparaison.`grid`et `fuzz`Les champs restent à recompiler chaque candidat avec le compilateur hôte. La comparaison en octets a besoin du même compilateur et des mêmes drapeaux pour signifier quelque chose, et l'objet engagé ne reste que pendant que `code/fixtures/build-record.json`il correspond toujours à la source candidate sur le disque: modifier la source et le champ de octets se lit `unknown`au lieu de juger les octets obsolètes.
 
 Forme attendue:
 
@@ -300,7 +301,7 @@ card = score_candidate(load_candidate("f1_base_64"), Path("/tmp/re45"), run_prog
 card["fields"]["bytes"]["evidence"], card["fields"]["citations"]["evidence"]
 ```
 
-Créer`/tmp/re45`- D'abord ou plus tard.`None`Pour utiliser l'objet engagé. Maintenant modifiez `fixtures/candidates/f1_base_64.c`Donc le multiplicateur est 100, courez les mêmes deux lignes, et regardez `bytes`tourner à `pass`Pendant ce temps`citations`Il faut changer le code et le rapport, et il faut changer le code.
+Créer`/tmp/re45`- D'abord ou plus tard.`None`Pour utiliser l'objet engagé. Maintenant modifiez `fixtures/candidates/f1_base_64.c`Donc le multiplicateur est 100, courez les mêmes deux lignes, et regardez `bytes`tourner à `pass`Pendant ce temps`citations`Le rapport mentionne encore les 64 et la reconstruction qui tourne.`bytes`à `pass`fonctionne uniquement sous le compilateur nommé en `code/fixtures/build-record.json`; sous tout autre clavier, ou avec `None`, votre modification laisse l' objet engagé derrière et `bytes`Il lit`unknown`Il faut changer le code et le rapport, et il faut changer le code.
 
 ### Laboratoire C: la chaîne qui s'adresse à l'analyste
 
@@ -316,6 +317,7 @@ La chaîne est là, le code est le même, et le champ de noms lit le DWARF et no
 
 ```bash
 python3 code/main.py mcp-serve
+npx tsx code/main.ts mcp-serve
 ```
 
 Passez trois lignes, une à la fois:
@@ -354,6 +356,7 @@ Exécutez la démo et la suite de test:
 ```bash
 cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

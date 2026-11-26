@@ -3,7 +3,7 @@
 > Les racines sont dépassées dans MCP 2026-07-28 et n'ont jamais été une boîte à sable de sécurité. Mettez la portée dans les arguments ou les URIs de ressources visibles, autorisez-les sur le serveur et utilisez MRTR lorsqu'un outil a vraiment besoin de l'entrée de l'utilisateur. L'utilisateur voit la décision, le modèle voit la poignée et toute instance du serveur peut traiter la répétition.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 11 (stateless MRTR)
 **Time:** ~60 minutes
 
@@ -247,6 +247,7 @@ Le stockage de données est en mémoire, le comportement du protocole est facile
 ```bash
 cd phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

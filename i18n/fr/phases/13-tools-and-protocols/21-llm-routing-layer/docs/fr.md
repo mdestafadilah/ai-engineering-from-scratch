@@ -3,7 +3,7 @@
 > Le verrouillage par fournisseur est cher. Différentes charges de travail d'appel d'outils s'adaptent à différents modèles. Les passerelles de routage donnent une surface API, des retries, des pannes, le suivi des coûts et des barreaux. Trois archétypes dominent 2026: LiteLLM (auto-hébergé open source), OpenRouter (SaaS géré), Portkey (de qualité de production, open source en mars 2026). Cette leçon nomme les critères de décision et marche sur une passerelle de routage stdlib.
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

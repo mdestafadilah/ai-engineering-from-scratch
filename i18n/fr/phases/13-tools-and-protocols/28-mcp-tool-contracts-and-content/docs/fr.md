@@ -3,7 +3,7 @@
 > Un outil n'est sûr d'automatiser que lorsque la découverte, les arguments, les résultats, la pagination et le transport de métadonnées sont d'accord sur un contrat.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07, 09, and 10
 **Time:** ~120 minutes
 
@@ -353,6 +353,7 @@ Le descripteur délibérément dangereux est l'enseignement des données.
 ```bash
 cd phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

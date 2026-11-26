@@ -3,7 +3,7 @@
 > Un démontage montre quel registre une fonction lit. Seul l'ABI dit ce que ces registres signifient, et l'ABI est choisi par l'en-tête de l'objet, donc cette leçon lit d'abord l'en-tête et vérifie ensuite chaque registre contre la règle qui l'y a mis.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ Exécutez la démo:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie est un rapport JSON. Pour chacun des sept objets, il donne le format, la machine et l'ABI, et pour chacune des douze fonctions, il donne les octets du prologue, les registres enregistrés avec des compensations d'entrée, la taille du cadre, le pointeur du cadre, les registres des paramètres, les compensations d'arguments de pile, les déversements, le registre de retour ou le pointeur caché, les profondeurs d'appel, et les registres sortants et les magasins des appelants. Chaque fonction se termine par ses vérifications: la règle, la valeur attendue de la signature, la valeur observée des octets et si elles sont d'accord. Le rapport se termine par les deux contrôles croisés et les captures de l'outil. Sur les 84 analyses de fonction, 489 contrôles sont effectués et les 489 sont d'accord.
@@ -331,6 +332,7 @@ Exécutez la démo et la suite déterministe:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

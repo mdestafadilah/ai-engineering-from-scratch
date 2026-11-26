@@ -3,7 +3,7 @@
 > Un serveur n'est pas conforme parce que son cheminement heureux a fonctionné à travers un SDK. La conformité vit au fil, aux limites de version, à travers les intermédiaires et pendant le retour.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ La porte de sortie refuse également la transcription vide, le différentiel SDK
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La démo exécute exactement quinze transcriptions dorées et négatives, y compris des résultats de finalisation valides et malformées, compare un résultat brut avec une vue SDK, inspecte un proxy qui a effondré une erreur d'origine, évalue la santé, authentifie les preuves de retour et sélectionne cette cible.
@@ -395,6 +396,7 @@ Exécutez la suite démo et déterministe:
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

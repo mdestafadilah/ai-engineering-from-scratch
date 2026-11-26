@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**L'enregistrement dynamique du client est dépassé en faveur des documents de métadonnées d'identification du client.`application_type`Un client valide une RFC 9207 présente `iss`Les données de référence sont fournies par les autorités compétentes.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ t3-jwks-rotate
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
@@ -354,7 +355,7 @@ Cette leçon produit `outputs/skill-mcp-auth.md`. Compte tenu d'une configuratio
 
 ## Exercices
 
-1. On court .`code/main.py`- Suivez le flux. Notez comment l'IDP tourne une clé à l'étape 6, la planifiée `refresh_jwks`Retire le jeu publié et valident à la fois l'ancien jeton (fenêtre de chevauchement) et un jeton nouveau sans redémarrage.
+1. On court .`code/main.py`. Suivre le flux. Notez comment l'IdP tourne une clé à l'étape 6 de la sortie du script (étape 7 du flux ci-dessus), le schéma `refresh_jwks`Retire le jeu publié et valident à la fois l'ancien jeton (fenêtre de chevauchement) et un jeton nouveau sans redémarrage.
 
 2. Ajouter un nouveau IDP aux métadonnées de la ressource protégée `authorization_servers`Liste. Émettre un jeton signé par le nouveau IDP et confirmer que le validateur l'accepte. Émettre un jeton signé par un IdP non inscrit et confirmer que le validateur rejette avec `WWW-Authenticate: Bearer error="invalid_token", error_description="iss not allowed"`- Je suis désolé .
 

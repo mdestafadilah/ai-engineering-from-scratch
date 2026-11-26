@@ -3,7 +3,7 @@
 > Cinq outils lisent le même objet et donnent quatre adresses, trois blocs comptent, et deux réponses pour un interrupteur, et cette leçon construit le harnais qui montre lequel est lequel.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ Exécutez la démo:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie est un rapport JSON. Il s'ouvre avec les versions des outils enregistrées au moment de la capture et avec les outils présents sur votre machine, qui peuvent tous être absents. Ensuite, pour chacun des quatre objets, il donne les extensions du symbole, les espaces de rembourrage, la base de chaque outil utilisé, la fonction démarre chaque outil trouvé ou inventé, et pour chaque fonction l'accord d'instruction-démarrage, les comptes de blocs, les comptes de bord, et les bords de chaque outil manquent. Il se termine par la comptabilité des octets par outil, les notes propres des outils, une liste des résultats en phrases simples et la section IR: la sortie du traducteur pour les trois instructions à côté des comptes mesurés sur les ascenseurs capturés.
@@ -472,6 +473,7 @@ Exécutez la démo et la suite déterministe:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

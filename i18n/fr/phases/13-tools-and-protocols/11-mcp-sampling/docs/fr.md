@@ -3,7 +3,7 @@
 > MCP 2026-07-28 déprécie le prélèvement d'échantillons pour de nouveaux modèles et supprime le canal de demande serveur-client. Si un flux de travail existant a encore besoin du modèle du client, le serveur renvoie un `input_required`Le logiciel de logique devient explicite, limité et sans état à la couche de protocole.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ Le faux modèle d'hôte rend l'exemple déterministe.`fake_host_model`La machine
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

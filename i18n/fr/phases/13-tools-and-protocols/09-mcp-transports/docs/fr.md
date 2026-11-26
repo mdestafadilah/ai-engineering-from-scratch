@@ -3,7 +3,7 @@
 > Le transport transporte des messages MCP. Il ne fournit pas l'état du protocole manquant.`2026-07-28`, stdio local et HTTP diffusable à distance portent toutes deux des demandes d'auto-décription.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 

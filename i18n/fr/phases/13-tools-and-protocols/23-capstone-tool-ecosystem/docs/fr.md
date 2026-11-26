@@ -3,7 +3,7 @@
 > Un système d'agent de production est un ensemble de limites, pas une pile de caractéristiques. Cette pierre angulaire sépare une simulation lisible en cours de processus des clients de protocole, serveur d'autorisation, sandbox et exportateur de télémétrie dont un déploiement réel a encore besoin.
 
 **Type:** Build
-**Languages:** Python (stdlib, in-process simulation)
+**Languages:** Python (stdlib, in-process simulation), TypeScript
 **Prerequisites:** Phase 13 · 01 through 22, using MCP revision `2026-07-28`
 **Time:** ~120 minutes
 
@@ -203,9 +203,10 @@ Remplissez le harnais en cours de traitement:
 ```bash
 cd phases/13-tools-and-protocols/23-capstone-tool-ecosystem
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
-Il faut examiner cinq choses:
+Il faut examiner six choses:
 
 1. `server/discover`annonce révision `2026-07-28`et l'extension des tâches.
 2. Alice peut lire et générer un rapport, tandis que l'appel écrit de Bob est refusé.

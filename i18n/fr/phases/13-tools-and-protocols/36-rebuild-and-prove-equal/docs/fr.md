@@ -3,7 +3,7 @@
 > Passer vos tests prouve votre accord sur vos tests, donc l'égalité a besoin d'une grille qui atteint chaque bord et octets qui correspond après le masquage de relocalisation.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ Les trois preuves que le champ utilise sont les trois pattes que vous pouvez con
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Avec le clang sur le chemin, la démo compile les deux paires de candidats et exécute 92 cellules pour chacun. Il recompile huit candidats, reproduit l'agent exécuté, et remplit le dossier de preuve. Sans clang il lit les objets engagés et rapporte les réclamations de comportement comme`unknown`- Je suis désolé .
@@ -371,6 +372,9 @@ Avec réa 6.5.0 et Ghidra 12.1.4 installés:
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 La première .`analyze_function`Il faut quelques secondes pendant que Ghidra importe l'objet. Comparer les nouveaux identifiants de preuve avec la mise en œuvre engagée. Les mêmes octets sous le même profil d'analyse donnent les mêmes identifiants, car l'id est un hash de contenu qui exclut le chemin du fichier.
@@ -389,6 +393,30 @@ Les exigences:
 
 Le succès signifie que le dossier de preuve énumère quatre fonctions, chaque réclamation porte un identifiant de preuve, et `grade_label`échoue lorsqu'une chaîne d'étiquette est différente.
 
+## Laboratoire qualifié
+
+Cinq questions sur les fixations de cette leçon.`code/lab_answers.json`. Écrivez les nombres comme des chiffres ou comme des chaînes hexagonale comme `"0x40"`, et les listes comme des listes JSON.
+
+1. `t1`: percent_change_model(3, 105) sur x86_64.
+2. `t2`: percent_change_model(0, 5) sur x86_64.
+3. `t3`: grade_model ((100).
+4. `t4`: le nombre de cellules dans input_grid().
+5. `t5`: le nombre de cellules de grille où le modèle x86_64 s'accroche.
+
+Vérifiez vos réponses:
+
+```bash
+cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
+python3 code/lab.py
+npx tsx code/lab.ts
+```
+
+Le vérificateur calcule chaque valeur attendue à partir de `code/main.py`Il imprime`PASS`- Je suis là .`FAIL`ou `TODO`pour chaque tâche et un score, et il sort de 0 seulement quand les cinq passent. `python3 code/lab.py my-answers.json`Il vérifie un autre dossier. `code/tests/test_lab.py`prouve que le vérificateur accepte les bonnes réponses et rejette les mauvaises.
+
+### Je le vois courir.
+
+Le [Inside a Decompiler](https://aiengineeringfromscratch.com/inside-a-decompiler)La machine se termine par un pseudocode et le dépose comme il l'a déduit: la page ne le prouve pas.
+
 ## Les compétences en matière de sortie
 
 Cette leçon produit `outputs/skill-rebuild-and-prove-equal.md`. Utilisez-le pour transformer la preuve de fonction et la reconstruction d'un candidat en une preuve à deux pattes et un enregistrement de preuve.
@@ -400,6 +428,7 @@ Exécutez la démo et la suite de test:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

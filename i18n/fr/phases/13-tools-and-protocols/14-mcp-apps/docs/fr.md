@@ -3,7 +3,7 @@
 > Un résultat interactif est toujours un outil MCP et un échange de ressources. Le noyau 2026-07-28 rend cet échange autonome, tandis que l'extension Apps ajoute la surface du navigateur sandboxé.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
 **Time:** ~75 minutes
 
@@ -265,10 +265,11 @@ Le modèle reçoit déjà des corps analysés et des en-têtes de routage.`Conte
 ```bash
 cd phases/13-tools-and-protocols/14-mcp-apps
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 
-Inspectez quatre choses dans la sortie:
+Inspectons cinq choses dans la sortie:
 
 1. Chaque appel est indépendant.
 2. Chaque demande a été faite .`_meta`les capacités.
@@ -292,7 +293,7 @@ Cette leçon va à l' air .`outputs/skill-mcp-apps-spec.md`. Utilisez-le pour ex
 2. Envoyez-moi .`Mcp-Name: ui://notes/other.html`avec un corps qui lit la ligne de temps.`-32020`- Je suis désolé .
 3. Modifier la ressource en `cacheScope: private`. Décrire la condition spécifique à l'utilisateur qui la justifie.
 4. Mettez le script à `https://static.example.com/app.js`- Ajouter cette origine à `resourceDomains`et expliquer le risque de la nouvelle chaîne d'approvisionnement.
-5. Ajouter un`notes_open`l'outil et le bouton de route cliquez sur l'hôte. Gardez l'approbation de l'utilisateur dans l'hôte.
+5. Ajouter un `notes_open`l'outil et le bouton de route cliquez sur l'hôte. Gardez l'approbation de l'utilisateur dans l'hôte.
 
 ## Les termes clés
 

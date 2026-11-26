@@ -3,7 +3,7 @@
 > Une atteinte à un point de rupture est une observation sur une course d'une construction. Cette leçon construit le harnais qui transforme ces observations en verdicts confirmés, réfugiés et non observés sur les affirmations des leçons statiques faites.
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ Exécutez la démo:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie est un rapport JSON sur les transcriptions enregistrées. Pour chaque construction, il énumère les points d'interruption avec leur résolution et leur nombre de coups, le nombre de points de surveillance matériels, chaque arrêt avec ses registres et arguments, l'état de sortie, la sortie du programme, les erreurs imprimées, et les revendications avec leurs verdicts et les enregistrements de preuves derrière eux. Il ajoute le tour de fond, les résultats de l'API Python, la panne de la boîte à sable et les outils externes qui sont absents sur cette machine.
@@ -496,6 +497,7 @@ Exécutez la démo et la suite déterministe:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

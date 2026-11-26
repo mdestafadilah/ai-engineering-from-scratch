@@ -3,7 +3,7 @@
 > Une compétence peut suggérer une action. Seul l'hôte peut l'autoriser, seule une limite d'isolement peut la contenir, et seule la vérification peut vous dire si elle a fonctionné.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 25 (Skill Invocation and Routing), Phase 13 · 15 (MCP Security I)
 **Time:** ~120 minutes
 
@@ -289,6 +289,7 @@ Exécuter les décisions politiques simulées:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

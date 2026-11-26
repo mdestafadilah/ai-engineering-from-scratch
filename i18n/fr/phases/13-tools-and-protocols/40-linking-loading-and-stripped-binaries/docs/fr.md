@@ -3,7 +3,7 @@
 > Un programme lié appelle des fonctions qu'il ne contient pas. Cette leçon lit les tables que l'éditeur de liens a écrites pour ces appels dans trois formats, suit un appel à la fente que le chargement remplit, et trouve les fonctions d'une construction après que ses noms ont disparu.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ Exécutez la démo:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie est un rapport JSON avec cinq parties. `elf`détient les chiffres de délocalisation des deux objets, le plan de liaison et la section dynamique, PLT et GOT de `tiny-dyn-x86_64`- Je suis là .`coff`détient les sections, les délocalisations, les fonctions et les noms indéfinis des deux objets. `pe`détient les titres, les annuaires, les importations, les exportations, les délocalisations de bases et les appels d'appels de l'IAT `tiny-x86_64.exe`- Je suis là .`macho`Il tient`ledger_main`Avec ses étiquettes, ses fixages enchaînés, ses rangées de fixations et ses exportations, l'héritage de la mise en page de `ledger_main_nochain`, le dylib, et les deux rapports de strip.`identification`Il y a la vérité, les quatre méthodes avec les scores, et les signatures avec leurs collisions, à `-O0`et `-O2`- Je suis désolé .
@@ -412,6 +413,7 @@ Exécutez la démo et la suite déterministe:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

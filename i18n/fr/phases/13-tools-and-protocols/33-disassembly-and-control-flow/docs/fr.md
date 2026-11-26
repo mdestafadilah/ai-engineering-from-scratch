@@ -3,7 +3,7 @@
 > Une liste de démontage est une affirmation sur les octets qui sont des instructions, et cette leçon construit le décodeur et le graphique qui vérifient la affirmation.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch)
 **Time:** ~150 minutes
 
@@ -347,6 +347,7 @@ Exécutez la démo:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie est un rapport JSON. Pour chaque objet fixe, il donne l'accord oracle. Pour chaque fonction, il donne des instructions, des blocs et des comptes de bord selon les trois méthodes. Il énumère également des blocs inaccessibles, des sauts indirects non résolus, des bordures arrière, des dominateurs immédiats et toutes les tables.
@@ -471,6 +472,30 @@ Les exigences:
 
 Le succès signifie`python3 code/main.py cfg`nomme chaque appel possible avec le déplacement qui le prouve, et la comparaison oracle continue de passer sur chaque objet.
 
+## Laboratoire qualifié
+
+Cinq questions sur les fixations de cette leçon.`code/lab_answers.json`. Écrivez les nombres comme des chiffres ou comme des chaînes hexagonale comme `"0x40"`, et les listes comme des listes JSON.
+
+1. `t1`: instructions pour décoder la descente récursive en grade à -O1.
+2. `t2`: blocs de base au total à -O1.
+3. `t3`: adresse de l'en-tête de boucle au total à -O1, en hex.
+4. `t4`: dans la barre de trappe, l'adresse où commence l'instruction de balayage linéaire couvrant 0x14, en hex.
+5. `t5`: les entrées dans le tableau de saut de la note à -O0.
+
+Vérifiez vos réponses:
+
+```bash
+cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
+python3 code/lab.py
+npx tsx code/lab.ts
+```
+
+Le vérificateur calcule chaque valeur attendue à partir de `code/main.py`Il imprime`PASS`- Je suis là .`FAIL`ou `TODO`pour chaque tâche et un score, et il sort de 0 seulement quand les cinq passent. `python3 code/lab.py my-answers.json`Il vérifie un autre dossier. `code/tests/test_lab.py`prouve que le vérificateur accepte les bonnes réponses et rejette les mauvaises.
+
+### Je le vois courir.
+
+Le [Inside a Decompiler](https://aiengineeringfromscratch.com/inside-a-decompiler?program=trap&sweep=linear)La machine exécute cette leçon comme son lit de décode et blocage.`sweep-trap.o`avec balayage linéaire: le lit montre les quatre octets de données décodés en code, et une pin marque la cible de saut à `0x14`à l'intérieur de la`addq`à`0x13`- Passez le décodeur à la descente récursive pour voir le saut sauter les données.
+
 ## Leçon d'artisanat
 
 Cette leçon comprend `outputs/skill-disassembly-and-control-flow.md`. Utilisez-le pour transformer un objet et un nom de fonction en une liste vérifiée, des blocs, des bords taillés, des dominateurs et tous les transferts non résolus. Il nécessite une comparaison oracle, les deux méthodes de démontage, la comptabilité des octets, la preuve de relocalisation pour chaque table récupérée, et une déclaration de ce qui est resté inconnu.
@@ -482,6 +507,7 @@ Exécutez la démo et la suite déterministe:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

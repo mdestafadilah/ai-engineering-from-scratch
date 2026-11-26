@@ -3,7 +3,7 @@
 > Une compétence n'est pas une longue demande avec un meilleur nom de fichier. C'est un paquet découvertable d'instructions, de ressources et d'assistants exécutables qui entre dans le contexte d'un agent par un contrat de fonctionnement.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 01 (The Tool Interface), Phase 13 · 05 (Tool Schema Design)
 **Time:** ~90 minutes
 
@@ -362,6 +362,7 @@ Le choix est dévoilé .`TaskShape`et `select_primitives(task)`Il traite les bes
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/22-skills-and-agent-sdks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
