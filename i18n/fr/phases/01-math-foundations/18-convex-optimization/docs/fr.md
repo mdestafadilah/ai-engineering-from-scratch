@@ -3,7 +3,7 @@
 > Les problèmes convexes ont une vallée, les réseaux neuronaux ont des millions.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 
@@ -18,7 +18,7 @@
 
 La leçon 08 vous a appris la descente de gradient, l'élan et Adam. Ces optimistes marchent en descente sur n'importe quelle surface. Mais ils ne sont pas garanties. La descente de gradient sur un paysage non convexe peut arriver à un mauvais minimum local, rester coincé sur un point de selle, ou osciller pour toujours. Vous l'avez utilisé quand même parce que les réseaux neuraux ne sont pas convexes et qu'il n'y a pas d'alternative.
 
-Mais de nombreux problèmes de machine learning sont convexes. Régrésion linéaire, régression logistique, SVM, LASSO, régression de crête. Pour ceux-ci, quelque chose de plus fort existe: optimisation avec des garanties mathématiques. Un problème convexe a exactement une vallée. Tout algorithme qui descend atteindra le minimum mondial. Pas besoin de redémarrage. Pas de calendriers de taux d'apprentissage. Pas de prière.
+Mais de nombreux problèmes de machine learning sont convexes. Régrésion linéaire, régression logistique, SVM, LASSO, régression de crête. Pour ceux-ci, il existe quelque chose de plus fort: l'optimisation avec des garanties mathématiques. Un problème convexe n'a pas de faux vallées: chaque minimum local est un minimum mondial. Pour une fonction convexe lisse ayant un minimum, la descente de gradient avec une taille d'étape appropriée converge à celle-ci. Pas besoin de redémarrer. Pas de calendrier d'apprentissage. Pas de prière.
 
 La compréhension de la convexité fait trois choses. Premièrement, elle vous indique quand votre problème est facile (convexe) contre difficile (non convexe). Deuxièmement, elle vous donne des outils plus rapides comme la méthode de Newton pour les problèmes convexes. Troisièmement, elle explique les concepts qui apparaissent dans tout ML: la régularisation comme une contrainte, la dualité dans les SVM, et pourquoi l'apprentissage profond fonctionne malgré la violation de toutes les bonnes propriétés que vous donne la convexité.
 
@@ -91,13 +91,13 @@ Le théorème central de l'optimisation convexe:
 
 **For a convex function, every local minimum is a global minimum.**
 
-Cela signifie que la descente du gradient ne peut pas être piégée. Tout chemin en descente conduit à la même réponse. L'algorithme est garanti de converger à la solution optimale.
+Cela signifie que la descente de gradient ne peut pas être piégée dans un mauvais minimum local. Chaque minimum qu'elle peut atteindre a la même perte. Pour une fonction convexe lisse qui a un minimum, la descente de gradient avec une taille d'étape appropriée est garantie de converger à la valeur optimale.
 
 ```mermaid
 graph LR
     subgraph "Convex: ONE answer"
         direction TB
-        C1["Loss surface has a single valley"] --> C2["Gradient descent ALWAYS finds the global minimum"]
+        C1["Loss surface has no false valleys"] --> C2["Gradient descent with a suitable step converges to the global minimum"]
     end
     subgraph "Non-convex: MANY traps"
         direction TB
@@ -534,6 +534,18 @@ print(f"Support vectors: {svm.n_support_}")
 4. **Regularization constraint.**Implémentation de l' optimisation limitée L1: minimiser $(x-3)^2 + (y-2)^2$sous réserve de $\lvert x \rvert + \lvert y \rvert \le 1$. Montrez que la solution a une coordonnée égale à zéro (sparsité de la contrainte diamant).
 
 5. **Hessian eigenvalue analysis.**Computez le Hessian de la fonction Rosenbrock à (1,1) et à (-1,1). Computez les valeurs propres à ces deux points.
+
+### Des indices
+
+**Exercise 1.**Prédire chaque résultat avant de courir .`check_convexity`: dans une dimension, regardez le signe de $f''(x)$; dans deux dimensions, regardez les valeurs propres de l'hessien.$f(x,y) = xy$, le Hessian a des valeurs propres 1 et -1, donc le vérificateur doit signaler qu'il n'est pas convexe.
+
+**Exercise 2.**Appel`optimize_gd`et `newtons_method`avec le gradient et le Hessian de $f$La méthode de Newton résout un quadratique en une seule étape.$2/100$à cause de la$50x^2$le terme, donc le $y$La direction se déplace lentement.$100x^2$et compte les pas encore.
+
+**Exercise 3.**Utilisation `lagrange_solve`avec $g(x,y) = x + 2y - 4$- À la réponse, vérifiez ça.$x + 2y = 4$et que$\nabla f = (2(x-3), 2(y-3))$est un multiple de $\nabla g = (1, 2)$- Je suis désolé .
+
+**Exercise 4.**Le minimum non restreint (3, 2) est en dehors du diamant, donc la réponse est à sa limite.$\lvert x \rvert + \lvert y \rvert \le 1$. Vérifiez que le résultat satisfait à la contrainte par égalité et comparez-le avec `demo_regularization_geometry`- Je suis désolé .
+
+**Exercise 5.**Appel`rosenbrock_hessian`à chaque point et transmettre le résultat à `hessian_eigenvalues_2d`. À (1, 1), les deux valeurs propres sont positives et leur rapport est très grand, de sorte que la vallée est étroite dans une direction et plate dans l'autre.
 
 ## Les termes clés
 

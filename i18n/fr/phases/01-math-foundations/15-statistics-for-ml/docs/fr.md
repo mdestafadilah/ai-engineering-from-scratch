@@ -3,7 +3,7 @@
 > Les statistiques sont la façon de savoir si votre modèle fonctionne vraiment ou si vous avez eu de la chance.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -141,7 +141,7 @@ Cov(X, Y) < 0:  when X increases, Y tends to decrease
 Cov(X, Y) = 0:  no linear co-movement
 ```
 
-Pour $d$caractéristiques, la matrice de covariance $C$est une $d \times d$matrice où $C[i][j] = \operatorname{Cov}(\text{feature}_i, \text{feature}_j)$Les entrées diagonales$C[i][i]$sont les variations de chaque caractéristique.
+Pour $d$caractéristiques, la matrice de covariance $C$est une $d \times d$matrice où $C[i][j] = \mathop{\mathrm{Cov}}(\text{feature}_i, \text{feature}_j)$Les entrées diagonales$C[i][i]$sont les variations de chaque caractéristique.
 
 ```
 C = | Var(x1)      Cov(x1,x2)  Cov(x1,x3) |

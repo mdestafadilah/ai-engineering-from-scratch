@@ -3,7 +3,7 @@
 > La probabilité est ce que vous attendez, le théorème de Bayes est ce que vous apprenez.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 Ajouter 1 à chaque compte assure qu'aucune probabilité n'est jamais nulle.
 
+Un mot qui n'a jamais été utilisé dans un message d'entraînement n'est pas dans le vocabulaire. `predict`Il ne le fait pas, car il ne donne aucune preuve pour les deux classes.
+
 ### Le maximum a posteriori (MAP)
 
 MLE demande: quels paramètres maximiser $P(\text{data} \mid \text{parameters})$- Je suis désolé .
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ Le même algorithme. CountVectorizer gère la symbolisation et la construction d
 
 ## La faire partir
 
-La classe NaiveBayes construite ici démontre l'ensemble du pipeline: la tokenization, l'estimation de probabilité avec le lissage de Laplace, la prédiction de l'espace log.`code/bayes.py`fonctionne de bout en bout sans dépendances au-delà de la bibliothèque standard de Python.
+La classe NaiveBayes construite ici démontre l'ensemble du pipeline: la tokenization, l'estimation de probabilité avec le lissage de Laplace, la prédiction de l'espace log.`code/bayes.py`fonctionne de bout en bout sans dépendances au-delà de la bibliothèque standard de Python.`code/bayes.ts`utilise uniquement la bibliothèque standard Node.
 
 ### Les prédécesseurs conjugaux
 
@@ -450,6 +452,16 @@ Les avantages par rapport aux tests A/B fréquentistes:
 3. **Add features.**Élargir la classe NaiveBayes pour utiliser également la longueur du message (courte/longue) comme fonctionnalité à côté du nombre de mots.$P(\text{short} \mid \text{spam})$et $P(\text{short} \mid \text{ham})$de la formation et le plier dans le score de prédiction.
 
 4. **MAP by hand.**Compte tenu des données observées (7 têtes sur 10 lancements de pièces), calculer l' estimation du MAP du biais en utilisant un $\text{Beta}(2,2)$Comparer avec l'estimation de l'AML ($7/10$)
+
+### Des indices
+
+**Exercise 1.**Appel`bayes`une fois pour obtenir le posterior après le test 1, puis appeler à nouveau avec ce posterior comme le prior. `sequential_bayes(prior, likelihood, false_positive_rate, 2)`doit donner la même valeur, proche de 0,5.
+
+**Exercise 2.**Créez un .`NaiveBayes(smoothing=s)`pour chaque valeur, entraînez-le sur les mêmes données, et imprimez `top_words`Avec l'allégement 0, un mot qui ne apparaît jamais dans le spam obtient la probabilité 0, donc son journal n'est pas défini.
+
+**Exercise 3.**Comptez combien de messages de spam et de jambon sont courts, divisez-les par le nombre de messages dans chaque classe, et ajoutez le journal de ce rapport au score en `predict`Vérifiez que les deux probabilités pour chaque classe s'ajoutent à 1.
+
+**Exercise 4.**Avec un$\text{Beta}(\alpha, \beta)$Avant, l'estimation du PAM est $\frac{h + \alpha - 1}{n + \alpha + \beta - 2}$- Mettez-le .$h = 7$- Je suis là .$n = 10$; le résultat doit être entre le MLE (0,7) et le mode précédent (0,5).
 
 ## Les termes clés
 

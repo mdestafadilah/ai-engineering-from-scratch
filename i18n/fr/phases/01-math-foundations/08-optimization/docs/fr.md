@@ -46,7 +46,7 @@ C'est l'ensemble de l'algorithme.
 
 ```mermaid
 graph TD
-    A["* Starting point (high loss)"] --> B["Moving downhill along gradient"]
+    A["* Starting point (high loss)"] --> B["Moving downhill, against the gradient"]
     B --> C["Approaching minimum"]
     C --> D["o Minimum (low loss)"]
 ```
@@ -158,7 +158,7 @@ Les horaires communs:
 
 ### Convexe contre non convexe
 
-Une fonction convexe a un minimum. la descente gradiente le trouve toujours.$f(x) = x^2$est convexe.
+Une fonction convexe n'a pas de mauvais minima locaux: chaque minimum local est un minimum global. Pour une fonction convexe lisse qui a un minimum, la baisse de gradient avec un taux d'apprentissage suffisamment faible converge à elle.$f(x) = x^2$est convexe et son minimum est unique.
 
 Les fonctions de perte de réseau neural ne sont pas convexes. Elles ont de nombreux minima locaux, des points de selle et des régions plates.
 
@@ -356,6 +356,16 @@ Les classes d'optimisation construites ici réapparaissent dans la phase 3 lorsq
 3. **Saddle point escape.**Définir la fonction $f(x, y) = x^2 - y^2$Comparer comment la vanille GD, SGD avec l'élan, et Adam se comportent.
 
 4. **Implement learning rate decay.**Ajouter un calendrier de déclin exponentiel à la classe GradientDescent: `lr = lr_0 * 0.999^step`Comparer la convergence avec et sans décomposition de la fonction Rosenbrock.
+
+### Des indices
+
+**Exercise 1.**- Le taux d'apprentissage`GradientDescent(lr=...)`pour chacun, et le transmettre à `optimize`avec `rosenbrock`et `rosenbrock_gradient`Une course qui diverge montre une perte qui augmente ou devient`nan`; le minimum est de $(1, 1)$avec une perte de 0.
+
+**Exercise 2.**Créer`SGDMomentum(momentum=m)`pour chaque valeur et enregistrer la perte après chaque étape.`find_convergence_step`pour comparer la vitesse, et chercher des pertes qui vont en haut et en bas pour trouver un surpassage.
+
+**Exercise 3.**Écrivez le gradient $(2x, -2y)$et exécutez les trois optimisateurs à partir de (0.01, 0.01).$y$chaque 100 étapes: l'optimisateur qui s'échappe est celui où $\lvert y \rvert$grandit.
+
+**Exercise 4.**La boutique `lr_0`et un compteur de pas dans `GradientDescent`, et le calcul .`lr = lr_0 * 0.999 ** step`à l' intérieur`step`. Imprimez le taux d'apprentissage à l'étape 0 et à l'étape 1000; il doit être déduit de `lr_0`À peu près .$0.37 \times \text{lr}_0$- Je suis désolé .
 
 ## Les termes clés
 

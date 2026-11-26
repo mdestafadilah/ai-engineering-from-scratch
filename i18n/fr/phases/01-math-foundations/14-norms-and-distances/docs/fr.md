@@ -3,7 +3,7 @@
 > Votre fonction de distance définit ce que signifie "semblable".
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -102,7 +102,7 @@ L1 et L2 sont des cas particuliers de la norme Lp:
 \lVert x \rVert_p = (|x_1|^p + |x_2|^p + \cdots + |x_n|^p)^{1/p}
 ```
 
-Vérités différentes de $p$produire des "boulons d'unité" de différentes formes (l'ensemble de tous les points à distance 1 de l'origine):
+Vérités différentes de $p$produisent des "boulons d'unité" de différentes formes (l'ensemble de tous les points à une distance maximale de 1 de l'origine; les formes ci-dessous sont leurs limites):
 
 ```
 p=1:    Diamond shape      (corners on axes)
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### Étape 1: Toutes les fonctions de norme et de distance
 
-Regardez !`code/distances.py`Chaque fonction est construite à partir de zéro en utilisant uniquement les mathématiques de base Python.
+Regardez !`code/distances.py`Chaque fonction est construite à partir de zéro en utilisant uniquement les mathématiques de base Python.`code/distances.ts`est un port TypeScript avec les mêmes fonctions et démos.
 
 ### Étape 2: Les mêmes données, différentes distances, voisins différents
 
@@ -483,6 +483,18 @@ Quand vous appelez`model.encode(text)`et ensuite rechercher une base de données
 4. Computez la distance de Wasserstein entre [0,5, 0,5, 0,0] et [0, 0, 0,5, 0,5] à la main en utilisant la méthode CDF. Computez-la ensuite entre [0,25, 0,25, 0,25, 0,25] et [0, 0, 0, 0,5, 0,5].
 
 5. Implémenter MinHash pour une similitude approximative de Jaccard. Générer 100 ensembles aléatoires, calculer exact Jaccard pour toutes les paires, et comparer avec l'approximation MinHash en utilisant 50, 100 et 200 fonctions de hachage.
+
+### Des indices
+
+**Exercise 1.**Le vecteur de différence est (-3, 2, -3), alors calculer les trois normes de ce vecteur avec `l1_norm`- Je suis là .`l2_norm`, et `linf_norm`Pour la preuve, comparez le plus grand.$\lvert d_i \rvert$avec la somme des carrés, et comparer la somme des carrés avec le carré de la somme des valeurs absolues.
+
+**Exercise 2.**La similitude cosine ignore la longueur, alors commencez par deux vecteurs qui pointent presque dans la même direction et faites l'un d'eux beaucoup plus long.`cosine_similarity`et `l2_distance`- Je suis désolé .
+
+**Exercise 3.**Appel`find_nearest_neighbor(query, dataset, distance_fn)`une fois pour chacun `l1_distance`- Je suis là .`l2_distance`- Je suis là .`cosine_distance`, et `mahalanobis_distance`- Je suis là .`demo_different_neighbors`montre un ensemble de données où les mesures ne sont pas d'accord, alors lisez-le d'abord et changez les points jusqu'à ce que les quatre réponses diffèrent.
+
+**Exercise 4.**Écrivez la somme cumulée de chaque distribution, puis ajoutez les différences absolues des deux sumes cumulatives.`wasserstein_1d(p, q)`, puis expliquer la valeur plus grande par la distance que la masse de probabilité doit se déplacer.
+
+**Exercise 5.**Pour chaque fonction de hachage, la signature MinHash d'un ensemble est la valeur minimale de hachage sur ses éléments, et la fraction de fonction de hachage où deux ensembles obtiennent les mêmes estimations minimales de leur similitude Jaccard.`jaccard_similarity`; l' erreur devrait être de la taille suivante:$1/\sqrt{k}$pour $k$fonction de hachage.
 
 ## Les termes clés
 

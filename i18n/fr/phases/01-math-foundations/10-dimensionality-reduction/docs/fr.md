@@ -3,7 +3,7 @@
 > Les données haute dimension ont une structure. Vous pouvez les trouver en regardant sous le bon angle.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -198,6 +198,13 @@ pca-axes
 
 ## Faites-le
 
+Le port TypeScript est activé `code/dim_reduction.ts`Les démonstrations du MNIST ont besoin de scikit-learning, donc elles fonctionnent uniquement en Python.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
+
 ### Étape 1: PCA à partir de zéro
 
 ```python
@@ -354,6 +361,14 @@ Cette leçon donne:
 2. Exécuter t-SNE sur le même sous-ensemble MNIST avec des valeurs de perplexité de 5, 30 et 100. Décrivez comment la sortie change. Pourquoi la perplexité affecte-t-elle la fermeté du cluster?
 
 3. Prenez un ensemble de données de 50 caractéristiques dont seulement 5 sont informatives (générez une avec `sklearn.datasets.make_classification`) Appliquer le PCA et vérifier si la courbe de variance expliquée identifie correctement que les données sont effectivement cinq dimensions.
+
+### Des indices
+
+**Exercise 1.**Lire `inverse_transform`dans le `PCA`classe et correspondant à un modèle pour chaque nombre de composants.`reconstruction_error`pour les composants 10, 50 et 200; l'erreur doit diminuer à mesure que le nombre de composants augmente.
+
+**Exercise 2.**Bien adapté .`sklearn.manifold.TSNE`3 fois sur le même sous-ensemble, en changeant seulement `perplexity`, et utiliser la même `random_state`. La faible perplexité regarde peu de voisins, alors attendez-vous à de petits groupes étroits; la grande perplexité regarde plus de voisins, alors attendez-vous à des groupes plus grands et plus lisses.
+
+**Exercise 3.**Appel`make_classification(n_features=50, n_informative=5, n_redundant=45)`, adapté`PCA`Les caractéristiques redondantes sont des combinaisons linéaires des caractéristiques informatives, de sorte que la courbe atteint presque 1,0 à 5 composants.`n_redundant=0`: les 45 autres caractéristiques sont des bruits indépendants, et la courbe ne s'applique pas.
 
 ## Les termes clés
 
