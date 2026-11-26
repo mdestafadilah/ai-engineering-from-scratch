@@ -3,7 +3,7 @@
 > L'attention Softmax répand une petite quantité de probabilité sur chaque jeton non correspondant. Plus de 100 000 jetons qui ajoutent du bruit et noient le signal. Le transformateur différentiel (Ye et al., ICLR 2025) le corrige en calculant l'attention comme la différence de deux softmaxes, en soustrayant le sol de bruit partagé. DIFF V2 (Microsoft, janvier 2026) est la réécriture de la pile de production: correspondant la latence de décode à la ligne de base Transformer, aucun noyau personnalisé, compatible avec FlashAttention. Cette leçon est de bout en bout V1 à V2, avec une mise en œuvre de jeu de travail de l'opération différence que vous pouvez exécuter dans stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 
@@ -16,7 +16,7 @@
 
 ## Le problème
 
-L'attention standard softmax a une propriété mathématique qui se transforme en un mal de tête opérationnel à l'échelle.`q`, les poids d' attention sont `softmax(qK^T / sqrt(d))`. Softmax ne peut jamais produire de zéros exacts  chaque jeton non correspondant obtient une masse positive. Cette masse résiduelle est du bruit, et elle s'égale avec la longueur du contexte.
+L'attention standard softmax a une propriété mathématique qui se transforme en un mal de tête opérationnel à l'échelle.`q`, les poids d' attention sont `softmax(qK^T / sqrt(d))`Softmax ne peut jamais produire de zéros exacts: chaque jeton non correspondant obtient une masse positive. Cette masse résiduelle est du bruit, et elle s'égale avec la longueur du contexte.
 
 En empirie, cela apparaît comme une interference de la tête d'attention: des citations hallucinées dans des RAG de long contexte, des échecs perdus au milieu sur les tâches de récupération de 100k-tokens et une dégradation subtile de la précision sur les points de référence de l'aiguille dans le paillot de foin après 32k. Le document Transformateur différentiel (arXiv:2410.05258, ICLR 2025) a mesuré l'écart: les Transformateurs DIFF ont atteint une plus faible perplexité, une plus grande précision dans le long contexte et moins d'hallucinations que les lignes de base de la même taille.
 
@@ -42,15 +42,15 @@ Divisez les projections Q et K de chaque tête en deux: $Q = (Q_1, Q_2)$et $K = 
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d})
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d})
 \end{aligned}
 ```
 
 Résultats:
 
 ```math
-\operatorname{DiffAttn} = (A_1 - \lambda \cdot A_2) V
+\mathop{\mathrm{DiffAttn}} = (A_1 - \lambda \cdot A_2) V
 ```
 
 La soustraction annule toute distribution de bruit que les deux cartes partagent. Si les deux cartes ont un poids approximativement uniforme sur les 127k jetons non liés (qui ils le feront, à l'initialisation aléatoire), ceux-ci annulent. Le signal  poids maximum sur les quelques jetons réellement pertinents  annule uniquement s'il apparaît dans les deux cartes à la même magnitude, ce qui ne le sera pas une fois que le modèle traîne.

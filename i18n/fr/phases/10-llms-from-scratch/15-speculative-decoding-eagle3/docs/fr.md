@@ -3,7 +3,7 @@
 > La leçon 16 a prouvé les mathématiques: la règle de rejet du Léviathan préserve exactement la distribution du vérificateur. Cette leçon est la vue de la formation en pile du décoding spéculatif de production de 2026. EAGLE-3 a transformé le modèle de projet d'une approximation bon marché en un réseau minuscule spécialement conçu et formé sur les états cachés du vérificateur, puis a ajouté une boucle de test de formation qui aligne ses distributions de train et d'inférence. Résultat: 3x à 6,5x accélération de bout en bout, taux acceptés par jeton supérieur à 0,9 sur le chat, aucun compromis de distribution. Chaque pile d'inférence de production en 2026 le renvoie par défaut.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 16 (speculative decoding math), Phase 10 · 12 (inference optimization)
 **Time:** ~75 minutes
 
@@ -70,6 +70,8 @@ Pour la recherche d'arbre EAGLE-2, le vérificateur exécute l'attention avec un
 | EAGLE-2 | EAGLE-1 + dynamic draft tree | 0.80-0.88 | 3-4× | ~60B tokens |
 | EAGLE-3 | Multi-layer feature fusion + TTT | 0.88-0.92 | 3.5-6.5× | ~60-200B tokens |
 | Lookahead | No draft (Jacobi iteration) | N/A | 1.3-1.6× | None |
+
+Le `α`La colonne est le taux d'acceptation par jeton le long du chemin accepté, sur les benchmarks de chat, avec un projet formé sur la correspondance des données de chat. C'est la bande supérieure. La phase 10 · 25 cite 0,82 pour EAGLE-3 d'une configuration différente, et la phase 17 · 05 prévoit des déploiements de production avec 0,6 à 0,8 sur le chat général. Mesure `α`sur votre propre trafic avant de choisir `N`- Je suis désolé .
 
 En 2026 production: vLLM et SGLang par défaut à EAGLE-3 quand disponible, EAGLE-2 autrement. TensorRT-LLM a le chemin Medusa le plus rapide pour les modèles publics Meta et NVIDIA. llama.cpp expédite le projet de vanille pour les déploiements de CPU.
 
