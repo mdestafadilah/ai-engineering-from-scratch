@@ -3,7 +3,7 @@
 > دو و همکاران (ICML 2024, "جماعه ذهن") نمونه های مدل N را اجرا می کنند که به طور مستقل پاسخ ها را پیشنهاد می کنند، سپس به طور تکراری از یکدیگر در دور های R انتقاد می کنند تا به هم نزدیک شوند. واقعیت، پیروی از قوانین، استدلال را بهبود می بخشد. توپولوژی Sparse در هزینه های رمزنگاری شده کامل میش را شکست می دهد.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 05 (Self-Refine and CRITIC)
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ debate-converge
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید: دقت و هزینه هر پروتکل؛ مطابقت کم در دو سوم سوالات با هزینه پایین تر.
@@ -117,7 +118,7 @@ python3 code/main.py
 
 ## خواندن بیشتر
 
-- [Du et al., Society of Minds (arXiv:2305.14325)](https://arxiv.org/abs/2305.14325) بحث کاینونیک چند عامل
+- [Du et al., Improving Factuality and Reasoning in Language Models through Multiagent Debate (arXiv:2305.14325)](https://arxiv.org/abs/2305.14325) بحث کاینونیک چند عامل
 - [Sparse Communication Topology (arXiv:2406.11776)](https://arxiv.org/abs/2406.11776) نتایج توپولوژی نادر
 - [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) کارگران سازنده به عنوان یک نوع بحث
 - [Madaan et al., Self-Refine (arXiv:2303.17651)](https://arxiv.org/abs/2303.17651) نمونه ی یک نمونه ی خود منتقد
