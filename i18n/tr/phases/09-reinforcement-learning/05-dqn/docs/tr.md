@@ -3,7 +3,7 @@
 > 2013: Mnih, çiğ pikseli üzerinde bir Q-öğrenme ağı eğitmiş, yedi Atari oyununda her klasik RL ajanını yenmiştir. 2015: 49 oyunlara kadar uzattı, Nature'de yayınlanmıştır, derin-RL çağını tetikledi. DQN, işlev yaklaşımını istikrarlı hale getiren üç numara ile birlikte Q-öğrenme.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 
@@ -72,7 +72,7 @@ class ReplayBuffer:
         return rng.sample(self.buf, batch)
 ```
 
-~ Atari için 50.000 kapasite; bizim oyuncak ortamımız için 5.000 yeter.
+~ Atari için orijinal DQN'de olduğu gibi 106 kapasite (öğrenme başlamadan önce 50.000 geçiş toplar); Oyuncak çevremiz için 5.000 yeterlidir.
 
 ### Adım 2: Küçük bir Q-ağı (elçi MLP)
 

@@ -3,7 +3,7 @@
 > İnsanlar "iyi yardımcı yanıt" için bir ödül işlevi yazabilir, ancak iki yanıtı karşılaştırıp daha iyi birini seçebilirler. Bu karşılaştırmalara bir ödül modeli uygula, sonra dil modelini karşılaştırın. Christiano 2017. InstructGPT 2022. GPT-3'yi ChatGPT'ye çeviren tarif. 2026'da çoğunlukla DPO  ile değiştirildi ancak zihinsel model kalır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment), Phase 9 · 08 (PPO)
 **Time:** ~45 minutes
 
@@ -113,7 +113,7 @@ def rlhf_step(theta, ref, w, prompt, rng, eps=0.2, beta=0.1, lr=0.05):
 
 ### Dördüncü adım: KL'yi izle
 
-İz ortalaması$\mathrm{KL}(\pi_\theta \Vert \pi_{\text{ref}})$Her güncelleme.`~5-10`politika çok uzakta $\pi_{\text{SFT}}$ daha düşük $\beta$Bu gerçek RLHF'deki en iyi teşhis.
+İz ortalaması$\mathrm{KL}(\pi_\theta \Vert \pi_{\text{ref}})$Her güncelleme.`~5-10`(KL'nin cevap başına nats, tokenlerin toplamı, TRL'lerin birim kayıtları) politika çok uzakta $\pi_{\text{SFT}}$: ya da $\beta$Bu gerçek RLHF'de en iyi teşhis.
 
 ### Adım 5: TRL ile üretim tarifi
 
