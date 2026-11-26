@@ -3,7 +3,7 @@
 > Una entrada en el registro le dice lo que un editor declaró.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 17 (gateways and registries), Phase 13 · 18 (production authentication)
 **Time:** ~90 minutes
 
@@ -163,6 +163,7 @@ Comience con la demostración finita:
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La demostración realiza cinco operaciones:
@@ -288,6 +289,7 @@ Ejecutar la demostración y la suite determinista:
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

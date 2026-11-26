@@ -3,7 +3,7 @@
 > Un archivo de código de byte es un programa más las notas del compilador al respecto, y esta lección construye los lectores que muestran qué notas cada recipiente guarda.
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ Ejecutar la demostración:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida es un informe JSON. Para cada pyc se dan ambos encabezados, el archivo y `grade`Los datos de la lista de instrucciones y nombres de opcodes de la lista capturada, y si el intérprete en ejecución puede leerlo. para cada clase de construcción que da la versión, los tamaños, los recuentos de tablas de desaceleración, y el `javap`Para cada construcción de Wassm se dan secciones, tipos, funciones, contenido de la sección de nombre y el`wasm-objdump`Para el ensamblaje, se da el encabezado de CLI, los flujos, el recuento de filas de tablas, los métodos y el acuerdo de sistema.Reflección.Metadatos.`PATH`¿ Qué ?
@@ -378,6 +379,7 @@ Ejecutar la demostración y la suite determinista:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

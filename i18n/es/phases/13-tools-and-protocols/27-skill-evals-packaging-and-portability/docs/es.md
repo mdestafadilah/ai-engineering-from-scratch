@@ -3,7 +3,7 @@
 > Una habilidad se termina cuando su paquete sobrevive a la tormenta, rutas en las solicitudes correctas, mejora una tarea medida, permanece dentro de la política, y degrada honestamente en otro anfitrión.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 22, 24, 25, and 26
 **Time:** ~150 minutes
 
@@ -425,6 +425,7 @@ Dirige el laboratorio de Capstone:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

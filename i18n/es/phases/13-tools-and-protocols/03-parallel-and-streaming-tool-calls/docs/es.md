@@ -3,7 +3,7 @@
 > Tres búsquedas de tiempo independientes en serie son tres viajes de ida y vuelta. ejecutarlos en paralelo y el tiempo total se desploma a la llamada única más lenta. Cada proveedor fronterizo ahora emite múltiples llamadas de herramienta en un solo giro. La recompensa es real; la tubería es sutil. Esta lección camina ambas mitades: el fan-out paralelo y el reensamblaje de argumentos transmitidos, con énfasis en la trampa de correlación de identidad.
 
 **Type:** Build
-**Languages:** Python (stdlib, thread pool + streaming harness)
+**Languages:** Python, TypeScript (stdlib, thread pool + streaming harness)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 
@@ -66,7 +66,7 @@ Cada llamada que emite el modelo tiene un`id`Cada resultado que devuelva el anfi
 
 El anfitrión ejecuta el ejecutor de cada llamada en su propio hilo, coroutine o trabajador remoto.`asyncio.gather`El orden de finalización es impredecible  el id es el identificador.
 
-Un error común: responder con resultados en orden de lista de llamadas en lugar de orden de finalización. Esto suele funcionar porque el modelo solo se preocupa por `tool_call_id`, pero si un resultado se deja caer o se duplica, la presentación fuera de orden hace que el descomposición sea más difícil.
+Un error común: responder con resultados en orden de lista de llamadas en lugar de orden de finalización. Esto suele funcionar porque el modelo solo se preocupa por `tool_call_id`, pero si un resultado se deja caer o se duplica, una lista de respuestas que se reordenará lejos del orden en que los resultados llegaron hace que la brecha sea más difícil de encontrar en los registros.
 
 ### Las llamadas de herramientas de transmisión
 

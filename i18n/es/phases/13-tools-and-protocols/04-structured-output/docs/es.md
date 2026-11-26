@@ -3,7 +3,7 @@
 > "Pregúntale bien al modelo para devolver JSON" falla del 5 al 15 por ciento de las veces, incluso en los modelos fronterizos. Las salidas estructuradas cierran esa brecha con decodificación restringida: el modelo se impide literalmente emitir un token que violaría el esquema.`responseSchema`, Pydantic AI `output_type`, y Zod's `.parse`Esta lección construye el validador de esquemas y los estudiantes de contrato de modo estricto utilizarán para cada tubería de extracción de producción.
 
 **Type:** Build
-**Languages:** Python (stdlib, JSON Schema 2020-12 subset)
+**Languages:** Python, TypeScript (stdlib, JSON Schema 2020-12 subset)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

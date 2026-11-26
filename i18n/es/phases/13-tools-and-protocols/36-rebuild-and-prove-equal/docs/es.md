@@ -3,7 +3,7 @@
 > Pasar sus pruebas demuestra que están de acuerdo en sus pruebas, así que la igualdad necesita una cuadrícula que llegue a todos los bordes y bytes que coincidan después de la reubicación enmascarado.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ Ejecutar el arnés estándar de la biblioteca:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Con el clang en el camino, la demostración recopila ambos pares de candidatos y ejecuta 92 celdas para cada uno. Recopila ocho candidatos, repite la ejecución del agente y fabrica el registro de prueba. Sin clang lee los objetos comprometidos y informa las afirmaciones de comportamiento como `unknown`¿ Qué ?
@@ -371,6 +372,9 @@ Con rea 6.5.0 y Ghidra 12.1.4 instaladas:
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 El primero .`analyze_function`Los datos de la prueba de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de datos de
@@ -389,6 +393,30 @@ Requisitos:
 
 El éxito significa que el registro de pruebas enumera cuatro funciones, cada afirmación lleva un ID de evidencia, y `grade_label`se falla cuando una cadena de etiquetas difiere.
 
+## Laboratorio de calificación
+
+Cinco preguntas sobre los accesorios de esta lección.`code/lab_answers.json`Escribir números como números o como cuerdas hexáticas como `"0x40"`, y listas como listas JSON.
+
+1. `t1`: por ciento_cambio_modelo(3, 105) en x86_64.
+2. `t2`: por ciento_cambio_modelo(0, 5) en x86_64.
+3. `t3`: grado_modelo(100).
+4. `t4`: el número de celdas en input_grid().
+5. `t5`: el número de celdas de la cuadrícula en las que el modelo x86_64 se atrapa.
+
+Compruebe sus respuestas:
+
+```bash
+cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
+python3 code/lab.py
+npx tsx code/lab.ts
+```
+
+El verificador calcula cada valor esperado desde `code/main.py`En los accesorios comprometidos.`PASS`¿ Qué ?`FAIL`o `TODO`para cada tarea y una puntuación, y sale de 0 sólo cuando pasan los cinco. `python3 code/lab.py my-answers.json`- ¿Qué? - Vea otro archivo.`code/tests/test_lab.py`prueba que el comprobador acepta las respuestas correctas y rechaza las incorrectas.
+
+### Ve cómo se ejecuta
+
+El [Inside a Decompiler](https://aiengineeringfromscratch.com/inside-a-decompiler)La máquina termina con un pseudocodo y archivó como se dedujo: la página no lo prueba.
+
 ## Habilidad de salida
 
 Esta lección produce`outputs/skill-rebuild-and-prove-equal.md`. Utilice para convertir la evidencia de la función y reconstruir un candidato en una prueba de dos patas y un registro de prueba. La habilidad requiere la listación antes del pseudocodo, una cuadrícula con cada clase de peligro, la máscaría de reubicación más una verificación constante y un agregado cerrado por falla.
@@ -400,6 +428,7 @@ Ejecutar la demostración y la suite de pruebas:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

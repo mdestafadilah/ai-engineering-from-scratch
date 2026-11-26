@@ -3,7 +3,7 @@
 > Un resultado interactivo es todavía una herramienta MCP y el intercambio de recursos. El núcleo 2026-07-28 hace que ese intercambio sea autónomo, mientras que la extensión Apps añade la superficie del navegador sandboxed.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
 **Time:** ~75 minutes
 
@@ -265,10 +265,11 @@ El modelo recibe cuerpos ya analizados y encabezados de enrutamiento.`Content-Ty
 ```bash
 cd phases/13-tools-and-protocols/14-mcp-apps
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 
-Inspeccionar cuatro cosas en la salida:
+Inspectar cinco cosas en la salida:
 
 1. Cada llamada es independiente.
 2. Cada solicitud tiene`_meta`las capacidades.

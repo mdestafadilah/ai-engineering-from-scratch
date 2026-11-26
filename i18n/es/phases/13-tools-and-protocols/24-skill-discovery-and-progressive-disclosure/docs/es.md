@@ -3,7 +3,7 @@
 > Una habilidad se vuelve útil antes de que su cuerpo se cargue. Su nombre y descripción ganan un lugar en el catálogo; sus archivos más profundos ganan contexto solo cuando la tarea les llega.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 22 (Agent Skills: Portable Contract and Runtime Boundary)
 **Time:** ~105 minutes
 
@@ -235,6 +235,7 @@ Dirige el laboratorio:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

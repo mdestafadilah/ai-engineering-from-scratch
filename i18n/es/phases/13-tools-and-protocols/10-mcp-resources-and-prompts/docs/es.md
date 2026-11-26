@@ -3,7 +3,7 @@
 > Las herramientas realizan operaciones. Los recursos exponen el contenido direccionable. Invita a los paquetes de plantillas de mensajes seleccionadas por el usuario. Un buen servidor MCP mantiene esos contratos separados y predecibles.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07 (Building an MCP Server), Phase 13, Lesson 09 (MCP Transports)
 **Time:** ~60 minutes
 
@@ -279,6 +279,7 @@ Ejecutar el simulador desde la raíz de repositorio:
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 
@@ -304,6 +305,7 @@ La lección también nos lleva .`assets/primitive-split.svg`, una versión está
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

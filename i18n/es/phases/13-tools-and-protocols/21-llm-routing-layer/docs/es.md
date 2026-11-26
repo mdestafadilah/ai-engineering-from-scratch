@@ -3,7 +3,7 @@
 > El bloqueo del proveedor es caro. Las diferentes cargas de trabajo para llamar a herramientas se adaptan a diferentes modelos. Las pasarelas de enrutamiento dan una superficie de API, retas, fallas, seguimiento de costos y barandillas. Tres arquetipos dominan 2026: LiteLLM (auto-hostado de código abierto), OpenRouter (SaaS administrado), Portkey (producción de grado, de código abierto en marzo de 2026). Esta lección nombra los criterios de decisión y se encuentra en una puerta de enrutamiento de STDlib.
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

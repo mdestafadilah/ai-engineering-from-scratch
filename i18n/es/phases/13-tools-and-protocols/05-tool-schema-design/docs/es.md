@@ -3,7 +3,7 @@
 > Una herramienta correcta falla silenciosamente cuando el modelo no puede saber cuándo usarla. El nombre, las descripciones y las formas de parámetros impulsan los cambios de 10 a 20 puntos porcentuales en la precisión de selección de herramientas en puntos de referencia como StableToolBench y MCPToolBench +. Esta lección nombra las reglas de diseño que separan una herramienta que un modelo elige confiablemente de una herramienta que un modelo dispara incorrectamente.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 
@@ -84,7 +84,7 @@ Regla de oro: si el `action`El argumento tiene más de tres valores, divida la h
 ### Diseño de parámetros
 
 - **Enum every closed set.** `units: "celsius" | "fahrenheit"`No lo he hecho .`units: string`Enums le dicen al modelo el universo de valores aceptables.
-- **Required vs optional.**Marque el mínimo necesario. Todo lo demás es opcional.`required`; añadir un `is_default: true`convención en su código y dejar que el modelo omita.
+- **Required vs optional.**Marque el mínimo necesario. Todo lo demás es opcional.`required`, para que el modelo no pueda omitir uno. Escriba un campo opcional como una unión con `null`y deja que el modelo envíe`null`cuando no tiene valor.
 - **Typed IDs.** `note_id: string`Está bien pero añade un `pattern`(El artículo`^note-[0-9]{8}$`) para atrapar identificación alucinada.
 - **No overly flexible types.**Evita el`type: any`El modelo alucinará formas.
 - **Describe the field.** `{"type": "string", "description": "ISO 8601 date in UTC, e.g. 2026-04-22"}`La descripción es parte de la solicitud del modelo.

@@ -3,7 +3,7 @@
 > Cinco herramientas leen el mismo objeto y dan cuatro direcciones, tres bloques contados, y dos respuestas para un interruptor, y esta lección construye el arnés que muestra cuál es cuál.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ Ejecutar la demostración:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida es un informe JSON. Se abre con las versiones de herramientas grabadas en el momento de la captura y con las herramientas presentes en su máquina, que pueden estar ausentes. Luego, para cada uno de los cuatro objetos da las extensiones del símbolo, las lagunas de relleno, la base de cada herramienta utilizada, la función inicia cada herramienta encontrada o inventada, y para cada función el acuerdo de inicio de instrucción, el conteo de bloques, el conteo de bordes y los bordes que cada herramienta carece. Terminará con la contabilidad de byte por herramienta, las propias notas de las herramientas, una lista de resultados en frases simples y la sección IR: la salida del traductor para las tres instrucciones junto a los recuentos medidos en los ascensores capturados.
@@ -472,6 +473,7 @@ Ejecutar la demostración y la suite determinista:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**El registro de clientes dinámico se desactiva a favor de los documentos de metadatos de ID de cliente.`application_type`Un cliente valida una presente RFC 9207 `iss`El valor y la reutilización de las credenciales en los emisores de servidores de autorización.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ Desde la raíz de repositorio, ejecuta:
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
@@ -354,7 +355,7 @@ Esta lección produce`outputs/skill-mcp-auth.md`. Dado una configuración de ser
 
 ## Los ejercicios
 
-1. - ¿ Qué ?`code/main.py`Observe cómo el IDP gira una tecla en el paso 6, el programa `refresh_jwks`retira el conjunto publicado, y tanto el token antiguo (ventana de superposición) como un token nuevo se validan sin reiniciar.
+1. - ¿ Qué ?`code/main.py`. Rastrear el flujo. Observe cómo el IdP gira una tecla en el paso 6 de la salida del guión (paso 7 del flujo anterior), el programado `refresh_jwks`retira el conjunto publicado, y tanto el token antiguo (ventana de superposición) como un token nuevo se validan sin reiniciar.
 
 2. Añadir un nuevo IDP a los metadatos de los recursos protegidos `authorization_servers`Emite un token firmado por el nuevo IDP y confirme que el validador lo acepta. Emite un token firmado por un IDP no listado y confirme que el validador lo rechaza con `WWW-Authenticate: Bearer error="invalid_token", error_description="iss not allowed"`¿ Qué ?
 

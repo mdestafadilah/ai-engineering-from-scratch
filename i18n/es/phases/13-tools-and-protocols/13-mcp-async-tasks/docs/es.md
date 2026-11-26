@@ -3,7 +3,7 @@
 > El MCP sin estatus no significa que cada operación debe terminar en una sola solicitud. La extensión oficial de tareas da a los trabajos de larga duración un mango duradero explícito. Un servidor puede devolver ese mango desde `tools/call`, cualquier instancia puede responder .`tasks/get`, y la entrada del cliente llega a través de `tasks/update`Sin reanudar las sesiones de protocolo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ Desde la raíz del repositorio:
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Las raíces se deprecian en MCP 2026-07-28 y nunca fueron una caja de seguridad. Coloque alcance en argumentos de herramientas visibles o en URIs de recursos, autorízala en el servidor y use MRTR cuando una herramienta realmente necesita la entrada del usuario. El usuario ve la decisión, el modelo ve el mango y cualquier instancia del servidor puede procesar la retrayectoria.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 11 (stateless MRTR)
 **Time:** ~60 minutes
 
@@ -247,6 +247,7 @@ Desde la raíz del repositorio:
 ```bash
 cd phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

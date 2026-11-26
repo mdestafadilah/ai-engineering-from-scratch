@@ -3,7 +3,7 @@
 > El MCP moderno no tiene apretón de manos y no tiene sesión de protocolo. Cada solicitud debe llevar suficientes metadatos para ser entendidos, autorizados, enrutados y retestados por sí solo.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

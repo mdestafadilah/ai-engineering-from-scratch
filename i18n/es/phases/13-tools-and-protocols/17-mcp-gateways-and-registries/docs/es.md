@@ -3,7 +3,7 @@
 > Un gateway debe hacer explícita cada ruta. El protocolo 2026-07-28 le da método, nombre, versión, capacidad, identidad, caché y límites de rastreo sin una sesión de transporte.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 15 (security), Phase 13 · 16 (authorization)
 **Time:** ~75 minutes
 
@@ -326,6 +326,7 @@ El modelo recibe cuerpos de solicitud analizados, encabezados de enrutamiento y 
 ```bash
 cd phases/13-tools-and-protocols/17-mcp-gateways-and-registries
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

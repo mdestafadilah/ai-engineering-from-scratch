@@ -3,7 +3,7 @@
 > Sin estatus no significa que no tenga confianza, significa que cada solicitud expone la evidencia que un servidor y una puerta de entrada necesitan para validar la llamada de forma independiente.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~60 minutes
 
@@ -248,6 +248,7 @@ El modelo comienza después de que un adaptador HTTP haya analizado el cuerpo JS
 ```bash
 cd phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

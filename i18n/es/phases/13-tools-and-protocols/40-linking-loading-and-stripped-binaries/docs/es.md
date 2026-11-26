@@ -3,7 +3,7 @@
 > Un programa vinculado llama a funciones que no contiene. Esta lección lee las tablas que el editor de enlaces escribió para esas llamadas en tres formatos, sigue una llamada a la ranura que llena el cargador y encuentra las funciones de una construcción después de que se hayan eliminado sus nombres.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ Ejecutar la demostración:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida es un informe JSON con cinco partes. `elf`tiene los recuentos de reubicación de los dos objetos, el plan de enlace y la sección dinámica, PLT y GOT de `tiny-dyn-x86_64`- ¿ Qué ?`coff`contiene las secciones, las reubicaciones, las funciones y los nombres indefinidos de los dos objetos. `pe`En el caso de las empresas de transporte, el número de pasajeros en el mercado de transporte de mercancías es el número de pasajeros en el mercado de transporte.`tiny-x86_64.exe`- ¿ Qué ?`macho`Tiene`ledger_main`con sus estumbres, arreglos encadenados, filas de arreglos y exportaciones, el diseño heredado de `ledger_main_nochain`, el Dyllib, y los dos informes de strip.`identification`Tiene la verdad, los cuatro métodos con puntajes, y las firmas con sus colisiones, en `-O0`y `-O2`¿ Qué ?
@@ -412,6 +413,7 @@ Ejecutar la demostración y la suite determinista:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

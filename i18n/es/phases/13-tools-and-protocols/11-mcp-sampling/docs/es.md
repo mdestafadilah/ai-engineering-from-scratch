@@ -3,7 +3,7 @@
 > MCP 2026-07-28 deprecia la muestreo para nuevos diseños y elimina el canal de solicitud de servidor a cliente. Si un flujo de trabajo existente todavía necesita el modelo del cliente, el servidor devuelve un `input_required`El cliente retoma la solicitud original con la salida del modelo. El bucle de razonamiento se vuelve explícito, limitado y sin estado en la capa de protocolo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ Desde la raíz del repositorio:
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

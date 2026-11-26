@@ -3,7 +3,7 @@
 > Un descompilador imprime`a->balance`cuando tiene una tabla de tipo y `*(int *)(param_1 + 4)`Esta lección construye la tabla a partir de los accesos, lee la verdadera de DWARF 5, y muestra dónde están de acuerdo los dos.
 
 **Type:** Build
-**Languages:** Python, C, C++, x86-64 assembly
+**Languages:** Python, TypeScript, C, C++, x86-64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~140 minutes
 
@@ -383,6 +383,7 @@ Ejecutar la demostración:
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida es un informe JSON con cinco partes. `dwarf`El título de la unidad, las estructuras y las funciones de la`-O0`Objeto.`oracles`tiene el diseño de las reglas de psABI, el `ctypes`La distribución, la distribución DWARF, la ejecución nativa y un `agree`bandera.`builds`contiene los accesos, la disposición inferida y la comparación para cada uno de los tres objetos. `cxx`contiene los nombres desfigurados, ambos vtables, ambos registros de tipoinfo, la llamada virtual y las ranuras DWARF. `tools`enumera las salidas de la herramienta capturadas.
@@ -513,6 +514,7 @@ Ejecutar la demostración y la suite determinista:
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

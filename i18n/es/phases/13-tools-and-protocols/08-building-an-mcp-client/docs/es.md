@@ -3,7 +3,7 @@
 > Un cliente MCP moderno repite su contrato en cada solicitud. Su decisión de compatibilidad más difícil es saber cuándo un servidor viejo es realmente viejo y cuándo un servidor moderno está reportando un error corregible.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07
 **Time:** ~85 minutes
 
@@ -178,6 +178,7 @@ tp-client-merge
 ```bash
 cd code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

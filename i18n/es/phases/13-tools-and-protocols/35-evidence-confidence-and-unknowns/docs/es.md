@@ -3,7 +3,7 @@
 > Un hallazgo sobre un programa compilado es un registro con un hash, una confianza, una autoridad y una lista de lo que no puede mostrar.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~105 minutes
 
@@ -306,6 +306,7 @@ Ejecutar la demostración de la biblioteca estándar:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La demostración lee el objeto, importa los dos registros rea, verifica la instantánea rea y deriva los dos modelos. Luego registra 18 predicciones, abre 18 desconocidas, compila y ejecuta el arnés, verifica cada reclamo y resuelve 17 desconocidas.
@@ -426,6 +427,30 @@ Requisitos:
 
 El éxito significa un informe en el que cada oración cita un ID del paquete y el uno `unknown`El reclamo se ha ido.
 
+## Laboratorio de calificación
+
+Cinco preguntas sobre los accesorios de esta lección.`code/lab_answers.json`Escribir números como números o como cuerdas hexáticas como `"0x40"`, y listas como listas JSON.
+
+1. `t1`: el ID de pruebas que da la computación_evidencia_id para el grado de pruebas reales.
+2. `t2`: el número de limitaciones en el registro de calificaciones.
+3. `t3`: el estado de relación_cubrición del registro de calificaciones.
+4. `t4`: la confianza y la autoridad del registro de calificaciones, como una lista de dos cadenas.
+5. `t5`: el SHA-256 del objeto del registro de calificación.
+
+Compruebe sus respuestas:
+
+```bash
+cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
+python3 code/lab.py
+npx tsx code/lab.ts
+```
+
+El verificador calcula cada valor esperado desde `code/main.py`En los accesorios comprometidos.`PASS`¿ Qué ?`FAIL`o `TODO`para cada tarea y una puntuación, y sale de 0 sólo cuando pasan los cinco. `python3 code/lab.py my-answers.json`- ¿Qué? - Vea otro archivo.`code/tests/test_lab.py`prueba que el comprobador acepta las respuestas correctas y rechaza las incorrectas.
+
+### Ve cómo se ejecuta
+
+El [Inside a Decompiler](https://aiengineeringfromscratch.com/inside-a-decompiler?symbols=off)La máquina mantiene un libro mayor de pruebas con cuatro bandejas: observado, derivado, inferido e desconocido. Este enlace abre la ejecución con la tabla de símbolos apagada, por lo que el nombre y el final del archivo de función son desconocidos y los archivos de inicio como inferidos.
+
 ## Lección Artefacto
 
 Esta lección produce`outputs/skill-evidence-ledger.md`. Le dice a un agente cómo escribir cada hallazgo como un registro con confianza, autoridad, limitaciones y enlaces.`pass`¿ Qué ?`fail`¿ Qué ?`unknown`, o`unsupported`¿ Qué ?
@@ -437,6 +462,7 @@ Ejecutar la demostración y la suite determinista:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

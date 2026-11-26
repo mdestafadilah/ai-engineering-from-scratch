@@ -3,7 +3,7 @@
 > Una desmontaje muestra qué registros una función lee. Sólo el ABI dice lo que esos registros significan, y el ABI es elegido por el encabezado del objeto, por lo que esta lección lee el encabezado primero y luego verifica cada registro contra la regla que lo puso allí.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ Ejecutar la demostración:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida es un informe JSON. Para cada uno de los siete objetos nombra el formato, la máquina y el ABI, y para cada una de las doce funciones da los bytes del prólogo, los registros guardados con compensaciones de entrada, el tamaño del marco, el puntero de marco, los registros de parámetros, los compensaciones de argumentos de pila, los derrames, el registro de retorno o puntero oculto, las profundidades de llamada y los registros y almacenes salientes de los llamadores. Cada función termina con sus controles: la regla, el valor esperado de la firma, el valor observado de los bytes y si están de acuerdo. El informe termina con los dos controles cruzados de desvío y la herramienta captura. En los 84 análisis de funciones, se realizan 489 controles y todos los 489 están de acuerdo.
@@ -331,6 +332,7 @@ Ejecutar la demostración y la suite determinista:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
