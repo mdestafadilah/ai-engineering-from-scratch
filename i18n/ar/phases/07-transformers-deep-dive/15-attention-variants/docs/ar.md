@@ -1,9 +1,9 @@
 # الاهتمام المتغيرات  نافذة زلقة، شقق، فرقية
 
-> الاهتمام الكامل هو دائرة. كل رمز يرى كل رمز، والذاكرة تدفع الثمن. أربعة فوارق يلتوي شكل الدائرة ويسترد نصف التكلفة.
+> الاهتمام الكامل هو دائرة. كل رمز يرى كل رمز، والذاكرة تدفع الثمن. ثلاثة فوارق يلتوي شكل الدائرة ويسترد نصف التكلفة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -63,8 +63,8 @@ positions 0-7          positions 0-7, W=4
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d}) \\
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d}) \\
 \text{DiffAttn} &= (A_1 - \lambda \cdot A_2) V
 \end{aligned}
 ```
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## بناءها
 
-انظر`code/main.py`نطبق مقارنة قناع السببية التي تظهر كاملة، SWA، محلية+خطوة، والاهتمام المختلف جنبا إلى جنب على تسلسل اللعبة.
+انظر`code/main.py`أو ميناء " رست "`code/main.rs`لتشغيل نسخة " الرست "`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`نطبق مقارنة قناع السببية التي تظهر كاملة، SWA، محلية+خطوة، والاهتمام المختلف جنبا إلى جنب على تسلسل اللعبة.
 
 ### الخطوة الأولى: قناع السببية الكامل (الخط الأساسي)
 
