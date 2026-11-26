@@ -3,7 +3,7 @@
 > Thuốc truyền trộn các biểu diễn liên tục và riêng biệt. Show-o (Xie et al., tháng 8 năm 2024) đi theo hướng khác: mã thông báo văn bản sử dụng dự đoán mã thông báo tiếp theo nguyên nhân, mã thông báo hình ảnh sử dụng sự lan truyền kín kín trong tinh thần của MaskGIT. Cả hai đều ngồi trong một bộ biến đổi với một mặt nạ tập trung lai. Kết quả thống nhất VQA, text-to-image, inpainting, và sản xuất modality hỗn hợp trên một xương sống, một tokeniser mỗi modality, một công thức mất mát (token tiếp theo mở rộng đến dự đoán che giấu). Bài học này đi theo thiết kế Show-o tại sao sự phân tán phân biệt được che giấu là một máy tạo hình ảnh song song, vài bước và tương phản với Transfusion và Emu3.
 
 **Type:** Learn
-**Languages:** Python (stdlib, masked-discrete-diffusion sampler)
+**Languages:** Python, TypeScript (stdlib, masked-discrete-diffusion sampler)
 **Prerequisites:** Phase 12 · 13 (Transfusion)
 **Time:** ~120 minutes
 
@@ -11,7 +11,7 @@
 
 - Giải thích sự phân tán phân biệt được che giấu: lịch trình che giấu token một cách đồng nhất sau đó yêu cầu biến đổi để phục hồi chúng.
 - So sánh việc giải mã hình ảnh song song (Show-o, MaskGIT) với việc giải mã hình ảnh tự rút (Chameleon, Emu3) về tốc độ và chất lượng.
-- Tên gọi ba nhiệm vụ Show-o xử lý tại một điểm kiểm soát: T2I, VQA, vẽ hình ảnh.
+- Hãy nêu tên bốn nhiệm vụ Show-o xử lý trong một điểm kiểm soát: tạo văn bản, VQA, T2I, vẽ hình ảnh.
 - Chọn một lịch trình che giấu (các, tuyến tính, cắt) và lý luận về tác động của nó đối với chất lượng mẫu.
 
 ## Vấn đề
