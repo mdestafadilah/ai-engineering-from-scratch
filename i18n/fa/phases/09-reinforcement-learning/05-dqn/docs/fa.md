@@ -3,7 +3,7 @@
 > 2013: Mnih یک شبکه Q-learning را بر روی پیکسل های خام آموزش داد، هر عامل RL کلاسیک را در هفت بازی Atari شکست داد. 2015: گسترش به 49 بازی، منتشر شده در طبیعت، عصر عمیق RL را آغاز کرد. DQN Q-learning به علاوه سه ترسه است که عملکرد تقرب را پایدار می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 
@@ -72,7 +72,7 @@ class ReplayBuffer:
         return rng.sample(self.buf, batch)
 ```
 
-~ 50 هزار ظرفیت برای آتاری ؛ 5000 برای محیط بازی ما کافی است
+~106 ظرفیت برای آتاری، مانند DQN اصلی (این 50،000 انتقال را قبل از شروع یادگیری جمع آوری می کند) ؛ 5000 برای محیط بازی ما کافی است.
 
 ### مرحله دوم: یک شبکه کوچک Q (MLP دستی)
 
