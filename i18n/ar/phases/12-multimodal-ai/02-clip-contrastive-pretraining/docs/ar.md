@@ -3,7 +3,7 @@
 > أثبتت CLIP (2021) من OpenAI فكرة واحدة كبيرة بما يكفي لتشغيل السنوات الخمس المقبلة: تحديد مُرمّد الصورة ومُرمّد النص في نفس المساحة المتجهة باستخدام أزواج الصور المُضوضعة فقط على شبكة الإنترنت. صفر علامات مراقبة 400 مليون زوج الفضاء الإضافي الناتج يقوم بتصنيف الصور والنصوص الصورة، ويقوم بتوصيل كل VLM عام 2026 كبرج الرؤية. استبدل SigLIP 2 (2025) softmax بـ sigmoid ووصلت إلى CLIP بعد ذلك بتكلفة أقل. هذا الدروس يمر الرياضيات من InfoNCE إلى sigmoid ضياع زوجية و يبني خطوة التدريب في stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 
@@ -66,7 +66,7 @@ loss = (loss_i2t + loss_t2i) / 2
 سيجليب يبدل softmax بـ sigmoid ذي العناصر: لكل زوج `(i, j)`، الخسارة هي تصنيف ثنائي من "هل هذه زوج المقابلة؟" علامات الفئة الإيجابية هي التناحية، كل شيء آخر هو سلبي. الخسارة هي:
 
 ```math
-L = -\frac{1}{N} \sum_{(i, j)} \Big[ y_{ij} \log \operatorname{sigmoid}(S[i,j]) + (1-y_{ij}) \log \operatorname{sigmoid}(-S[i,j]) \Big]
+L = -\frac{1}{N} \sum_{(i, j)} \Big[ y_{ij} \log \mathop{\mathrm{sigmoid}}(S[i,j]) + (1-y_{ij}) \log \mathop{\mathrm{sigmoid}}(-S[i,j]) \Big]
 ```
 
 `y_ij = 1`إذا`i == j`كل زوج من الخسائر مستقلة. لا حاجة إلى جمع كل. كل GPU يحسب كتله المحلي والكميات. siglip 2 مقياسات ل 32k-512k على نطاق رخيص حيث CLIP سوف تحتاج إلى أكثر اتصالات نسبيا.
