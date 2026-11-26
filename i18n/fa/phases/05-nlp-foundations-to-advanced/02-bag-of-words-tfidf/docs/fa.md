@@ -3,7 +3,7 @@
 > اول حساب کن بعد فکر کن TF-IDF هنوز در سال 2026 از برنامه های کاربردی در وظایف مشخصه بر میگیره
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 
@@ -26,7 +26,7 @@
 ```math
 \begin{aligned}
 \text{TF-IDF}(w, d) &= \text{TF}(w, d) \cdot \text{IDF}(w) \\
-&= \frac{\operatorname{count}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\operatorname{df}(w)}
+&= \frac{\mathop{\mathrm{count}}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\mathop{\mathrm{df}}(w)}
 \end{aligned}
 ```
 
@@ -126,7 +126,7 @@ def tfidf(bow_matrix):
 >>> tfidf(bow)
 ```
 
-سه سند، پنج کلمه صوتی (`the`،`cat`،`sat`،`dog`،`ran`)`the`در هر سه مورد ظاهر شده، پس ارتش اسرائيلي کم است.`dog`ویکتورها نادر هستند (زیادہ تر ورودی ها کوچک هستند) و کلمات تبعیض آمیز پاپ می شوند.
+سه سند، پنج کلمه صوتی (`the`،`cat`،`sat`،`dog`،`ran`)`the`در هر سه مورد ظاهر شده، پس ارتش اسرائيلي کم است.`dog`در این بازی، کلمات تبعیض آمیز ظاهر می شوند. حتی در این اسباب بازی، کلمات تبعیض آمیز ظاهر می شوند.
 
 ### مرحله 5: صف های L2- عادی سازی
 

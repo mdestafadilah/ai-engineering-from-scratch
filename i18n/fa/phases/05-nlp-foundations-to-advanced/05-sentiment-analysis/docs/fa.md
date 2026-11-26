@@ -3,7 +3,7 @@
 > وظیفه NLP کانونیک. بیشتر آنچه که شما باید در مورد طبقه بندی متن کلاسیک بدانید در اینجا نشان داده شده است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 2 · 14 (Naive Bayes)
 **Time:** ~75 minutes
 
@@ -200,7 +200,7 @@ pipe.fit(X_train, y_train)
 print(pipe.score(X_test, y_test))
 ```
 
-سه تا چيز براي توجه`stop_words=None`. انکار رو نگه مي داره`ngram_range=(1, 2)`به اون اضافه مي کنه`not_good`به عنوان یک ویژگی تبدیل می شود.`sublinear_tf=True`این سه علامت تفاوت بین یک خط پایه 75 درصد دقیق و یک خط پایه 85 درصد دقیق در SST-2 است.
+سه تا چيز براي توجه`stop_words=None`. انکار رو نگه مي داره`ngram_range=(1, 2)`به اون اضافه مي کنه`not good`تبدیل به یک ویژگی می شود (scikit-learn دو کلمه را با یک فضای متصل می کند). `sublinear_tf=True`این سه علامت تفاوت بین یک خط پایه 75 درصد دقیق و یک خط پایه 85 درصد دقیق در SST-2 است.
 
 ### چه زمانی باید یک ترانسفورماتور را پیدا کنیم
 

@@ -3,7 +3,7 @@
 > اگه کلمه ای شگفت آور باشه مدلش خرابه. حیرانه بودن باعث شگفتی میشه. نرم کردن باعث می شه اعداد محدود باشند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 
@@ -42,7 +42,7 @@ prediction-game
 **N-gram probability:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`. درست کردن`n`(معمولا 3 برای تریگرام، 4 برای 4 گرم)
 
 ```math
-P(w \mid \text{context}) = \frac{\operatorname{count}(\text{context}, w)}{\operatorname{count}(\text{context})}
+P(w \mid \text{context}) = \frac{\mathop{\mathrm{count}}(\text{context}, w)}{\mathop{\mathrm{count}}(\text{context})}
 ```
 
 **The zero-count problem.**هر n-گرام که در آموزش دیده نشده است احتمال صفر را به دست می آورد. یک مطالعه در سال 2007 در مورد کورپوس براون نشان داد که حتی یک مدل 4 گرم نیز 30٪ از 4 گرم را در آموزش دیده است. شما نمی توانید بدون صاف کردن در هر متن واقعی ارزیابی کنید.
