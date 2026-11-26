@@ -3,7 +3,7 @@
 > Rafaelov y otros. (2023) mostró que el óptimo de RLHF tiene una forma cerrada en términos de datos de preferencias, por lo que puede saltarse el modelo de recompensa explícito y optimizar la política directamente. Esa visión dio lugar a una familia  IPO, KTO, SimPO, ORPO, BPO  cada uno fijando un modo de falla de DPO. En 2026, los algoritmos de alineación directa envían más carreras fronterizas después del entrenamiento que PPO. Pero la curva de optimización excesiva de la Lección 2 sigue siendo aplicable: los DAA no escapan de Goodhart, simplemente se mueven donde muerde.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 
@@ -53,7 +53,7 @@ L_{\text{DPO}} = -\log \sigma\!\left(
 
 - La brecha implícita de recompensas `beta * (log(pi/pi_ref)_w - log(pi/pi_ref)_l)`Una pequeña preferencia puede producir una brecha arbitrariamente grande.
 - El disco de pérdida selecciona y rechaza las pruebas de registro en direcciones opuestas. Puede empujar la prueba de registro absoluta elegida hacia abajo siempre que la rechazada caiga más rápido. Este es el fenómeno de la respuesta elegida degradada.
-- Las preferencias fuera de distribución (par raro raro vs par raro raro) producen recompensas implícitas arbitrarias.
+- Las preferencias fuera de distribución (parejas en las que ambas respuestas son raras en el marco de la política de referencia) producen recompensas implícitas arbitrarias.
 
 ### El mercado de la inversión se ha convertido en un mercado de inversión.
 
