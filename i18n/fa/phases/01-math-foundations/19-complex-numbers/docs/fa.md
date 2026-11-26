@@ -3,7 +3,7 @@
 > ریشه مربع -1 غیر خیالی نیست. این کلید چرخش، فرکانس و نیمی از پردازش سیگنال است.
 
 **Type:** Learn
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -105,7 +105,7 @@ z = 0 + 4i  corresponds to the point (0, 4) on the imaginary axis
 \begin{aligned}
 z &= r (\cos\theta + i \sin\theta) \\[4pt]
 \text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
-\theta &= \operatorname{atan2}(b, a) \quad \text{(phase, or argument)}
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
 \end{aligned}
 ```
 
@@ -250,7 +250,7 @@ PE(pos, 2i+1) &= \cos\left(pos / 10000^{2i/d}\right)
 | Multiplication | $(ac-bd) + (ad+bc)i$ | Rotate and scale |
 | Conjugate | $a - bi$ | Reflect over real axis |
 | Magnitude | $\sqrt{a^2 + b^2}$ | Distance from origin |
-| Phase | $\operatorname{atan2}(b, a)$ | Angle from positive real axis |
+| Phase | $\mathop{\mathrm{atan2}}(b, a)$ | Angle from positive real axis |
 | Division | multiply by conjugate | Reverse rotation and rescale |
 | Power | $r^n e^{in\theta}$ | Rotate $n$ times, scale by $r^n$ |
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## -باده
 
-فرار کن`code/complex_numbers.py`تولید کردن`outputs/skill-complex-arithmetic.md`. .
+فرار کن`code/complex_numbers.py`یا`npx tsx code/complex_numbers.ts`تولید کردن`outputs/skill-complex-arithmetic.md`. .
 
 ## تمرینات
 
@@ -440,6 +440,18 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 5. **Rotation matrix equivalence.**برای 10 زاویه تصادفی و 10 نقطه تصادفی، تایید کنید که ضرب پیچیده همان نتیجه را به عنوان ضرب ماتریس-وکتور با ماتریس چرخش 2x2 می دهد. حداکثر تفاوت عددی چاپ کنید.
 
+### اشاره ها
+
+**Exercise 1.**محصول رو با $i^2 = -1$، سپس با ضرب بالا و پایین با مخلوط تقسیم کنید$1 + 3i$. محصول رو با`Complex(2, 3) * Complex(4, -1)`: آن`magnitude()`باید برابر محصول دو شدت باشد و`phase()`باید برابر با مجموع دو مرحله باشد.
+
+**Exercise 2.**قدم رو بردار`euler(math.pi / 6)`و 12 بار ضرب کنید. در هر مرحله، بررسی کنید که آیا شدت 1 باقی می ماند و زاویه 30 درجه رشد می کند. نقطه نهایی باید در حدود 1e-12 از (1, 0 باشد.
+
+**Exercise 3.**با $t = n/32$و تماس بگیرید`dft`فقط به کاشی های 0 تا 15 نگاه کنید چون نیمه بالا یک عکس آینه است.$k$برای یک سینوس از آمپلتوید$A$.$AN/2$، پس انتظار داشته باشید که در بین 3 حدود 16 و در بین 7 حدود 8 باشد
+
+**Exercise 4.**تماس بگیرید`roots_of_unity(8)`و ریشه ها را اضافه کنید: مقدار مجموع باید نزدیک به 0 باشد. هر ریشه را با ریشه قبلی تقسیم کنید و بررسی کنید که هر نتیجه برابر است.`euler(2 * math.pi / 8)`. .
+
+**Exercise 5.**ماتریس چرخش [[cos t، -sin t، [sin t، cos t] است. برای هر زاویه و نقطه، محاسبه کنید `euler(t) * Complex(x, y)`و محصول ماتریکس، سپس بزرگترین تفاوت مطلق را ثبت کنید. انتظار دارید که یک مقدار نزدیک باشد $10^{-15}$. .
+
 ## اصطلاحات کلیدی
 
 | Term | What it means |
@@ -448,7 +460,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 | Imaginary unit | The number $i$, defined by $i^2 = -1$. Not imaginary in the philosophical sense -- it is a rotation operator |
 | Complex plane | The 2D plane where the x-axis is real and the y-axis is imaginary. Also called the Argand plane |
 | Magnitude (modulus) | The distance from the origin: $\sqrt{a^2 + b^2}$. Written as $\lvert z \rvert$ |
-| Phase (argument) | The angle from the positive real axis: $\operatorname{atan2}(b, a)$. Written as $\arg(z)$ |
+| Phase (argument) | The angle from the positive real axis: $\mathop{\mathrm{atan2}}(b, a)$. Written as $\arg(z)$ |
 | Conjugate | The mirror image across the real axis: conjugate of $a + bi$ is $a - bi$ |
 | Polar form | Expressing $z$ as $r e^{i\theta}$ instead of $a + bi$. Makes multiplication easy |
 | Euler's formula | $e^{i\theta} = \cos\theta + i \sin\theta$. Connects exponentials to trigonometry |

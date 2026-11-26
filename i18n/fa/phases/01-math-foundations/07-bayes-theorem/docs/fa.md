@@ -3,7 +3,7 @@
 > احتمال به آنچه انتظار دارید بستگی دارد. نظریه ی بیز به آنچه یاد می گیرید بستگی دارد.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 اضافه کردن 1 به هر شمارش تضمین می کند که هیچ احتمالی هرگز صفر نیست.
 
+کلمه ای که هرگز در هیچ پیام آموزشی ظاهر نشده در لغات نیست.`predict`ازش تخطي ميکنه، چون هيچ مدرکي براي هر دو کلاس نميدونه
+
 ### حداکثر یک پس از (MAP)
 
 MLE پرسید: چه پارامتر هایی را حداکثر می کند $P(\text{data} \mid \text{parameters})$؟
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ for msg, pred in zip(test_messages, predictions):
 
 ## -باده
 
-کلاس NaiveBayes که در اینجا ساخته شده است، کل خط تولید را نشان می دهد: توکن سازی، تخمین احتمال با صاف کردن Laplace، پیش بینی فضای ثبت.`code/bayes.py`بدون وابستگی فراتر از کتابخانه استاندارد پایتون اجرا می شود.
+کلاس NaiveBayes که در اینجا ساخته شده است، کل خط تولید را نشان می دهد: توکن سازی، تخمین احتمال با صاف کردن Laplace، پیش بینی فضای ثبت.`code/bayes.py`از انتها به انتها بدون وابستگی فراتر از کتابخانه استاندارد پایتون اجرا می شود. پورت تایپ اسکریپت در `code/bayes.ts`فقط با استفاده از کتابخانه استاندارد Node
 
 ### پیشاپیش های متقابل
 
@@ -450,6 +452,16 @@ graph LR
 3. **Add features.**کلاس NaiveBayes را گسترش دهید تا از طول پیام (قصر/طول) به عنوان یک ویژگی در کنار شمارش کلمات استفاده شود. تخمین $P(\text{short} \mid \text{spam})$و$P(\text{short} \mid \text{ham})$از داده های آموزش و آن را به نمره پیش بینی بکشید.
 
 4. **MAP by hand.**با توجه به داده های مشاهده شده (۷ سر در ۱۰ فلپ سکه) تخمین MAP از تعصب را با استفاده از یک$\text{Beta}(2,2)$قبل از این، آن را با تخمین MLE مقایسه کنید ($7/10$)
+
+### اشاره ها
+
+**Exercise 1.**تماس بگیرید`bayes`بعد از تست 1، یک بار پس از تست 1، پس از آن دوباره با پس از آن به عنوان پیش رو تماس بگیرید.`sequential_bayes(prior, likelihood, false_positive_rate, 2)`باید مقدار مشابهی داشته باشد، نزدیک به 0.5
+
+**Exercise 2.**یکی بساز`NaiveBayes(smoothing=s)`برای هر مقدار، آن را بر اساس همان داده ها آموزش دهید و چاپ کنید`top_words`با صاف کردن 0، کلمه ای که هرگز در اسپام ظاهر نمی شود احتمال 0 را می گیرد، بنابراین تاریخش تعریف نشده است.
+
+**Exercise 3.**شمارش کنید که چه تعداد پیام های اسپم و خمیر کوتاه هستند، با تعداد پیام ها در هر کلاس تقسیم کنید و به نمره در `predict`. چک کنید که دو احتمال برای هر کلاس به 1 اضافه می شود
+
+**Exercise 4.**با یک$\text{Beta}(\alpha, \beta)$قبل از این، تخمین MAP $\frac{h + \alpha - 1}{n + \alpha + \beta - 2}$. بذارش$h = 7$،$n = 10$; نتیجه باید بین MLE (0.7) و حالت قبلی (0.5) باشد.
 
 ## اصطلاحات کلیدی
 
