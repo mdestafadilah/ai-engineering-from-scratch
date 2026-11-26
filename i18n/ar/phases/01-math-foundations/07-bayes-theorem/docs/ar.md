@@ -3,7 +3,7 @@
 > الاحتمال يتعلق بما تتوقعه، نظرية بايز يتعلق بما تتعلمينه
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 إضافة 1 لكل عدد يضمن عدم وجود احتمال هو أبدا صفر.
 
+كلمة لم تظهر أبدا في أي رسالة تدريبية ليست في المفردات. `predict`يفرض ذلك لأنه لا يقدم أي دليل على أي من الفصول.
+
 ### الحد الأقصى a posteriori (MAP)
 
 يسأل MLE: ما هي المعايير التي تسمح لها بالتحقيق أقصى قدر $P(\text{data} \mid \text{parameters})$- ماذا ؟
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ for msg, pred in zip(test_messages, predictions):
 
 ## أرسله
 
-فمجموعة NaiveBayes التي تم بناؤها هنا تظهر خط الأنابيب الكامل: التكنولوجيا، وتقدير الاحتمالات مع تسطيح Laplace، وتنبؤ الفضاء السجل.`code/bayes.py`تعمل من نهاية إلى نهاية بدون أي اعتمادات خارج مكتبة Python القياسية.
+فمجموعة NaiveBayes التي تم بناؤها هنا تظهر خط الأنابيب الكامل: التكنولوجيا، وتقدير الاحتمالات مع تسطيح Laplace، وتنبؤ الفضاء السجل.`code/bayes.py`يعمل من نهاية إلى نهاية دون أي اعتمادات خارج مكتبة بايثون القياسية.`code/bayes.ts`يستخدم فقط مكتبة Node القياسية.
 
 ### الاولى المتزوجة
 
@@ -450,6 +452,16 @@ graph LR
 3. **Add features.**توسيع فئة NaiveBayes للاستخدام أيضاً طول الرسالة (قصير/طويل) كخصية إلى جانب عدد الكلمات. تقدير $P(\text{short} \mid \text{spam})$و$P(\text{short} \mid \text{ham})$من بيانات التدريب ويقومون بتثبيتها في النتيجة التنبؤية
 
 4. **MAP by hand.**بالنظر إلى البيانات الملاحظة (سبع رؤوس في 10 رمضات عملة) ، احسب تقدير MAP للتحيز باستخدام $\text{Beta}(2,2)$قبل ذلك. مقارنة مع تقدير MLE ($7/10$)
+
+### إشارات
+
+**Exercise 1.**اتصل`bayes`مرة واحدة للحصول على الظهر بعد اختبار 1 ثم استدعاء مرة أخرى مع ذلك الظهر كالأسبق. `sequential_bayes(prior, likelihood, false_positive_rate, 2)`يجب أن يعطي نفس القيمة، قريبة من 0.5
+
+**Exercise 2.**إخلق واحدة`NaiveBayes(smoothing=s)`لكل قيمة، تدرب على نفس البيانات، وتطبيع `top_words`مع تسهيل 0، كلمة لا تظهر أبدا في البريد الإلكتروني تحصل على احتمال 0، لذلك لا يتم تعريف سجلها.
+
+**Exercise 3.**عد عدد رسائل الرسائل البريد الالكتروني والحمام قصيرة، وقسمها بعدد الرسائل في كل فئة، و أضف سجل هذا النسبة إلى النتيجة في `predict`تحقق من احتمالات كل فئة تبلغ 1.
+
+**Exercise 4.**مع$\text{Beta}(\alpha, \beta)$قبل ذلك، تقدير الخريطة$\frac{h + \alpha - 1}{n + \alpha + \beta - 2}$ضعها$h = 7$،$n = 10$يجب أن تكون النتيجة بين MLE (0.7) والوضع السابق (0.5).
 
 ## الشروط الرئيسية
 

@@ -190,14 +190,14 @@ P(X = x) = \sum_{y} P(X = x, Y = y)
 
 ### لماذا توزيع طبيعي يظهر في كل مكان
 
-نظرية الحد المركزي: مجموع (أو متوسط) العديد من المتغيرات العشوائية المستقلة يتقارب إلى توزيع طبيعي، بغض النظر عن التوزيع الأصلي.
+نظرية الحد المركزي: متوسط العديد من المتغيرات العشوائية المستقلة من نفس التوزيع ، مرة واحدة مركزية وتحجم من خلال $\sqrt{n}$، يقترب من التوزيع الطبيعي، مهما كان شكل التوزيع الأصلي، طالما أن اختلافه محدود.
 
 ```
 Roll 1 die:  uniform distribution (flat)
 Average of 2 dice:  triangular (peaked)
 Average of 30 dice: nearly perfect bell curve
 
-This works for ANY starting distribution.
+This works for ANY starting distribution with finite variance.
 ```
 
 هذا هو السبب:
@@ -448,6 +448,16 @@ print(f"Log-softmax: {log_probs}")
 
 4. اكتب وظيفة تأخذ قائمة من احتمالات السجل وتعطي التسلسل الأكثر احتمالا، والاحتمالات السجلية الإجمالية، والاحتمالات الخام المكافئة. اختبره بعبارة من 50 كلمة حيث كل كلمة لديها احتمال 0.01.
 
+### إشارات
+
+**Exercise 1.**ارسم`u`من توزيع و إرجاع متساوي$-\ln(1 - u) / \lambda$تحقق من أن متوسط العينة قريب من$1/\lambda$و أن حاويات التشخيص تتبع$\lambda e^{-\lambda x}$. . .
+
+**Exercise 2.**املأ جدول 6×6 حيث كل خلية هي احتمالية وجميع الخلايا هي 1 ثم اتصل`joint_to_marginals`استخدم`check_independence`: الكرة مستقلة فقط إذا كانت كل خلية تساوي نسبة حافة حوافقتها.
+
+**Exercise 3.**التطبيق`softmax`إلى المخطوطات وخذ$-\ln$من احتمالية في المؤشر 3. يجب أن يكون النتيجة قريبة من 0.421, وهو القيمة `nn.CrossEntropyLoss`يعطي نفس الخصم والهدف
+
+**Exercise 4.**أضف احتمالات السجل، لا تضاعف احتمالات خام. بالنسبة إلى 50 كلمة مع احتمال 0.01, يجب أن يكون إجمالي $50 \ln(0.01) \approx -230.26$والاحتمال الخام هو$10^{-100}$. . .
+
 ## الشروط الرئيسية
 
 | Term | What people say | What it actually means |
@@ -460,7 +470,7 @@ print(f"Log-softmax: {log_probs}")
 | Expected value | "The average" | The probability-weighted sum of all outcomes. The loss function is an expected value |
 | Variance | "How spread out" | The expected squared deviation from the mean. High variance = noisy, unstable estimates |
 | Normal distribution | "The bell curve" | $f(x) = (1/\sqrt{2\pi\sigma^2}) \cdot \exp(-(x-\mu)^2/(2\sigma^2))$. Appears everywhere due to the CLT |
-| Central Limit Theorem | "Averages become normal" | The mean of many independent samples converges to a normal distribution regardless of the source |
+| Central Limit Theorem | "Averages become normal" | The centered, scaled mean of many independent samples converges to a normal distribution for any source with finite variance |
 | Joint distribution | "Two variables together" | $P(X, Y)$ describes the probability of every combination of $X$ and $Y$ outcomes |
 | Marginal distribution | "Sum out the other variable" | $P(X) = \sum_y P(X, Y)$. Recovers one variable's distribution from the joint |
 | Log probability | "Log of the probability" | $\log P(x)$. Turns products into sums, preventing numerical underflow in long sequences |

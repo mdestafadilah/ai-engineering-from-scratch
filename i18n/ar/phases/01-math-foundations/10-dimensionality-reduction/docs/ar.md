@@ -3,7 +3,7 @@
 > البيانات الابعاد العالي لديها بنية يمكنك العثور عليها بالنظر من الزاوية الصحيحة
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -198,6 +198,13 @@ pca-axes
 
 ## بناءها
 
+منفذ النسخة النسخة هو في `code/dim_reduction.ts`الـ (منست) يحتاج إلى تعلم (سكيت) لذا يعملون فقط في (بايتون)
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
+
 ### الخطوة الأولى: PCA من الصفر
 
 ```python
@@ -354,6 +361,14 @@ for k in [10, 30, 50, 100, 200]:
 2. قم بتشغيل t-SNE على نفس مجموعة فرعية MNIST مع قيم الارتباك من 5، 30 و 100. وصف كيف تتغير الخروج. لماذا يؤثر الارتباك على ضيق الكلاستر؟
 
 3. خذ مجموعة بيانات ذات 50 ميزة حيث 5 فقط من المعلومات (إنشاء واحدة مع `sklearn.datasets.make_classification`تطبيق PCA وتحقق من ما إذا كان منحنى التباين الموضح يحدد بشكل صحيح أن البيانات هي فعلياً خمسة أبعاد.
+
+### إشارات
+
+**Exercise 1.**اقرأ`inverse_transform`في`PCA`فئة و تناسب نموذج واحد لكل عدد من المكونات.`reconstruction_error`للصيغ 10، 50 و 200، يجب أن ينخفض الخطأ مع نمو عدد المكونات.
+
+**Exercise 2.**مناسبة`sklearn.manifold.TSNE`ثلاث مرات على نفس الجمع الفرعي ، تغير فقط `perplexity`، واستخدم نفسها`random_state`. الارتباك المنخفض ينظر إلى عدد قليل من الجيران، لذلك توقع مجموعات صغيرة ضيقة؛ الارتباك الكبير ينظر إلى المزيد من الجيران، لذلك توقع مجموعات أكبر، أكثر سلاسة.
+
+**Exercise 3.**اتصل`make_classification(n_features=50, n_informative=5, n_redundant=45)`، مناسبة`PCA`وطباعة التباين التراكمي الموضح. الميزات الزائدة هي مزيجات خطية من المعلومات، لذلك ال منحنى يصل إلى ما يقرب من 1.0 في 5 مكونات. ثم حاول `n_redundant=0`: الـ45 الخصائص الأخرى هي ضوضاء مستقلة، والحرف لا يسطح.
 
 ## الشروط الرئيسية
 
