@@ -3,7 +3,7 @@
 > Transfüzyon sürekli ve ayrı temsilleri karıştırır. Show-o (Xie et al., Ağustos 2024) diğer tarafa gider: metin tokenleri sebepçi bir sonraki token tahminini kullanır, görüntü tokenleri MaskGIT ruhunda maskeli ayrı yayımı kullanır. İkisi de hibrit bir dikkat maskesine sahip bir transformatörün içinde oturuyor. Sonuç, bir omurgan, modalite başına bir tokenizer, bir kayıp formülasyonu (maskeli tahminlere uzanan bir sonraki token) üzerinde VQA, metin-resim, boyalama ve karışık modalite jenerasyonunu birleştirir. Bu ders, Show-o tasarımını  neden maskeli ayrı yayılma paralel, birkaç adımlı bir görüntü jeneratörü  ve Transfusion ve Emu3 ile karşıtlık gösterir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, masked-discrete-diffusion sampler)
+**Languages:** Python, TypeScript (stdlib, masked-discrete-diffusion sampler)
 **Prerequisites:** Phase 12 · 13 (Transfusion)
 **Time:** ~120 minutes
 
@@ -11,7 +11,7 @@
 
 - Maskeli ayrı yayımı açıklayın: simgelerinin bir şekilde maskelediği program, daha sonra transformatörden onları kurtarmasını ister.
 - Hız ve kalite açısından paralel görüntü çözümü (Show-o, MaskGIT) ile autoregressive görüntü çözümü (Chameleon, Emu3) karşılaştırın.
-- Show-o'nun tek kontrol noktasında yerine getirdiği üç görevi: T2I, VQA, görüntü boyaması.
+- Show-o'nun tek kontrol noktasında yerine getirdiği dört görevi neyinleştirebilirsiniz: metin oluşturma, VQA, T2I, görüntü boyaması.
 - Bir maskeleme programı seçin (kozin, doğrusal, kısaltılmış) ve örnek kalitesine etkisini düşünün.
 
 ## Sorun

@@ -3,7 +3,7 @@
 > OpenAI'nin CLIP (2021) projesi, önümüzdeki beş yıl boyunca güç sağlayacak kadar büyük bir fikir olduğunu kanıtladı: Sadece gürültülü web görüntü başlık çiftlerini kullanarak bir görüntü kodleyicisi ve bir metin kodleyicisini aynı vektör alanına doğru birleştirmek ve kontrast kaybı. - Null denetim etiketi. 400 milyon çift. Sonuçta yerleştirme alanı sıfır çekim sınıflandırma, görüntü metni kurtarma ve görme kule olarak her 2026 VLM'ye bağlanır. SigLIP 2 (2025) softmax' ı sigmoid ile değiştirdi ve daha düşük maliyetle CLIP' i geçti. Bu ders, InfoNCE'den sigmoid çiftlik kaybına kadar matematik yürür ve stdlib Python'da eğitim adımını inşa eder.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 
@@ -66,7 +66,7 @@ Softmax bütün benzerlik matrisini senkronize ederek kullanır. dağıtılmış
 SigLIP softmax ' i elementli sigmoid ile değiştirir: her çift için `(i, j)`, kaybı "bu eşleşen çift mi?" ikili sınıf sınıflandırmasıdır.
 
 ```math
-L = -\frac{1}{N} \sum_{(i, j)} \Big[ y_{ij} \log \operatorname{sigmoid}(S[i,j]) + (1-y_{ij}) \log \operatorname{sigmoid}(-S[i,j]) \Big]
+L = -\frac{1}{N} \sum_{(i, j)} \Big[ y_{ij} \log \mathop{\mathrm{sigmoid}}(S[i,j]) + (1-y_{ij}) \log \mathop{\mathrm{sigmoid}}(-S[i,j]) \Big]
 ```
 
 `y_ij = 1`Eğer`i == j`Her GPU'nun yerel blok ve toplamlarını hesaplaması gerekir. SigLIP 2 32k-512k'lık bir seri olarak ucuz bir şekilde ölçebilir. CLIP'in nispeten daha fazla iletişim gerekecektir.

@@ -3,7 +3,7 @@
 > Geleneksel RAG PDF'leri metneye ayırır, parçalara ayırır, parçaları yerleştirir, vektörleri saklar. Her adım sinyal kaybeder: OCR tablo verilerini düşürür, parçalanma tablo satırlarını kırar, metin yerleştirmeleri rakamları görmezden gelir. ColPali (Faysse et al., Temmuz 2024) daha basit bir soru sordu: Neden metni çıkarmak? Sayfa resmini doğrudan PaliGemma üzerinden yerleştirin, arama için ColBERT tarzı geç etkileşimi kullanın ve belgenin taşıdığı tüm düzen, rakamlar, şifre ve biçimlendirme sinyalini koruyun. Yayınlanan referans değerleri: Görsel açıdan zengin belgelerdeki metin-RAG'den yüzde 20-40 daha iyi bir son-son doğruluk. ColQwen2, ColSmol ve VisRAG bu kalıpı genişletti. Bu ders, görme doğası RAG tezini okuyor ve küçük bir ColPali benzeri bir indeks oluşturur.
 
 **Type:** Build
-**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer)
+**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer), TypeScript
 **Prerequisites:** Phase 11 (LLM Engineering — RAG basics), Phase 12 · 05 (LLaVA)
 **Time:** ~180 minutes
 
@@ -95,10 +95,10 @@ Görme doğası olan bir RAG için:
 
 Sayfa başına 729 patch ve 128 boyutlu yerleştirmeler ile 50 sayfalık bir finansal rapor:
 
-- ColPali: 50 * 729 * 128 * 4 byte = ~18 MB çiğ, ~4 MB PQ'den sonra.
+- ColPali: 50 * 729 * 128 * 4 byte = ~18 MB çiğ, ~2.3 MB 8x PQ'dan sonra.
 - Metin-RAG: 50 parça * 768-dim * 4 byte = ~ 150 kB.
 
-ColPali, bir belge için ~ 30 kat daha fazla depolama alanı içerir. Ölçüsünde, OPQ / PQ genellikle tolere edilebilir olan ~ 5-10 katı azaltır.
+ColPali, çiğ belge başına ~ 120 kat daha fazla depolama alanı sağlar. Ölçüsünde 8x OPQ / PQ genellikle tolere edilebilir olan ~ 15x'e düşürür.
 
 ### SMS-RAG hala kazanırken
 
