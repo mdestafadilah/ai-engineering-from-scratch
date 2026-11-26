@@ -3,7 +3,7 @@
 > Autoregressive decoding là hàng loạt. Mỗi token chờ đợi cho token trước đó. Spekulative decoding phá vỡ chuỗi: một mô hình rẻ tiền che chở N token, mô hình đắt tiền xác minh tất cả N trong một lần đi trước. Khi dự thảo đúng, bạn đã trả một tiền lớn cho N thế hệ.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -70,7 +70,7 @@ Lợi thế: không có mô hình thứ hai. Khối thấu: thêm các tham số
 
 ### Eagle  mô tả tốt hơn bằng cách tái sử dụng các trạng thái ẩn
 
-EAGLE-1/2/3 (Li et al., 20242025) làm cho mô hình dự thảo trở thành một biến thể nhỏ (thường là 1 lớp) hấp thụ các trạng thái ẩn lớp cuối cùng của người xác minh. Bởi vì dự thảo thấy đại diện tính năng của người xác minh, dự đoán của nó tương quan chặt chẽ với phân phối đầu ra của người xác minh. Tỷ lệ chấp nhận tăng từ ~ 0.6 (vanilla) lên 0.85+.
+EAGLE-1/2/3 (Li et al., 20242025) làm cho mô hình dự thảo trở thành một bộ biến đổi nhỏ (thường là 1 lớp) nuốt vào trạng thái ẩn lớp cuối cùng của người xác minh. Bởi vì bản thảo thấy đại diện tính năng của người xác minh, dự đoán của nó tương quan chặt chẽ với phân phối đầu ra của người xác minh. Tỷ lệ chấp nhận tăng từ ~ 0,6 (vanilla) lên 0,85+. Đây là tỷ lệ mỗi token trên các tiêu chuẩn trò chuyện, với một bản thảo được đào tạo trên dữ liệu trò chuyện phù hợp. Đối với lưu lượng sản xuất hỗn hợp, giai đoạn 17 · 05 có kế hoạch 0,6 đến 0,8 cho EAGLE-3, và lưu lượng domain có thể thấp hơn.
 
 EAGLE-3 (2025) đã thêm tìm kiếm cây trên các tiếp tục ứng cử viên. vLLM và SGLang tàu EAGLE-2/3 như là con đường thông số mặc định cho Llama 3/4 và Qwen 3.
 
@@ -91,6 +91,13 @@ Nhìn xem`code/main.py`Chúng tôi thực hiện thuật toán lấy mẫu đầ
 - Một "chương trình lớn" là một xác định-softmax trên một phân phối mã hóa bằng tay (vì vậy chúng ta có thể xác minh toán học chấp nhận phân tích).
 - Một "mô hình bản thảo" là một sự xáo trộn của mô hình lớn.
 - Một vòng chấp nhận / từ chối tạo ra phân phối biên tương tự như lấy mẫu trực tiếp.
+
+`code/main.rs`là một cổng Rust với cùng các chức năng và demo. Nó chỉ sử dụng thư viện tiêu chuẩn. Số ngẫu nhiên khác với Python, nhưng kết luận in là giống nhau.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Bước 1: Bước từ chối
 

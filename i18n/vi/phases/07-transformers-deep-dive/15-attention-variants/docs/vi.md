@@ -1,9 +1,9 @@
 # Sự chú ý Các biến thể  cửa sổ trượt, Sparse, Differential
 
-> Tất cả sự chú ý là một vòng tròn. Mỗi token nhìn thấy mỗi token, và bộ nhớ trả giá. Bốn biến thể xoay hình dạng của vòng tròn và phục hồi một nửa chi phí.
+> Tất cả sự chú ý là một vòng tròn. Mỗi token nhìn thấy mỗi token, và bộ nhớ trả giá. Ba biến thể xoay hình dạng của vòng tròn và phục hồi một nửa chi phí.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -63,8 +63,8 @@ Sự chú ý khác biệt khắc phục điều này bằng cách tính toán **
 
 ```math
 \begin{aligned}
-A_1 &= \operatorname{softmax}(Q_1 K_1^T / \sqrt{d}) \\
-A_2 &= \operatorname{softmax}(Q_2 K_2^T / \sqrt{d}) \\
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d}) \\
 \text{DiffAttn} &= (A_1 - \lambda \cdot A_2) V
 \end{aligned}
 ```
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## Hãy xây dựng nó
 
-Nhìn xem`code/main.py`Chúng tôi thực hiện một so sánh mặt nạ nhân quả cho thấy toàn bộ, SWA, địa phương + bước, và sự chú ý khác biệt bên cạnh nhau trên một chuỗi đồ chơi.
+Nhìn xem`code/main.py`, hoặc cảng Rust của nó`code/main.rs`Để chạy phiên bản Rust:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Chúng tôi thực hiện một so sánh mặt nạ nhân quả cho thấy toàn bộ, SWA, địa phương + bước, và sự chú ý khác biệt bên cạnh nhau trên một chuỗi đồ chơi.
 
 ### Bước 1: mặt nạ nguyên nhân đầy đủ (tầm cơ sở)
 
