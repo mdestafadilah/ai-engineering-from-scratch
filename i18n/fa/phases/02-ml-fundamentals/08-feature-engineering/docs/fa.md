@@ -3,7 +3,7 @@
 > یک ویژگی خوب ارزش هزار نقطه داده را دارد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Statistics for ML, Linear Algebra), Phase 2 Lessons 1-7
 **Time:** ~90 minutes
 
@@ -82,7 +82,7 @@ flowchart LR
 داده های واقعی سوراخ هایی دارند.
 
 - **Drop rows:**فقط وقتی داده های گمشده نادر و تصادفی هستند
-- **Mean/median imputation:**ساده، شکل توزیع را حفظ می کند (در میان میان، نسبت به غیر قابل ملاحظه قوی تر است)
+- **Mean/median imputation:**ساده، مرکز ویژگی را حفظ می کند (وسطین قوی تر به غیرمستقیم است) ، اما تفاوت آن را کاهش می دهد و هر مقدار پر شده را بر روی یک نوک جمع می کند، بنابراین شکل توزیع تغییر می کند
 - **Mode imputation:**برای ویژگی های دسته بندی
 - **Indicator column:**قبل از فرض کردن یک ستون دوگانه "was_this_missing" اضافه کنید. این واقعیت که داده ها از دست رفته است می تواند خود اطلاعات باشد
 - **Forward/backward fill:**برای داده های سری زمان
