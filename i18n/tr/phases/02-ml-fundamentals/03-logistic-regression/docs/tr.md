@@ -3,7 +3,7 @@
 > Lojiistik gerileme, olasılıklarla evet veya hayır sorularına cevap vermek için düz çizgiyi S eğriye eğer.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -86,7 +86,7 @@ Neden işe yarıyor:
 - Ne zaman ?$y=0$ve $p$0'ya yakın: $\log(1) = 0$, yani kaybı 0 yakın (doğru, düşük maliyet)
 - Ne zaman ?$y=0$ve $p$1'e yakın.$\log(0)$Negatif sonsuzluk yaklaşır, bu yüzden kayıp büyüktür ( yanlışı, yüksek maliyet)
 
-Bu kayıp işlevi, lojistik gerileme için eğri ve tek bir küresel minimum garanti eder.
+Bu kayıp işlevi lojistik gerileme için eğri, bu nedenle her yerel minimum küresel bir minimum ve gradient düşüşü kötü birinde sıkışamaz. mükemmel ayrılabilir verilerde kayıp ağırlıkların büyüdükçe düşmeye devam eder, bu nedenle sınırlı minimum yoktur; L2 düzenlenmesi bunu düzeltir ve minimumı eşsiz yapar.
 
 ### Logistik Geri Dönüşüm için Aralıklı Düşüş
 
@@ -503,6 +503,7 @@ Scikit-learn çözücü seçeneklerini (liblinear, lbfgs, saga), otomatik düzen
 
 Bu ders şunları ortaya çıkarır:
 - `code/logistic_regression.py`- metriklerle sıfırdan lojistik geri dönüş
+- `code/main.rs`- Rust'deki aynı kod, sadece STDlib.`rustc --edition 2021 code/main.rs && ./main`- Evet .
 
 ## Egzersizler
 

@@ -3,7 +3,7 @@
 > Bir karar ağacı sadece bir akış haritasıdır. Ama bir orman, ML'de en güçlü araçlardan biridir.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -104,7 +104,7 @@ Bu açgözlülükle yaklaşım küresel olarak en iyi ağacı garanti etmez. En 
 
 ### Durdurma koşulları
 
-Ağaç, her yaprak saf olana kadar (yarrak başına bir örnek) durmadan büyür.
+Ağaç, durma koşulları olmadan her yaprak saf olana kadar veya parçalanmadan örneklerini ayırana kadar büyür, genellikle bir yaprak başına tek bir örnekten aşağı. Bu eğitim verilerini mükemmel bir şekilde ezberler ve korkunç bir şekilde genelleştirir.
 
 **Pre-pruning**ağaç tamamen büyümeden önce durdurur:
 - Maksimum derinlik: ağaç belirlenmiş bir derinliğe ulaştığında bölünmeyi durdurur
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-Bakın .`code/trees.py`Tüm yardımcı yöntemlerle birlikte tam olarak uygulanması için.
+Bakın .`code/trees.py`Tüm yardımcı yöntemlerle birlikte tam olarak uygulanması için. `code/trees.ts`Aynı fonksiyon ve demo ile TypeScript portu.`npx tsx code/trees.ts`- Evet .
 
 ## Kullan
 
