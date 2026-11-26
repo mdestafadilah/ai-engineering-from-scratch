@@ -3,7 +3,7 @@
 > Raphaïlov et al. (2023) a montré que l'optimisation de RLHF a une forme fermée en termes de données de préférence, de sorte que vous pouvez sauter le modèle de récompense explicite et optimiser la politique directement. Cette compréhension a donné naissance à une famille  IPO, KTO, SimPO, ORPO, BPO  chacun fixant un mode d'échec de DPO. En 2026, les algorithmes d'alignement direct envoient plus de courses post-entraînement frontalières que les PPO. Mais la courbe de suroptimisation de la leçon 2 s'applique toujours: les DAA ne fuient pas Goodhart, ils se déplacent simplement là où il mord.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 
@@ -53,7 +53,7 @@ Qu'est-ce qui peut aller mal ?
 
 - L' écart de récompense implicite `beta * (log(pi/pi_ref)_w - log(pi/pi_ref)_l)`Une petite préférence peut créer un écart arbitrairement grand.
 - Les disques de perte choisissent et rejettent les log-probes dans des directions opposées. Il peut pousser le log-prob absolu choisi vers le bas tant que le rejet tombe plus rapidement.
-- Les préférences hors distribution (pares rares contre pares rares) produisent des récompenses implicites arbitraires.
+- Les préférences hors distribution (pares où les deux réponses sont rares dans le cadre de la politique de référence) produisent des récompenses implicites arbitraires.
 
 ### Les actions d'investissement (Azar et coll., 2024)
 
