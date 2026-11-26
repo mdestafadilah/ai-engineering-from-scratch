@@ -3,7 +3,7 @@
 > "O, onu aradı. cevap vermedi. Doktor öğle yemeğindeydi". İki kişiye üç referans ve kimse adı verilmedi.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 
@@ -61,14 +61,14 @@ coref-links
 ```python
 import spacy
 nlp = spacy.load("en_coreference_web_trf")   # experimental model
-doc = nlp("Apple announced new products. The company said they would ship soon.")
+doc = nlp("Apple announced new products. The company said it would ship them soon.")
 for cluster in doc._.coref_clusters:
     print(cluster, "->", [m.text for m in cluster])
 ```
 
 Uzun bir belgeye göre şöyle bir şey olur:
-- Cluster 1: [Apple, Şirket, onlar]
-- Grup 2: [yeni ürünler]
+- Cluster 1: [Apple, Şirket, it]
+- Grup 2: [yeni ürünler, onlar]
 
 ### Adım 2: Kurallara dayalı isim çözücü (öğretim)
 
