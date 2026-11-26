@@ -3,7 +3,7 @@
 > أقرأ أولاً، فكر في ذلك لاحقاً، فـ"تـف-إيدف" لا تزال تفوق على التكليد في المهام المحددة جيداً في عام 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 
@@ -26,7 +26,7 @@
 ```math
 \begin{aligned}
 \text{TF-IDF}(w, d) &= \text{TF}(w, d) \cdot \text{IDF}(w) \\
-&= \frac{\operatorname{count}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\operatorname{df}(w)}
+&= \frac{\mathop{\mathrm{count}}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\mathop{\mathrm{df}}(w)}
 \end{aligned}
 ```
 
@@ -126,7 +126,7 @@ def tfidf(bow_matrix):
 >>> tfidf(bow)
 ```
 
-وثائق ثلاث، خمس كلمات في الكلمات (`the`،`cat`،`sat`،`dog`،`ran`)`the`يظهر في كل ثلاثة، لذلك جيش الدفاع الدولي منخفض.`dog`يظهر في واحد، لذلك الجيش الإسرائيلي مرتفع. المتجهات نادرة (معظم الإدخالات صغيرة) والكلمات التمييزية تظهر.
+وثائق ثلاث، خمس كلمات في الكلمات (`the`،`cat`،`sat`،`dog`،`ran`)`the`يظهر في كل ثلاثة، لذلك جيش الدفاع الدولي منخفض.`dog`يظهر في واحد، لذلك قوات الدفاع الإسرائيلية عالية. مع مجموعة حقيقية من الآلاف من الكلمات، هذه المتجهات نادرة (معظم الإدخالات صفر). حتى في هذه اللعبة، الكلمات التمييزية تظهر.
 
 ### الخطوة 5: تعاديل الصفوف L2
 

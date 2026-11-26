@@ -3,7 +3,7 @@
 > "لقد اتصلت به، لم يرد، كان الطبيب في الغداء". ثلاثة إشارات إلى شخصين ولا يُذكر أحد اسمه.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 
@@ -61,14 +61,14 @@ coref-links
 ```python
 import spacy
 nlp = spacy.load("en_coreference_web_trf")   # experimental model
-doc = nlp("Apple announced new products. The company said they would ship soon.")
+doc = nlp("Apple announced new products. The company said it would ship them soon.")
 for cluster in doc._.coref_clusters:
     print(cluster, "->", [m.text for m in cluster])
 ```
 
 في وثيقة أطول، تحصل على شيء مثل:
-- المجموعة الأولى: [Apple، الشركة، هم]
-- المجموعة الثانية: [المنتجات الجديدة]
+- الكluster 1: [Apple، الشركة، هو]
+- المجموعة الثانية: [المنتجات الجديدة، هي]
 
 ### الخطوة الثانية: حلل اللقب القائم على القواعد (التدريس)
 

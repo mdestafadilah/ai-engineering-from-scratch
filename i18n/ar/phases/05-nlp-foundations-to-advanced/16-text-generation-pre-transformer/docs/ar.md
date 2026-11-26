@@ -3,7 +3,7 @@
 > إذا كانت الكلمة مفاجئة، فإن النموذج سيء، والحيرة تجعل المفاجأة رقم، والسلم يبقيه محدود.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 
@@ -42,7 +42,7 @@ prediction-game
 **N-gram probability:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`- إصلاح`n`(عادة 3 للاستعمال الثلاثي، 4 للاستعمال الثلاثي)
 
 ```math
-P(w \mid \text{context}) = \frac{\operatorname{count}(\text{context}, w)}{\operatorname{count}(\text{context})}
+P(w \mid \text{context}) = \frac{\mathop{\mathrm{count}}(\text{context}, w)}{\mathop{\mathrm{count}}(\text{context})}
 ```
 
 **The zero-count problem.**أي ن-جرام لا يظهر في التدريب يحصل على احتمال صفر. وجدت دراسة عام 2007 على برون كوربوس أن حتى نموذج 4 جرام كان لديه 30٪ من 4 جرام غير مرئية في التدريب. لا يمكنك تقييم على أي نص حقيقي دون تسطيع.
