@@ -3,7 +3,7 @@
 > Construíste um GPT-2 pequeno a partir do zero na lição 04. Os modelos abertos de fronteira em 2026 são a mesma família com cinco ou seis mudanças concretas. RMSNorm em vez de LayerNorm. SwiGLU em vez de GELU. RoPE em vez de posições aprendidas. GQA ou MLA em vez de MHA completa. Mistura de especialistas em escala. A matemática que já conheces cobre 95% deles. Esta lição lê Llama 3, DeepSeek-V3, Mixtral, Qwen e Gemma lado a lado e nomeia a linha exata onde cada arquitetura diverge.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 
@@ -53,7 +53,7 @@ Tudo o resto (hora de aprendizagem, mix de dados, tamanho do lote, comprimento d
 LayerNorm subtrai a média, dividiu por std, escalas e mudanças.
 
 ```math
-\operatorname{RMSNorm}(x) = \frac{x}{\sqrt{\operatorname{mean}(x^2) + \epsilon}} \cdot \gamma
+\mathop{\mathrm{RMSNorm}}(x) = \frac{x}{\sqrt{\mathop{\mathrm{mean}}(x^2) + \epsilon}} \cdot \gamma
 ```
 
 Não há subtração média. Não há viés. Um matmul menos por token. Zhang e Sennrich (2019) argumentaram que corresponde ao LayerNorm na tradução automática, sendo 10% mais rápido.
@@ -79,7 +79,7 @@ Cada Llama, Mistral, Qwen, DeepSeek e Gemma usa RoPE. Gemma 2 usa um híbrido (R
 O MLP do GPT-2 é `x -> gelu(xW1 + b1) -> (...)W2 + b2`O SwiGLU (Shazeer 2020) substitui a ativação por um produto fechado:
 
 ```math
-\operatorname{SwiGLU}(x) = (xW_1) \cdot \operatorname{sigmoid}(xW_1) \cdot xV
+\mathop{\mathrm{SwiGLU}}(x) = (xW_1) \cdot \mathop{\mathrm{sigmoid}}(xW_1) \cdot xV
 ```
 
 Duas projeções em paralelo em vez de uma, fechadas pela ativação Swish. Empiricamente mais forte em perplexidade por parâmetro. Llama 2 adotou, todos seguiram. O tamanho oculto do MLP é geralmente definido para que o número total de parâmetros coincida com o MLP denso original: se GPT-2 foi usado `ff_dim = 4 * hidden`, SwiGLU utiliza `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden`- Não .

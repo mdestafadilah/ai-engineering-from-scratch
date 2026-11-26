@@ -3,7 +3,7 @@
 > Com 64k tokens, a atenção consome 70-80% da latência de decodificação. Todos os laboratórios abertos têm um plano para consertá-lo. A NSA do DeepSeek (melhor documento ACL 2025) é aquela que ficou preso: três ramos paralelas de atenção  tokens com grãos grosseiros comprimidos, tokens com grãos finos retidos seletivamente, e janelas deslizantes para contexto local  combinadas através de um portão aprendido. É alinhado com hardware (friendly-kernel), nativamente treinável (funciona em pré-treino, não ligado à inferência), e em 64k decodificações ele funciona mais rápido do que FlashAttention enquanto combina ou supera a qualidade de atenção total. Esta lição constrói os três ramos de ponta a ponta e mostra por que a esparsia é diferenciável de ponta a ponta.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 12 (KV cache, flash-attention), Phase 7 · 15 (attention variants), Phase 10 · 16 (differential attention)
 **Time:** ~60 minutes
 
@@ -46,7 +46,7 @@ As três saídas de ramificação são combinadas através de um portão de posi
 
 O passo de seleção (blocos de topo-k) é discreto. Operações discretas quebram fluxo de gradiente. O trabalho anterior de atenção escassa ou saltou o backprop através da seleção (treino limitante) ou usou relaxações contínuas que não deram escassez real na inferência.
 
-A NSA evita isto: a atenção de ramo comprimido é uma atenção grosseira diferenciável sobre toda a sequência. A operação top-k apenas reutiliza as pontuações de atenção mais altas do ramo comprimido para escolher quais blocos de grãos finos carregar. Os gradientes fluem através das pontuações de ramo comprimido (que influenciam tanto a saída comprimida quanto a lógica de seleção), e a contribuição dos blocos selecionados para a saída final também é diferenciável. O não diferenciável`top_k`A operação é um no-op no gráfico computacional avançado.
+A NSA evita isto: a atenção de ramo comprimido é uma atenção grosseira diferenciável sobre toda a sequência. A operação top-k apenas reutiliza as pontuações de atenção mais altas do ramo comprimido para escolher quais blocos de grãos finos carregar. Os gradientes atingem as pontuações de ramos comprimidos através da própria saída do ramos comprimido, não através da escolha de blocos. Dentro dos blocos escolhidos, a atenção sobre as chaves e valores selecionados é atenção comum, de modo que a sua contribuição para a saída final também é diferenciável. O `top_k`A selecção do índice não obtém nenhum gradiente: só controla quais blocos são carregados da memória.
 
 É por isso que a NSA pode ser usada em pré-treino de ponta a ponta. O modelo aprende a encaminhar informações através dos três ramos em conjunto, produzindo um padrão escasso que, na inferência, realmente entrega a velocidade prometida.
 

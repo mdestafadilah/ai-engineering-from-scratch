@@ -3,7 +3,7 @@
 > Fase 7 · Lição 16 provou a matemática: a regra de rejeição Leviatã preserva a distribuição do verificador exatamente. Esta lição é a visão de formação-pilha da descodificação especulativa de produção de 2026. A EAGLE-3 transformou o modelo de projeto de uma aproximação barata em uma rede pequena construída para fins treinados nos próprios estados ocultos do verificador, depois adicionou um ciclo de teste de treinamento que alinha suas distribuições de trem e inferência. Resultado: 3x a 6,5x end-to-end speedup, taxas aceitas por token acima de 0,9 no chat, sem compensação distributiva. Todas as inferências de produção em 2026 enviam-na por padrão.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 16 (speculative decoding math), Phase 10 · 12 (inference optimization)
 **Time:** ~75 minutes
 
@@ -70,6 +70,8 @@ Para a pesquisa de árvores EAGLE-2, o verificador corre a atenção com uma má
 | EAGLE-2 | EAGLE-1 + dynamic draft tree | 0.80-0.88 | 3-4× | ~60B tokens |
 | EAGLE-3 | Multi-layer feature fusion + TTT | 0.88-0.92 | 3.5-6.5× | ~60-200B tokens |
 | Lookahead | No draft (Jacobi iteration) | N/A | 1.3-1.6× | None |
+
+O `α`A coluna é a taxa de aceitação por token ao longo do caminho aceito, em benchmarks de chat, com um esboço treinado em dados de chat correspondentes. É a banda superior. Fase 10 · 25 cita 0,82 para EAGLE-3 de uma configuração diferente, e Fase 17 · 05 planeja implantações de produção com 0,6 a 0,8 no chat geral. Medida `α`em seu próprio tráfego antes de escolher `N`- Não .
 
 Em 2026 produção: vLLM e SGLang padrão para EAGLE-3 quando disponível, EAGLE-2 de outra forma. TensorRT-LLM tem o caminho mais rápido Medusa para os modelos públicos Meta e NVIDIA. llama.cpp navega vanilla draft para implantações de CPU.
 
