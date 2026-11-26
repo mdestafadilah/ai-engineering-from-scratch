@@ -3,7 +3,7 @@
 > خانواده Qwen-VL  Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025)  در سال 2026 تأثیرگذارترین مدل زبان دید باز است. هر نسل یک شرط معماری قطعی را انجام داد که بقیه اکوسیستم باز در عرض دوازده ماه کپی کرد: رزولوشن دینامیک بومی از طریق M-RoPE، نمونه گیری دینامیک-FPS با هماهنگی مطلق زمان، توجه پنجره در ViT و فرمت های خروجی عامل ساختاری. با Qwen3-VL، دستور العمل ثابت شده بود: یک کدگر 2D-RoPE-ViT با ورودی نسبت جنبه های بومی، یک پروژکتور MLP به یک پایگاه زبان Qwen3 بزرگ، و مراحل آموزشی که بر OCR، زمین سازی و رفتار عامل به عنوان اهداف درجه اول تاکید می کردند. این درس خانواده رو به ترتیب خونده تا تو بفهمي چرا هر دکمه اي همونجاست
 
 **Type:** Learn
-**Languages:** Python (stdlib, M-RoPE encoder + dynamic-FPS sampler)
+**Languages:** Python, TypeScript (stdlib, M-RoPE encoder + dynamic-FPS sampler)
 **Prerequisites:** Phase 12 · 06 (patch-n'-pack)
 **Time:** ~120 minutes
 
@@ -53,7 +53,7 @@ Qwen2-VL جایگزین استیک با وضوح ثابت + Q-Former با یک �
 
 تغییر بزرگ Qwen2.5VL ویدئو بود. FPS پویا فقط "برچینه های بیشتر در صورت نیاز" نیست.
 
-- نماد زمان مطلق. به جای شاخص های موقعیت (چشمۀ 0، 1، 2...) ، از زمان واقعی استفاده کنید. "در 0:04، گربه پر می شود". مدل می بیند`<time>0.04</time>`توکن هایی که با توکن های فریم متقابل هستند.
+- زمان مطلق در ID موقعیت. به جای شاخص های فریم ( فریم 0, 1, 2...) ، محور زمانی M-RoPE از زمان واقعی پیروی می کند، بنابراین فاصله بین ID دو فریم ها ثانیه های بین آنها را ردیابی می کند. "در 0:04 ، گربه پر می شود". هیچ نشانه متن اضافی زمان را حمل نمی کند، بنابراین کدگذاری هیچ طول ردیابی را اضافه نمی کند.
 - FPS پویا. نمونه در 1 FPS برای فیلمبرداری آهسته، 4+ FPS برای عمل. کاربر یا مربی انتخاب می کند؛ M-RoPE سازگار می شود.
 - توجه پنجره در ViT. توجه فضایی برای تولید پنجره (مقامی در داخل بلوک ها) است؛ توجه جهانی هر چند لایه.
 - فرمت JSON صریح. آموزش داده های تماس ابزار: "{\" ابزار\": \" کلیک\", \" کاردها\": [380, 220]}".
@@ -92,7 +92,7 @@ M-RoPE، کمال پنهان رو به سه دسته تقسیم ميکنه`d = 9
 1. حداکثر FPS رو که میتونی تحمل کنی محاسبه کن:`fps_max = B / (T * tokens_per_frame)`. .
 2. از بين هدف FPS رو انتخاب کن`{1, 2, 4, 8}`که رضایت میده`fps <= fps_max`. .
 3. اگر حرکت بالا باشد (هیرستیک جریان نوری یا درخواست صریح کاربر) FPS بالاتر را انتخاب کنید.
-4. نمونه به صورت یکسانی در FPS انتخاب شده؛ وارد کنید `<time>t</time>`توکن ها بین فریم ها
+4. نمونه یکسانی در FPS انتخاب شده؛ تعیین M-RoPE ID زمانی هر قاب از زمان خود را در ثانیه.
 
 Qwen2.5 - VL این منطق را به طور ضمنی آموزش می دهد؛ در نتیجه کاربر از طریق `fps`یک سری عمل 60 ثانیه ای در 4 FPS با 81 توکن در هر فریم = 19440 توکن، قابل مدیریت در یک زمینه 32k.
 
@@ -147,7 +147,7 @@ mm-mrope-axes
 |------|-----------------|------------------------|
 | M-RoPE | "Multimodal RoPE" | 3D rotary position embedding with temporal, height, and width bands in the hidden dim |
 | Dynamic FPS | "Smart sampling" | Frame sampling rate chosen per video based on motion, duration, and token budget |
-| Absolute time token | "Timestamp token" | `<time>t</time>` interleaved in the sequence so the model sees actual seconds not frame index |
+| Absolute time encoding | "Time-aligned M-RoPE" | Temporal position IDs set from each frame's timestamp, so the model sees actual seconds, not frame index, with no extra tokens |
 | Window attention | "Local attention" | Spatial self-attention restricted to small windows for speed; global attention added periodically |
 | Structured agent output | "JSON mode" | Training data supervision teaching the VLM to emit parseable JSON with coords and tool names |
 | min_pixels / max_pixels | "Resolution bounds" | Per-request Qwen2.5-VL controls bounding total pixel count and therefore token count |
