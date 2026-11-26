@@ -3,7 +3,7 @@
 > Bir otomatik kodlayıcı sıkıştırır, sonra yeniden oluşturur. Hatırlıyor. Yaratmaz. Bir numara ekleyin  kodu Gaussian görünmesi için zorlayın  ve bir örneklemeci elde edersiniz.$z = \mu + \sigma \cdot \epsilon$, bu yüzden 2026'da kullandığınız her gizli yayılma ve akış eşleşme görüntü modeli girişinde bir VAE'ye sahip.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 
@@ -23,7 +23,7 @@ Kingma'nın 2013 VAE'si kodlayıcının bir * dağıtım* çıkartması için e�
 
 **Autoencoder.** $z = \text{encoder}(x)$- Evet .$\hat{x} = \text{decoder}(z)$, kayıp = $\lVert x - \hat{x} \rVert^2$- Kod alanı yapılandırılmamış.
 
-**VAE encoder.**İki vektör çıkışı: $\mu(x)$ve $\log \sigma^2(x)$Bu tanımlar .$q(z \mid x) = \mathcal{N}(\mu, \operatorname{diag}(\sigma^2))$- Evet .
+**VAE encoder.**İki vektör çıkışı: $\mu(x)$ve $\log \sigma^2(x)$Bu tanımlar .$q(z \mid x) = \mathcal{N}(\mu, \mathop{\mathrm{diag}}(\sigma^2))$- Evet .
 
 **Reparameterization trick.**$q(z \mid x)$Örnekte farklılık gösterilmez.$z = \mu + \sigma \cdot \epsilon$nerede$\epsilon \sim \mathcal{N}(0, I)$- Şimdi .$z$$(\mu, \sigma)$Parametre dışı bir gürültü ekle  gradientler akıyor `μ`ve $\sigma$- Evet .
 
@@ -99,7 +99,7 @@ Bu, üreticik model. Beş satır.
 - **Posterior collapse.**KL term sürücüleri $q(z \mid x) \to \mathcal{N}(0, I)$O kadar agresif ki$z$hakkında hiçbir bilgi taşımaz.$x$. Düzeltme: β- annulleri (başlamak $\beta=0$, rampa 1)), boş bitler veya KL'yi aktif olmayan boyutlarda atlayın.
 - **Blurry samples.**Gaussian dekodör olasılığı, L2 için Bayes-optimal olan MSE yeniden yapılandırmasını içerir (ortalama)  bir dizi makul rakamın ortalaması bulanık bir rakamdır. Düzelt: ayrı dekodör (VQ-VAE, NVAE), veya VAE'yi yalnızca bir kodlayıcı ve yataklarda yığın yayılması olarak kullanın (Stable Diffusion yapar).
 - **β too large, too early.**Arka çöküşü gör.$\beta \approx 0.01$ve ramp.
-- **Latent dim too small.**16-D, MNIST için, 256-D, ImageNet 2562, 2048-D için ImageNet 10242 için çalışır.
+- **Latent dim too small.**16-D, MNIST için, 256-D, ImageNet 2562, 2048-D için ImageNet 10242 için çalışır. Stable Diffusion'ın VAE'si 512×512×3 → 64×64×4'i (bir tarafta aşağı örnek, boşluk alanında 64x; kanallar 3'ten 4'e gidiyor, bu nedenle toplamda yaklaşık 48x daha az değer).
 
 ## Kullan
 

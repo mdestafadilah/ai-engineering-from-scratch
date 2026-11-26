@@ -3,7 +3,7 @@
 > Her jeneratif model lider tablosu, insan tercih alanından FID, CLIP puanı ve kazanım oranını belirtir. Her sayı, belirlenmiş bir araştırmacı oynayabilecek bir başarısızlık moduna sahiptir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 
@@ -27,7 +27,7 @@ Heusel et al. (2017). Adımlar:
 
 1. N gerçek görüntüler ve N oluşturulan görüntüler için Inception-v3 özelliklerini (2048-D) çıkarın.
 2. Her havuz için bir Gaussian ayarlayın: hesap ortalaması$\mu_r, \mu_g$ve kovarians $\Sigma_r, \Sigma_g$- Evet .
-3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \operatorname{Tr}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$- Evet .
+3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \mathop{\mathrm{Tr}}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$- Evet .
 
 Anlatma: Özellik alanındaki iki çok değişken Gaussyan arasındaki Fréchet mesafe.
 

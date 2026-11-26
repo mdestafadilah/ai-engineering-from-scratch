@@ -3,7 +3,7 @@
 > Çoğu jeneratör hareket eder .$z$StyleGAN onu bölüyor: ilk harita$z$Ortalama bir kişiye.$w$, sonra * enjekte * $w$AdaIN'den gelen bu tek değişim gizli alanı çözüp fotorealist yüzleri yedi yıl boyunca çözülmüş bir sorun haline getirdi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
@@ -26,7 +26,7 @@ Sonuç:$W$"Yüksek seviye stili" (koşul, kimlik) vs. "yenis stili" (yalnızca �
 **AdaIN.**
 
 ```math
-\operatorname{AdaIN}(x, y) = y_{\text{scale}} \cdot \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x)} + y_{\text{bias}}
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 nerede$y_{\text{scale}}$ve $y_{\text{bias}}$$w$"Style" burada özellik haritasının birinci ve ikinci sıradaki istatistikleridir.

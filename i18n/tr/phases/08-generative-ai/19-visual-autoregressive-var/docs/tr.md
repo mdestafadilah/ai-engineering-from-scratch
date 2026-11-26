@@ -34,7 +34,7 @@ f -> tokenize at (H/p)x(W/p): token grid z_K of shape (H/p, W/p)
 Her biri .$z_k$Aynı kod defteri kullanır (tipik boyut 4096-16384). Her ölçekte simgelik bağımsız değildir  her ölçekte kalanların toplamı yeniden yapılandırılır $f$- ...
 
 ```math
-f \approx \operatorname{upsample}(\operatorname{embed}(z_1), \text{target\_size}) + \cdots + \operatorname{upsample}(\operatorname{embed}(z_K), \text{target\_size})
+f \approx \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_1), \text{target\_size}) + \cdots + \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_K), \text{target\_size})
 ```
 
 Bu bir **residual VQ**Variant.$k$Ne ölçekleri yakalar $1 \ldots k-1$Dekoder tüm ölçek yerleşimlerinin toplamını alır ve görüntüyü üretir.
@@ -50,7 +50,7 @@ Giriş sırası yapısı:
 [START, z_1 tokens, z_2 tokens, z_3 tokens, ..., z_K tokens]
 ```
 
-Konum yerleşimleri, ölçek indeksi ve ölçek içindeki uzay konumunu hem kodlar. Dikkat ölçek sırasındaki nedenseldir: ölçekteki token $k$, pozisyon$(i, j)$Tüm tokenlere bakmak için ölçekler .$1 \ldots k$ve ölçekli tokenlere .$k$VAR, ölçek içi bir sırada daha önce gelen (VAR, ölçek içi bir nedensizlik olmadan sabit konum dikkatini kullanır  bir ölçek içindeki tüm konumlar paralel olarak öngörülür).
+Konum yerleşimleri, ölçek indeksi ve ölçek içindeki uzay konumunu hem kodlar. Dikkat ölçek sırası ve ölçek içindeki blok açısından nedençi: ölçekteki token $k$, pozisyon$(i, j)$Tüm tokenlere bakmak için ölçekler .$1 \ldots k$, her ölçek pozisyonunu da dahil eder .$k$Bir ölçek içi düzen ve ölçek içi sebepsizlik yoktur, bu yüzden bir ölçek içindeki tüm pozisyonlar paralel olarak tahmin edilir.
 
 Eğitim kaybı: her ölçekte $k$, simgelerinin tahminini yap .$z_k$GPT'nin diğer tüm yapıları, "sequence" hariç, artık ölçekli yapılandırılmıştır.
 
