@@ -90,7 +90,7 @@ Cả hai đều xuất hiện trong tự nhiên. Đối với một U-Net đầu
 Đối với phân đoạn ngữ nghĩa với $C$các lớp, mô hình đầu ra là `(N, C, H, W)`Mục tiêu là`(N, H, W)`với các ID lớp nguyên số. Cross-entropy giống như trường hợp phân loại, chỉ áp dụng ở mọi vị trí không gian:
 
 ```math
-\text{Loss} = \operatorname*{mean}_{(n, h, w)} \left[ -\log\left( \operatorname{softmax}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy`PyTorch xử lý hình dạng này một cách tự nhiên.
@@ -103,7 +103,7 @@ Thiếu tích Dice giải quyết vấn đề này bằng cách trực tiếp t�
 
 ```math
 \begin{aligned}
-\operatorname{Dice}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
 \text{Dice}_{\text{loss}} &= 1 - \text{Dice}
 \end{aligned}
 ```
@@ -129,7 +129,7 @@ Tờ báo cáo về một lớp học, không chỉ là một lớp học.
 
 ### Trả giá trị giải pháp đầu vào
 
-Bộ mã hóa của U-Net làm giảm phân giải gấp bốn lần, vì vậy đầu vào phải được chia bằng 16. Hình ảnh y tế thường là 512x512 hoặc 1024x1024.`H * W * C_max`, và ở 1024x1024 với 1024 kênh nút chai, đường đi trước đã sử dụng gigabytes VRAM.
+Bộ mã hóa U-Net giảm phân giải gấp bốn lần, vì vậy các kết nối skip chỉ xếp hàng chính xác khi đầu vào được chia bằng 16. Các kích thước khác cần đệm hoặc thay đổi kích thước trong khối lên (Bước 2). Hình ảnh y tế thường là 512x512 hoặc 1024x1024.`H * W * C_max`, và ở 1024x1024 với 1024 kênh nút chai, đường đi trước đã sử dụng gigabytes VRAM.
 
 Hai phương pháp giải quyết tiêu chuẩn:
 1. Đơn gạch nhập  quy trình 256x256 gạch với chồng chéo và đan.

@@ -45,7 +45,7 @@ Không lưới điện, không kết nối, hai tính chất làm cho việc nà
 PointNet (Qi et al., 2017) giải quyết cả hai với một ý tưởng: áp dụng một MLP chia sẻ cho mọi điểm, sau đó tổng hợp với một hàm đối xứng (tầm tối đa). Kết quả là một vector kích thước cố định không phụ thuộc vào thứ tự.
 
 ```math
-f(P) = \max_{p \in P} \operatorname{MLP}(p)
+f(P) = \max_{p \in P} \mathop{\mathrm{MLP}}(p)
 ```
 
 Đây là toàn bộ lõi của PointNet. Các biến thể sâu hơn (PointNet++, Point Transformer) thêm mẫu phân cấp và tổng hợp địa phương nhưng thủ thuật chức năng đối xứng không thay đổi.
