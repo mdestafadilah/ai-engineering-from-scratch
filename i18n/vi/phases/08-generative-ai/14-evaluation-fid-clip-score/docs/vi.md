@@ -3,7 +3,7 @@
 > Mỗi bảng xếp hạng mô hình tạo ra chỉ trích FID, điểm CLIP và tỷ lệ thắng từ một lĩnh vực ưu tiên của con người. Mỗi số có chế độ thất bại mà một nhà nghiên cứu xác định có thể chơi. Nếu bạn không biết các chế độ thất bại, bạn không thể thấy sự cải thiện thực sự từ một cuộc chơi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 
@@ -27,7 +27,7 @@ Heusel et al. (2017).
 
 1. Tạo các tính năng Inception-v3 (2048-D) cho N hình ảnh thực và N tạo.
 2. Đưa một Gaussian vào mỗi hồ bơi: tính trung bình$\mu_r, \mu_g$và sự đồng hóa$\Sigma_r, \Sigma_g$- Tôi không biết.
-3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \operatorname{Tr}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$- Tôi không biết.
+3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \mathop{\mathrm{Tr}}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$- Tôi không biết.
 
 Giải thích: Khoảng cách Fréchet giữa hai Gaussia đa biến trong không gian tính năng.
 

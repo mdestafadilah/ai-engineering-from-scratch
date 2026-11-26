@@ -3,7 +3,7 @@
 > Hầu hết các máy phát điện đều làm động$z$StyleGAN chia nó ra: bản đồ đầu tiên$z$cho một trung gian $w$, sau đó * tiêm * $w$Sự thay đổi duy nhất đó đã giải quyết không gian ẩn và làm cho những khuôn mặt chân thực ảnh trở thành một vấn đề được giải quyết trong bảy năm liên tiếp.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
@@ -26,7 +26,7 @@ Kết quả là:$W$có các trục gần như thẳng thắn cho " phong cách c
 **AdaIN.**
 
 ```math
-\operatorname{AdaIN}(x, y) = y_{\text{scale}} \cdot \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x)} + y_{\text{bias}}
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 nơi $y_{\text{scale}}$và $y_{\text{bias}}$đến từ các dự đoán tương tự của $w$. bình thường hóa theo bản đồ tính năng, sau đó tái tạo. "Style" ở đây là số liệu thống kê thứ nhất và thứ hai của bản đồ tính năng.

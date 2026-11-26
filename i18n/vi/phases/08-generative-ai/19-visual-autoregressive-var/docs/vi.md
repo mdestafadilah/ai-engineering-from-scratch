@@ -34,7 +34,7 @@ f -> tokenize at (H/p)x(W/p): token grid z_K of shape (H/p, W/p)
 Mỗi người$z_k$sử dụng cùng một cuốn sách mã (kích thước điển hình 4096-16384). Việc mã hóa tại mỗi thang không độc lập  nó được đào tạo để tổng hợp các dư ở mỗi thang tái tạo $f$- Có thể là:
 
 ```math
-f \approx \operatorname{upsample}(\operatorname{embed}(z_1), \text{target\_size}) + \cdots + \operatorname{upsample}(\operatorname{embed}(z_K), \text{target\_size})
+f \approx \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_1), \text{target\_size}) + \cdots + \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_K), \text{target\_size})
 ```
 
 Đây là một **residual VQ**biến thể.$k$bắt được những cân bằng nào $1 \ldots k-1$Decoder lấy tổng số tất cả các tích hợp quy mô và tạo ra hình ảnh.
@@ -50,7 +50,7 @@ Cấu trúc chuỗi đầu vào:
 [START, z_1 tokens, z_2 tokens, z_3 tokens, ..., z_K tokens]
 ```
 
-Các vị trí nhúng mã hóa cả chỉ số quy mô và vị trí không gian trong quy mô.$k$, vị trí $(i, j)$có thể tham gia tất cả các token ở quy mô $1 \ldots k$và các token ở quy mô $k$chính nó xuất hiện sớm hơn trong bất kỳ thứ tự nội quy nào được sử dụng (VAR sử dụng sự chú ý vị trí cố định mà không có tính nhân quả nội quy  tất cả các vị trí trong một quy mô được dự đoán song song).
+Các tích hợp vị trí mã hóa cả chỉ số quy mô và vị trí không gian trong quy mô. Sự chú ý là nguyên nhân theo thứ tự quy mô và khối trong quy mô: token trên quy mô $k$, vị trí $(i, j)$có thể tham gia tất cả các token ở quy mô $1 \ldots k$, bao gồm cả mọi vị trí của thang đo$k$Không có thứ tự trong quy mô và không có sự liên quan về nguyên nhân trong quy mô, vì vậy tất cả các vị trí trong một quy mô được dự đoán song song.
 
 Thiệt hại đào tạo: trên mỗi thang$k$, dự đoán các token $z_k$GPT chỉ có "đường" mà bây giờ có cấu trúc quy mô.
 

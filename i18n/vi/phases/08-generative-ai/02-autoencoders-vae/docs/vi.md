@@ -3,7 +3,7 @@
 > Một mã mã tự động đơn giản nén lại sau đó tái tạo. Nó ghi nhớ. Nó không tạo ra. Thêm một thủ thuật  buộc mã để trông Gaussian  và bạn có được một mẫu.$z = \mu + \sigma \cdot \epsilon$, đó là lý do tại sao mỗi mô hình ảnh phân tán tiềm ẩn và tương thích dòng chảy mà bạn sử dụng vào năm 2026 có một VAE tại đầu vào.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 
@@ -23,7 +23,7 @@ Trong năm 2026, VAE hiếm khi được vận chuyển độc lập  chúng đ�
 
 **Autoencoder.** $z = \text{encoder}(x)$- $\hat{x} = \text{decoder}(z)$, mất mát = $\lVert x - \hat{x} \rVert^2$Không gian mã không có cấu trúc.
 
-**VAE encoder.**Tạo ra hai vector: $\mu(x)$và $\log \sigma^2(x)$- Chúng định nghĩa$q(z \mid x) = \mathcal{N}(\mu, \operatorname{diag}(\sigma^2))$- Tôi không biết.
+**VAE encoder.**Tạo ra hai vector: $\mu(x)$và $\log \sigma^2(x)$- Chúng định nghĩa$q(z \mid x) = \mathcal{N}(\mu, \mathop{\mathrm{diag}}(\sigma^2))$- Tôi không biết.
 
 **Reparameterization trick.**Tiêu chuẩn lấy mẫu từ $q(z \mid x)$không phân biệt được.$z = \mu + \sigma \cdot \epsilon$nơi $\epsilon \sim \mathcal{N}(0, I)$Giờ thì$z$là một hàm xác định của $(\mu, \sigma)$cộng với tiếng ồn không phải tham số  gradient chảy qua `μ`và $\sigma$- Tôi không biết.
 
@@ -99,7 +99,7 @@ def sample(dec, z_dim, rng):
 - **Posterior collapse.**KL term drive $q(z \mid x) \to \mathcal{N}(0, I)$quá mạnh mẽ mà$z$không có thông tin nào về $x$Phong sửa: β- hủy bỏ (bắt đầu $\beta=0$, ramp đến 1), free bits, hoặc bỏ qua KL trên kích thước không hoạt động.
 - **Blurry samples.**Thiết lập: decoder phân biệt (VQ-VAE, NVAE), hoặc chỉ sử dụng VAE như một bộ mã hóa và phân tán chồng trên các laten (đó là điều Stable Diffusion làm).
 - **β too large, too early.**Xem sự sụp đổ sau.$\beta \approx 0.01$và đường băng.
-- **Latent dim too small.**16-D hoạt động cho MNIST, 256-D cho ImageNet 2562, 2048-D cho ImageNet 10242. VAE của Stable Diffusion nén 512×512×3 → 64×64×4 (32x downsample factor trong không gian, 32x trong kênh).
+- **Latent dim too small.**16-D hoạt động cho MNIST, 256-D cho ImageNet 2562, 2048-D cho ImageNet 10242. VAE của Stable Diffusion nén 512×512×3 → 64×64×4 (8x downsample mỗi bên, 64x trong không gian; kênh đi từ 3 đến 4, do đó tổng thể ít hơn 48x giá trị).
 
 ## Sử dụng nó
 
