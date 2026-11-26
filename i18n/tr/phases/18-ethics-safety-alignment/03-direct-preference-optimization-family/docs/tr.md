@@ -3,7 +3,7 @@
 > Rafailov et al. (2023) RLHF'nin optimumu tercih verileri açısından kapalı bir biçime sahip olduğunu gösterdi, bu nedenle açık ödül modelini atlayabilir ve politikayı doğrudan optimize edebilirsiniz. Bu anlayış bir aile doğurdu  IPO, KTO, SimPO, ORPO, BPO  her biri DPO'nun başarısızlık modunu düzeltti. 2026 yılında, doğrudan uyum algoritmaları, PPO'dan daha fazla sınır sonrası antrenman yolculuğu gönderir. Ama 2. Dersin aşırı optimize eğri hala geçerlidir: DAA'lar Goodhart'tan kaçmazlar, sadece ısırık olduğu yere hareket ederler.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 
@@ -53,7 +53,7 @@ Yanlış giden ne olabilir:
 
 - - Ödül boşluğu .`beta * (log(pi/pi_ref)_w - log(pi/pi_ref)_l)`Küçük bir tercih keyfiyle büyük bir boşluk oluşturabilir.
 - Kayıp sürücüler seçilen ve reddedilen log-probları karşı yönde hareket ettirir. Seçilen mutlak log-probı reddedilen daha hızlı düşerse aşağıya itirebilir. Bu, Degraded Chosen Response fenomeni.
-- Paylaştırılmamış tercihler (kuşkusuz nadir nadir çiftler vs. nadir nadir çiftler) keyfi anlamda bilinçli ödüller üretir.
+- Yayınlanmamış tercihler (referans politikası çerçevesinde her iki yanıtın nadir olduğu çiftler) keyfi anlamda dolaylı ödüller üretir.
 
 ### Açıklama (Azar et al., 2024)
 
