@@ -3,7 +3,7 @@
 > A descodificação autoregressiva é serial. Cada token espera para o anterior. A descodificação especulativa quebra a cadeia: um modelo barato elabora N tokens, o modelo caro verifica todos os N em uma passagem para frente. Quando o projeto é correto, você pagou um grande avanço para N gerações.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -70,7 +70,7 @@ Pros: nenhum segundo modelo. Cons: adiciona parâmetros treinables; precisa de u
 
 ### A ÁGuila  melhor desenho reutilizando estados ocultos
 
-EAGLE-1/2/3 (Li et al., 20242025) faz do modelo de projeto um pequeno transformador (tipicamente 1 camada) que ingere os estados ocultos da última camada do verificador. Como o projeto vê a representação de características do verificador, suas previsões se correlacionam fortemente com a distribuição de saída do verificador.
+A EAGLE-1/2/3 (Li et al., 20242025) torna o modelo de projeto um pequeno transformador (tipicamente de 1 camada) que ingere os estados ocultos da última camada do verificador. Como o rascunho vê a representação de características do verificador, suas previsões se correlacionam fortemente com a distribuição de saída do verificador. As taxas de aceitação subem de ~ 0,6 (vanilha) para 0,85+. Estas são taxas por token em benchmarks de chat, com um esboço treinado em dados de chat correspondentes. No que diz respeito ao tráfego de produção mista, a fase 17 · 05 prevê um tráfego de 0,6 a 0,8 para a EAGLE-3, e o tráfego de domínio pode ser menor.
 
 A EAGLE-3 (2025) adicionou a busca de árvores sobre as continuações candidatos.
 
@@ -91,6 +91,13 @@ Veja .`code/main.py`Implementamos o algoritmo de amostragem especulativa central
 - Um "modelo grande" que é um determinístico-softmax sobre uma distribuição codificada à mão (para que possamos verificar a aceitação matemática analíticamente).
 - Um "modelo de projeto" que é uma perturbação do modelo grande.
 - Um ciclo de aceitação/rejeição que produz a mesma distribuição marginal que a amostragem direta.
+
+`code/main.rs`O Rust é um port Rust com as mesmas funções e demos.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Passo 1: o passo de rejeição
 
