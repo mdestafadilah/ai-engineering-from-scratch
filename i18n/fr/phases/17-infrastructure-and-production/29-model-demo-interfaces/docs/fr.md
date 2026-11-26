@@ -3,7 +3,7 @@
 > Un modèle de démonstration a un contrat: une entrée, un appel modèle et une sortie.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -76,6 +76,8 @@ Mettez les contrôles du serveur dans l'ordre des coûts:
 
 | Failed check | HTTP status | Error code |
 |--------------|-------------|------------|
+| No `Content-Length` header | 411 Length Required | `length_required` |
+| `Content-Length` is not a number | 400 Bad Request | `bad_length` |
 | Body over 4,096 bytes | 413 Content Too Large | `body_too_large` |
 | Body stops before `Content-Length` bytes arrive | 408 Request Timeout | `request_timeout` |
 | Content type is not JSON | 415 Unsupported Media Type | `unsupported_media_type` |
@@ -205,12 +207,14 @@ Le code est un fichier,`code/main.py`, sans dépendances en dehors de la bibliot
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 L'auto-test vérifie le validateur, le seau de jetons, le format de flux et un véritable aller-retour HTTP. Il démarre le serveur sur un port gratuit, envoie trois demandes, arrête le serveur et sort.
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Ouvert .`http://127.0.0.1:8000`Préciser Ctrl + C pour arrêter le serveur.
@@ -476,6 +480,7 @@ Pour exiger un jeton d'accès, définissez `DEMO_ACCESS_TOKEN`la page montre ens
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Exécuter les tests:
