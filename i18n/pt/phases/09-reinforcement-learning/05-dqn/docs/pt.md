@@ -3,7 +3,7 @@
 > 2013: Mnih treinou uma rede de aprendizado Q em pixels brutos, venceu todos os agentes RL clássicos em sete jogos Atari. 2015: estendido para 49 jogos, publicado na Nature, desencadeou a era do aprendizado profundo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 
@@ -72,7 +72,7 @@ class ReplayBuffer:
         return rng.sample(self.buf, batch)
 ```
 
-- 50.000 para a Atari. 5.000 são suficientes para o nosso ambiente de brinquedos.
+- 106 capacidade para a Atari, como no DQN original (recolhe 50.000 transições antes de começar a aprendizagem); 5.000 são suficientes para o nosso ambiente de brinquedos.
 
 ### Passo 2: uma pequena rede Q (MLP manual)
 
