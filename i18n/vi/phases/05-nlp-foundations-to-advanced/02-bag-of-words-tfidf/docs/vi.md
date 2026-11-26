@@ -3,7 +3,7 @@
 > TF-IDF vẫn đánh bại các nhiệm vụ được xác định rõ ràng vào năm 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 
@@ -26,7 +26,7 @@ Bài học này xây dựng túi từ, sau đó là TF-IDF, từ đầu. sau đ�
 ```math
 \begin{aligned}
 \text{TF-IDF}(w, d) &= \text{TF}(w, d) \cdot \text{IDF}(w) \\
-&= \frac{\operatorname{count}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\operatorname{df}(w)}
+&= \frac{\mathop{\mathrm{count}}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\mathop{\mathrm{df}}(w)}
 \end{aligned}
 ```
 
@@ -126,7 +126,7 @@ def tfidf(bow_matrix):
 >>> tfidf(bow)
 ```
 
-Ba tài liệu, năm từ ngữ (`the`- `cat`- `sat`- `dog`- `ran` ).`the`xuất hiện trong cả ba, vì vậy IDF của nó là thấp. `dog`xuất hiện trong một, do đó IDF của nó là cao. Các vector là hiếm (những mục nhập lớn nhất là nhỏ) và các từ phân biệt đối xử pop.
+Ba tài liệu, năm từ ngữ (`the`- `cat`- `sat`- `dog`- `ran` ).`the`xuất hiện trong cả ba, vì vậy IDF của nó là thấp. `dog`với một từ vựng thực sự của hàng ngàn từ, các vector này là hiếm (những mục nhập hầu hết là không). ngay cả trong đồ chơi này, các từ phân biệt đối xử pop.
 
 ### Bước 5: L2- bình thường hóa hàng
 

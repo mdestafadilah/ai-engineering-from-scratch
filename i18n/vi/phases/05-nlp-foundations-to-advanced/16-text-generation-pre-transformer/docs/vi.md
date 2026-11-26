@@ -3,7 +3,7 @@
 > Nếu một từ là đáng ngạc nhiên, mô hình là xấu. Sự bối rối làm cho một số ngạc nhiên. Nhấp nhàng giữ cho nó hữu hạn.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 
@@ -42,7 +42,7 @@ prediction-game
 **N-gram probability:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`- Đặt lại .`n`(thường là 3 cho trigram, 4 cho 4 gram).
 
 ```math
-P(w \mid \text{context}) = \frac{\operatorname{count}(\text{context}, w)}{\operatorname{count}(\text{context})}
+P(w \mid \text{context}) = \frac{\mathop{\mathrm{count}}(\text{context}, w)}{\mathop{\mathrm{count}}(\text{context})}
 ```
 
 **The zero-count problem.**Bất kỳ n-gram nào không được nhìn thấy trong đào tạo đều có xác suất bằng không. Một nghiên cứu năm 2007 trên Brown corpus cho thấy rằng ngay cả một mô hình 4 gram có 30% 4 gram không được nhìn thấy trong đào tạo. Bạn không thể đánh giá trên bất kỳ văn bản thực nào mà không làm trơn.
