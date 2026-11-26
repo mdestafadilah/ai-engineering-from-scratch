@@ -53,7 +53,7 @@ Step 10000: Expected distance from origin ~ 100 (sqrt(10000))
 
 **In 2D**, bước đi di chuyển lên, xuống, trái, hoặc phải với xác suất tương tự.$\sqrt{n}$Scaling áp dụng cho khoảng cách từ nguồn.
 
-**Why $\sqrt{n}$?**Mỗi bước là +1 hoặc -1 với xác suất tương đương.$n$bước, vị trí $S_n = X_1 + X_2 + \cdots + X_n$nơi mỗi $X_i$là $\pm 1$. Sự khác biệt của mỗi bước là 1, và các bước là độc lập, vì vậy $\operatorname{Var}(S_n) = n$. Phác lệch chuẩn = $\sqrt{n}$Theo định lý giới hạn trung tâm,$S_n / \sqrt{n}$hội tụ với phân bố bình thường tiêu chuẩn.
+**Why $\sqrt{n}$?**Mỗi bước là +1 hoặc -1 với xác suất tương đương.$n$bước, vị trí $S_n = X_1 + X_2 + \cdots + X_n$nơi mỗi $X_i$là $\pm 1$. Sự khác biệt của mỗi bước là 1, và các bước là độc lập, vì vậy $\mathop{\mathrm{Var}}(S_n) = n$. Phác lệch chuẩn = $\sqrt{n}$Theo định lý giới hạn trung tâm,$S_n / \sqrt{n}$hội tụ với phân bố bình thường tiêu chuẩn.
 
 Đây là$\sqrt{n}$quy mô hiển thị ở khắp mọi nơi trong ML. SGD noise scale là 1/sqrt(batch_size).$\sqrt{d}$. Quả gốc vuông là chữ ký của các sự cộng ngẫu nhiên độc lập.
 
@@ -121,7 +121,7 @@ Hầu hết các chuỗi mà bạn gặp trong ML đáp ứng cả hai điều k
 
 **Absorbing states.**Một trạng thái hấp thụ nếu một khi bạn vào đó, bạn không bao giờ rời khỏi ($P[i][i] = 1$Trải theo các quy trình mô hình chuỗi Markov với các trạng thái cuối cùng - một trò chơi kết thúc, một khách hàng đang lắc lắc, một chuỗi mã thông báo tấn công vào mã thông báo cuối văn bản.
 
-**Mixing time.**Số bước cho đến khi chuỗi "gần" với phân phối tĩnh?$P$(1 trừ giá trị tự lớn thứ hai) điều khiển thời gian trộn.
+**Mixing time.**Số bước cho đến khi chuỗi "gần" với phân phối tĩnh? Về hình thức, số bước cho đến khi khoảng cách thay đổi tổng thể từ tĩnh giảm xuống dưới một số ngưỡng.$P$(1 trừ kích thước giá trị tự lớn nhất ngoài giá trị tự 1) điều khiển thời gian trộn.
 
 ### Kết nối với các mô hình ngôn ngữ
 
@@ -436,6 +436,18 @@ SGLD (Stochastic Gradient Langevin Dynamics) kết hợp giảm gradient mini-ba
 4. **Compare Langevin dynamics at different temperatures.**Mô hình từ tiềm năng cống hai lốp$U(x) = (x^2 - 1)^2$Ở nhiệt độ thấp, các mẫu được tập hợp trong một giếng. Ở nhiệt độ cao, chúng được trải rộng trên cả hai. Tìm nhiệt độ quan trọng nơi chuỗi trộn lẫn giữa các giếng.
 
 5. **Implement the forward diffusion process.**Bắt đầu với một tín hiệu 1D (ví dụ, một sóng âm đạo). Thêm tiếng ồn dần dần hơn 100 bước với một lịch trình tiếng ồn tuyến tính. Hãy cho thấy tín hiệu suy giảm xuống là tiếng ồn tinh khiết. Sau đó thực hiện một biểu tượng đơn giản đảo ngược quá trình (ngay cả một sự ngây thơ mà chỉ trừ được tiếng ồn ước tính).
+
+### Những gợi ý
+
+**Exercise 1.**Gọi`random_walk_1d(10000, seed=i)`cho 1000 hạt và giữ từng vị trí cuối cùng. kiểm tra rằng trung bình gần 0, lệch chuẩn gần 100, và khoảng 68% vị trí cuối cùng là giữa -100 và 100.
+
+**Exercise 2.**Đếm từng cặp từ, sau đó chia từng hàng bằng tổng số của nó để mỗi hàng cộng lên đến 1.`MarkovChain(transition_matrix, state_names)`và gọi`simulate`Hãy kiểm tra xem mỗi cặp từ trong đầu ra của bạn cũng xuất hiện trong corpus.
+
+**Exercise 3.**Hãy chấp nhận điểm tồi tệ hơn với khả năng$\exp(-\Delta / T)$và nhân lên$T$bằng một nhân tố như 0,99 sau mỗi bước. kiểm tra trên một hàm mà bạn biết tối thiểu, và kiểm tra câu trả lời của bạn với một tìm kiếm lưới tinh tế.
+
+**Exercise 4.**Tốc độ là $4x(x^2 - 1)$, nên hãy chuyển nó cho `langevin_dynamics(grad_U, x0, dt, temperature, n_steps)`- Chân rào ở$x = 0$có chiều cao 1, vì vậy đếm bao nhiêu lần dấu hiệu của $x$thay đổi nhiệt độ từ 0,05 đến 1 và tìm nhiệt độ nơi số lượng bắt đầu tăng nhanh chóng.
+
+**Exercise 5.**Gọi`diffusion_forward(signal, 100)`và tính toán$\bar{\alpha}$bước cuối cùng như là sản phẩm của $(1 - \beta_t)$Nếu$\bar{\alpha}$là xa 0, tín hiệu vẫn chưa là tiếng ồn tinh khiết, vì vậy hãy nâng `beta_end`Hãy thử thử máy báo trước với tiếng ồn thật: sau đó$(x_t - \sqrt{1 - \bar{\alpha}_t} \epsilon)/\sqrt{\bar{\alpha}_t}$phải trả lại tín hiệu ban đầu chính xác.
 
 ## Các điều khoản chính
 

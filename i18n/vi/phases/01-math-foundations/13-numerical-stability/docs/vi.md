@@ -3,7 +3,7 @@
 > Điểm nổi là một sự trừu tượng bị rò rỉ. Nó sẽ cắn bạn trong khi tập luyện, và bạn sẽ không thấy nó đến.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -173,7 +173,7 @@ Trù này xuất hiện khắp nơi trong ML:
 Softmax chuyển đổi logits thành xác suất:
 
 ```math
-\operatorname{softmax}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
+\mathop{\mathrm{softmax}}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
 ```
 
 Nếu không có thủ thuật, logit của [100, 101, 102] gây ra tràn:
@@ -184,7 +184,7 @@ exp(101) = 7.31e43
 exp(102) = 1.99e44
 sum      = 2.99e44
 
-These overflow float32 (max ~3.4e38)? No, 2.69e43 < 3.4e38? Actually:
+2.69e43 > 3.4e38, the float32 maximum, so every term overflows.
 exp(88.7) is already at the float32 limit.
 exp(100) = inf in float32.
 ```
@@ -353,7 +353,7 @@ Layer 50: values in [0, inf]
 Tiêu chuẩn hóa các recenters và tái kích hoạt ở mỗi lớp:
 
 ```math
-\operatorname{LayerNorm}(x) = \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x) + \epsilon} \cdot \gamma + \beta
+\mathop{\mathrm{LayerNorm}}(x) = \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x) + \epsilon} \cdot \gamma + \beta
 ```
 
 - `epsilon`(thường là 1e-5) ngăn chặn chia bằng không khi tất cả các hoạt động đều giống nhau.`gamma`và `beta`để mạng phục hồi bất kỳ quy mô nào nó cần.
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-Nhìn xem`code/numerical.py`cho các triển khai hoàn chỉnh với tất cả các trường hợp cạnh được chứng minh.
+Nhìn xem`code/numerical.py`cho các thực hiện hoàn chỉnh với tất cả các trường hợp cạnh được chứng minh.`code/numerical.ts`là một cổng TypeScript với các chức năng và demo tương tự.
 
 ## Chuyển nó
 
@@ -579,6 +579,18 @@ Những thực hiện ổn định này xuất hiện lại trong giai đoạn 3
 4. **Gradient checking a neural network layer.**Thực hiện một lớp tuyến tính đơn `y = Wx + b`và phân tích của nó đi ngược lại.`numerical_gradient`để xác minh sự chính xác cho một matrix trọng lượng 3x2.
 
 5. **Loss scaling experiment.**Mô phỏng đào tạo với float16: tạo gradient ngẫu nhiên trong phạm vi [1e-9, 1e-3), chuyển đổi sang float16, và đo phân số nào trở thành không. Sau đó áp dụng quy mô mất mát (lập số bằng 1024), chuyển đổi sang float16, quy mô lại, và đo phân số không một lần nữa.
+
+### Những gợi ý
+
+**Exercise 1.**Chuyển đổi ba giá trị bằng `np.float32`trước khi bạn bình quân chúng, sau đó gọi `variance_naive`và `welford_variance`Giá trị gần$10^{12}$trong float32 có khoảng cách lớn hơn nhiều so với 1, vì vậy mong đợi kết quả ngây thơ sẽ xa từ 0.6667 và kết quả Welford sẽ gần.
+
+**Exercise 2.**Bắt đầu với `x = np.float32(1.0)`và giảm một nửa trong khi `np.float32(1.0) + x != np.float32(1.0)`. Giữ mọi giá trị trong float32, sau đó so sánh giá trị cuối cùng mà vẫn thay đổi số tiền với `numpy.finfo(numpy.float32).eps`, đó là $2^{-23}$- Tôi không biết.
+
+**Exercise 3.**Hãy dự đoán trước mỗi câu trả lời.$n$giá trị bình đẳng $c$, kết quả là $c + \ln n$Đối với một giá trị lớn, kết quả gần với giá trị đó. Đối với giá trị gần -1000, kết quả gần $-1000 + \ln n$, trong khi `logsumexp_naive`trả lại `-inf`vì mỗi hàm số biểu diễn chảy xuống 0.
+
+**Exercise 4.**Vì $y = Wx + b$với một tổn thất $L$, độ nghiêng của $W$là sản phẩm bên ngoài của độ lệch lên dòng và $x$. Bỏ mất tích như một chức năng của phẳng $W$, gọi `numerical_gradient`, và chuyển cả hai kết quả cho `check_gradient`- Tôi không biết.
+
+**Exercise 5.**Mô tả các quy mô trên thang log với `10 ** np.random.uniform(-9, -3, n)`và chuyển đổi với `np.float16`. Float16 không thể giữ các giá trị dưới khoảng $6 \times 10^{-8}$, nên mong đợi khoảng một phần tư các giá trị sẽ trở thành 0 trước khi mở rộng và gần như không có khi bạn nhân bằng 1024.
 
 ## Các điều khoản chính
 

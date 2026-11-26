@@ -3,7 +3,7 @@
 > Giải quyết$Ax = b$là vấn đề lâu đời nhất trong toán học vẫn đang điều hành mạng lưới thần kinh của bạn.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -219,7 +219,7 @@ Cholesky nhanh gấp đôi LU và đòi hỏi một nửa lưu trữ. Nó chỉ 
 - Hessian của một hàm ngọc tối thiểu là đối xứng tích cực xác định.
 - $A^T A$luôn là đối xứng tích cực bán xác định.
 
-Trong các quy trình Gaussian, bạn tính toán các khối lõi$K$Cholesky, sau đó giải quyết.$K \alpha = y$Cholesky cũng cho bạn số lượng xác định log cho xác suất biên:$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$- Tôi không biết.
+Trong các quy trình Gaussian, bạn tính toán các khối lõi$K$Cholesky, sau đó giải quyết.$K \alpha = y$Cholesky cũng cho bạn số lượng xác định log cho xác suất biên:$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$- Tôi không biết.
 
 ### Các hình vuông tối thiểu: khi Ax = b không có giải pháp chính xác
 
@@ -385,7 +385,7 @@ Mỗi phương pháp trong bài học này xuất hiện trong sản xuất ML:
 
 **Ridge regression.**Thêm thêm $\lambda I$đến$X^T X$Hệ thống quy định$(X^T X + \lambda I) w = X^T y$luôn có thể giải quyết qua Cholesky bởi vì$X^T X + \lambda I$là tích cực đối xứng xác định cho $\lambda > 0$- Tôi không biết.
 
-**Gaussian processes.**Tỷ lệ trung bình dự đoán đòi hỏi phải giải quyết $K \alpha = y$nơi $K$là các khối lượng hạt nhân.$K$là phương pháp tiếp cận tiêu chuẩn.$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$- Tôi không biết.
+**Gaussian processes.**Tỷ lệ trung bình dự đoán đòi hỏi phải giải quyết $K \alpha = y$nơi $K$là các khối lượng hạt nhân.$K$là phương pháp tiếp cận tiêu chuẩn.$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$- Tôi không biết.
 
 **Neural network initialization.**Việc khởi tạo trực giác sử dụng phân hủy QR để tạo ra các matrix trọng lượng có cột là hoặc bình thường. Điều này ngăn chặn sự sụp đổ tín hiệu trong các mạng sâu.
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 Bài học này mang lại:
 - `code/linear_systems.py`chứa các thực hiện từ đầu của loại bỏ Gaussian, phân hủy LU, phân hủy Cholesky, các hình vuông tối thiểu và sự lùi sườn
+- `code/linear_systems.ts`Nó so sánh với các giải pháp tham chiếu nhỏ từ đầu, bởi vì TypeScript không có NumPy.
 - Một minh chứng làm việc cho thấy các phương trình bình thường và Klern's LinearRegression tạo ra các trọng lượng tương tự
 
 ## Các bài tập
@@ -559,6 +560,18 @@ Bài học này mang lại:
 4. Thực hiện thuật toán gradient kết hợp cho một số liệu số 100x100 ngẫu nhiên đối xứng tích cực xác định. Đếm bao nhiêu lần lặp lại cần để hội tụ với dung lượng 1e-8. So sánh với tối đa lý thuyết của $n$lặp lại.
 
 5. Thời gian của bạn cho cholesky giải quyết vs LU giải quyết vs `np.linalg.solve`trên các số liệu xác định tích cực đối xứng với kích thước 10, 50, 200, 500.
+
+### Những gợi ý
+
+**Exercise 1.**Gọi`gaussian_elimination(A, b)`, sau đó `lu_decompose(A)`tiếp theo là `lu_solve(P, L, U, b)`, sau đó `np.linalg.solve(A, b)`Hãy kiểm tra từng câu trả lời với `np.allclose(A @ x, b)`và so sánh ba câu trả lời với `np.allclose`- Tôi không biết.
+
+**Exercise 2.**Sử dụng `least_squares_normal`cho các phương trình bình thường và ba hàm NumPy cho các phương pháp khác.`w_true`- So sánh`condition_number(X.T @ X)`với `condition_number(X)`: thứ nhất là hình vuông của thứ hai, vì vậy các phương trình bình thường mất độ chính xác nhất.
+
+**Exercise 3.**Hãy mong đợi một số điều kiện ở trên $10^{9}$- Giải quyết với `np.linalg.solve`và với `ridge_regression(A, b, 0.01)`, sau đó so sánh`np.linalg.norm(x)`Cả hai chất còn lại có thể nhỏ, nhưng dung dịch không có quy định thường có các mục rất lớn.
+
+**Exercise 4.**Làm một matrix xác định tích cực đối xứng với `B @ B.T + n * np.eye(n)`, để mỗi giá trị bản chất là tích cực. Thêm một đếm vào vòng lặp trong bản sao của bạn của `conjugate_gradient`, sau đó kiểm tra rằng chuẩn dư cuối cùng là dưới 1e-8 và rằng con số là tối đa 100.
+
+**Exercise 5.**Sử dụng cùng một `B @ B.T + n * np.eye(n)`các matrices cho cả ba giải pháp và thời gian mỗi giải quyết với `time.perf_counter`Cholesky cần khoảng một nửa số toán của LU, vì vậy tỷ lệ rõ ràng nhất ở các kích thước lớn hơn.
 
 ## Các điều khoản chính
 

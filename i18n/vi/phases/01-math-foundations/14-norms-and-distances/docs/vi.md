@@ -3,7 +3,7 @@
 > Chọn sai và mọi thứ sẽ bị phá vỡ.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -102,7 +102,7 @@ L1 và L2 là các trường hợp đặc biệt của chuẩn Lp:
 \lVert x \rVert_p = (|x_1|^p + |x_2|^p + \cdots + |x_n|^p)^{1/p}
 ```
 
-Các giá trị khác nhau của $p$tạo ra "cánh bóng đơn vị" có hình dạng khác nhau (số tất cả các điểm ở khoảng cách 1 từ nguồn):
+Các giá trị khác nhau của $p$tạo ra "cánh bóng đơn vị" có hình dạng khác nhau (số tất cả các điểm ở khoảng cách tối đa 1 từ nguồn gốc; hình dạng dưới đây là ranh giới của chúng):
 
 ```
 p=1:    Diamond shape      (corners on axes)
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### Bước 1: Tất cả các chức năng chuẩn và khoảng cách
 
-Nhìn xem`code/distances.py`Mỗi hàm được xây dựng từ đầu chỉ bằng toán học Python cơ bản.
+Nhìn xem`code/distances.py`cho việc thực hiện hoàn chỉnh. Mỗi hàm được xây dựng từ đầu chỉ sử dụng toán học Python cơ bản.`code/distances.ts`là một cổng TypeScript với các chức năng và demo tương tự.
 
 ### Bước 2: cùng dữ liệu, khoảng cách khác nhau, hàng xóm khác nhau
 
@@ -483,6 +483,18 @@ Khi anh gọi`model.encode(text)`và sau đó tìm kiếm một cơ sở dữ li
 4. Xét khoảng cách Wasserstein giữa [0,5, 0,5, 0,0] và [0, 0, 0,5, 0,5] bằng tay bằng phương pháp CDF. Sau đó tính nó giữa [0,25, 0,25, 0,25, 0,25] và [0, 0, 0, 0,5, 0.5].
 
 5. Thực hiện MinHash để tương tự Jaccard gần như. Tạo 100 bộ ngẫu nhiên, tính toán chính xác Jaccard cho tất cả các cặp, và so sánh với sự gần gũi MinHash bằng cách sử dụng hàm hash 50, 100, và 200.
+
+### Những gợi ý
+
+**Exercise 1.**Dấu tích khác biệt là (-3, 2, -3), vì vậy tính toán ba quy tắc của dấu tích đó bằng `l1_norm`- `l2_norm`, và`linf_norm`Để chứng minh, so sánh lớn nhất$\lvert d_i \rvert$với tổng số vuông, và so sánh tổng số vuông với số vuông của tổng số giá trị tuyệt đối.
+
+**Exercise 2.**Sự tương đồng cosine bỏ qua chiều dài, vì vậy hãy bắt đầu với hai vector chỉ ra gần như cùng một hướng và làm cho một trong số chúng dài hơn nhiều. Đối với trường hợp thứ hai, sử dụng hai vector ngắn gần nguồn chỉ ra các hướng khác nhau, sau đó kiểm tra cả hai điều kiện bằng `cosine_similarity`và `l2_distance`- Tôi không biết.
+
+**Exercise 3.**Gọi`find_nearest_neighbor(query, dataset, distance_fn)`một lần cho mỗi người `l1_distance`- `l2_distance`- `cosine_distance`, và`mahalanobis_distance`- `demo_different_neighbors`cho thấy một tập dữ liệu mà các số liệu không đồng ý, vì vậy hãy đọc nó trước và sau đó thay đổi các điểm cho đến khi cả bốn câu trả lời khác nhau.
+
+**Exercise 4.**Viết tổng cộng tích lũy của mỗi phân phối, sau đó thêm sự khác biệt tuyệt đối của hai tổng tích lũy.`wasserstein_1d(p, q)`, sau đó giải thích giá trị lớn hơn bằng cách cách khối lượng xác suất phải di chuyển xa như thế nào.
+
+**Exercise 5.**Đối với mỗi hàm hash, chữ ký MinHash của một tập hợp là giá trị hash tối thiểu trên các yếu tố của nó, và phần của các hàm hash nơi hai tập hợp nhận được ước tính tối thiểu tương tự của họ. So sánh mỗi ước tính với `jaccard_similarity`; lỗi phải rơi vào khoảng như $1/\sqrt{k}$cho $k$hàm hash.
 
 ## Các điều khoản chính
 

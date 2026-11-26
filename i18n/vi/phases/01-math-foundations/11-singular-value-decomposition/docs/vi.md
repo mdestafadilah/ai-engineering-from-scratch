@@ -55,7 +55,7 @@ Hãy nghĩ về nó theo cách này. Bạn trao cho SVD một số liệu. Nó n
 & \quad \Sigma \text{ is } m \times n, \text{ diagonal (singular values on the diagonal)} \\
 & \quad V \text{ is } n \times n, \text{ orthogonal } (V^T V = I) \\[6pt]
 & \text{The singular values } \sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > 0 \\
-& \text{where } r = \operatorname{rank}(A)
+& \text{where } r = \mathop{\mathrm{rank}}(A)
 \end{aligned}
 ```
 
@@ -147,7 +147,7 @@ Sự kết nối này cho bạn biết ba điều:
 & \quad \Sigma_k \text{ is } k \times k \quad \text{(top-left } k \times k \text{ block of } \Sigma\text{)} \\
 & \quad V_k \text{ is } n \times k \quad \text{(first } k \text{ columns of } V\text{)} \\[6pt]
 & \text{Approximation error} = \sigma_{k+1} \quad \text{(in spectral norm)} \\
-& \phantom{\text{Approximation error}} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
+& \text{Approximation error} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
 \end{aligned}
 ```
 
@@ -519,6 +519,18 @@ Bài học này mang lại:
 4. Tạo một matrix tài liệu dài hạn 100x50 với 3 chủ đề tổng hợp. Mỗi chủ đề có 5 thuật ngữ liên quan. Thêm tiếng ồn. Sử dụng SVD và xác minh rằng 3 giá trị đơn vị hàng đầu lớn hơn nhiều so với phần còn lại. Dự án tài liệu vào không gian ẩn 3D và kiểm tra tài liệu từ cùng một cụm chủ đề cùng nhau.
 
 5. Tạo một số liệu thấp (tầng 3, kích thước 50x40) và thêm tiếng ồn Gaussian ở các cấp độ khác nhau ($\sigma$= 0,1, 0,5, 1,0, 2.0). Đối với mỗi mức tiếng ồn, tìm ra mức cắt giảm tối ưu bằng cách lau $k$từ 1 đến 40 và đo lỗi tái tạo với matrix sạch.$k$thay đổi với mức độ tiếng ồn.
+
+### Những gợi ý
+
+**Exercise 1.**Lưu ý$A^T A$, lấy các giá trị riêng và các vector riêng của nó với `np.linalg.eigh`, và sắp xếp chúng theo thứ tự giảm. các giá trị đơn vị là các gốc vuông của các giá trị riêng; kiểm tra rằng$U \Sigma V^T$xây dựng lại $A$và so sánh lỗi với `svd_from_scratch`và `np.linalg.svd`- Tôi không biết.
+
+**Exercise 2.**Gọi`truncated_svd`cho mỗi cấp bậc, xây dựng lại hình ảnh với `reconstruct`, và sử dụng `compression_ratio(m, n, k)`lỗi tương đối phải giảm khi xếp hạng tăng lên, và thứ hạng đầu tiên mà bạn không thấy các khối rõ ràng là câu trả lời.
+
+**Exercise 3.**Đánh dấu các tế bào thiếu, lấp đầy chúng với đường trung bình hàng, sau đó xây dựng lại một mức độ 3 gần với `truncated_svd`và `reconstruct`Sau đó đo kết quả: đếm các dự đoán bên ngoài phạm vi xếp hạng, và in thay đổi lớn nhất trong một tế bào được biết.
+
+**Exercise 4.**Cho mỗi chủ đề một khối 5 từ với số lượng cao cho tài liệu của nó, sau đó thêm tiếng ồn nhỏ. Bác các giá trị đơn lẻ: 3 đầu tiên phải lớn hơn nhiều so với 4th. Sau đó màu các điều phối 3D theo chủ đề và kiểm tra rằng mỗi chủ đề tạo thành một nhóm.
+
+**Exercise 5.**Làm cho các matrix sạch như là sản phẩm của một 50x3 và một 3x40 matrix ngẫu nhiên, sau đó thêm tiếng ồn cho mỗi $\sigma$. cho mỗi người$k$, so sánh cấp độ $k$tái tạo với matrix sạch; mong đợi tốt nhất $k$gần 3 đối với tiếng ồn thấp và nhỏ hơn đối với tiếng ồn cao.
 
 ## Các điều khoản chính
 

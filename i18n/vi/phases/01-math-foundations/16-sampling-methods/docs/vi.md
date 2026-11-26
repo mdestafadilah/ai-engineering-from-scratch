@@ -3,7 +3,7 @@
 > Tiêu mẫu là cách AI khám phá không gian của khả năng.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -117,7 +117,8 @@ Algorithm:
   3. If u < p(x) / (M * q(x)), accept x
   4. Otherwise, reject and go to step 1
 
-Acceptance rate = 1/M
+Acceptance rate = Z/M, where Z is the integral of p(x)
+                (Z = 1, so the rate is 1/M, when p is normalized)
 ```
 
 Càng chặt hơn thì càng chặt hơn$M$, tỷ lệ chấp nhận cao hơn. Trong các chiều kích thấp (1-3), lấy mẫu từ chối hoạt động tốt. Trong các chiều kích cao, tỷ lệ chấp nhận giảm theo cấp số lượng bởi vì phần lớn khối lượng đề xuất bị từ chối. Đây là lời nguyền về chiều kích cho lấy mẫu từ chối.
@@ -608,6 +609,8 @@ Hãy cho thấy nhiệt độ giảm làm cho đầu ra tiếp cận một vecto
 
 Các thực hiện đầy đủ với tất cả các hình ảnh hóa là trong `code/sampling.py`- Tôi không biết.
 
+Cổng TypeScript đang được cài đặt `code/sampling.ts`Nó sử dụng máy phát điện ngẫu nhiên của riêng nó, vì vậy số ngẫu nhiên của nó khác với đầu ra Python.
+
 ## Sử dụng nó
 
 Với NumPy và SciPy, các phiên bản sản xuất:
@@ -651,6 +654,18 @@ Anh đã xây dựng những cái này từ đầu rồi, giờ anh biết nhữ
 4. Thực hiện Metropolis-Hastings để lấy mẫu từ phân phối 2D $p(x, y)$tương xứng với $\exp(-(x^2 y^2 + x^2 + y^2 - 8x - 8y) / 2)$- Chụp các mẫu và đường đi chuỗi.
 
 5. Xây dựng một bản demo tạo văn bản hoàn chỉnh: với một từ vựng 10 từ với logit, tạo ra chuỗi 20 mã thông báo bằng cách sử dụng (a) tham lam, (b) nhiệt độ = 0,7, (c) top-k = 3, (d) top-p = 0,9. So sánh sự đa dạng của các đầu ra trong 5 lần chạy.
+
+### Những gợi ý
+
+**Exercise 1.**Giải quyết $u = F(x)$cho $x$, cho phép$x = \tan(\pi(u - 0.5))$Kiểm tra xem liệu trung bình mẫu có gần 0 và khoảng 6% mẫu có $\lvert x \rvert > 10$, đó là $1 - (2/\pi)\arctan(10)$- Tôi không biết.
+
+**Exercise 2.**Độ dày Beta ((2, 5) là $30x(1-x)^4$Tìm giá trị lớn nhất của nó ở chế độ $x = 1/5$và sử dụng giá trị đó như $M$trong `rejection_sample`Tỷ lệ chấp nhận lý thuyết là$1/M$, nên so sánh nó với phần nhỏ các đề xuất mà bạn chấp nhận.
+
+**Exercise 3.**Giá trị chính xác là 2.`monte_carlo_integral(math.sin, 0, math.pi, n)`cho mỗi $n$và lặp lại mỗi lần chạy với nhiều hạt giống.$n$tăng gấp 10 lần, lỗi trung bình sẽ giảm khoảng $\sqrt{10} \approx 3.2$- Tôi không biết.
+
+**Exercise 4.**Viết nhật ký của mục tiêu, đó là $-(x^2 y^2 + x^2 + y^2 - 8x - 8y)/2$, và chuyển nó cho `metropolis_hastings_2d`- ghi lại tỷ lệ chấp nhận cho mỗi đề xuất lệch chuẩn: một giá trị rất nhỏ chấp nhận hầu hết mọi bước nhưng di chuyển chậm, và một giá trị rất lớn từ chối hầu hết mọi bước.
+
+**Exercise 5.**Việc giải mã tham lam lấy chỉ số logit lớn nhất ở mỗi bước.`temperature_sample`- `top_k_sample`, và`top_p_sample`Tham mê phải đưa ra cùng một chuỗi trong tất cả 5 lần chạy, vì vậy hãy đếm các chuỗi riêng biệt cho mỗi phương pháp để đo đa dạng.
 
 ## Các điều khoản chính
 

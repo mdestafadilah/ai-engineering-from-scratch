@@ -3,7 +3,7 @@
 > Dữ liệu chiều cao có cấu trúc. Bạn tìm thấy nó bằng cách nhìn từ góc độ đúng.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -198,6 +198,13 @@ pca-axes
 
 ## Hãy xây dựng nó
 
+Cổng TypeScript đang được cài đặt `code/dim_reduction.ts`Các bản demo của MNIST cần học scikit, vì vậy chúng chỉ chạy bằng Python.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
+
 ### Bước 1: PCA từ đầu
 
 ```python
@@ -354,6 +361,14 @@ Bài học này mang lại:
 2. Thực hiện t-SNE trên cùng một bộ tiểu MNIST với giá trị phức tạp 5, 30 và 100. Mô tả cách thức đầu ra thay đổi. Tại sao sự phức tạp ảnh hưởng đến độ chặt của cluster?
 
 3. Hãy lấy một bộ dữ liệu với 50 tính năng mà chỉ có 5 tính năng thông tin (tạo ra một với `sklearn.datasets.make_classification`). Sử dụng PCA và kiểm tra xem đường cong biến số được giải thích có xác định chính xác dữ liệu có hiệu quả là 5 chiều không.
+
+### Những gợi ý
+
+**Exercise 1.**Đọc `inverse_transform`trong `PCA`lớp và phù hợp với một mô hình cho mỗi số thành phần.`reconstruction_error`cho 10, 50 và 200 thành phần; lỗi phải giảm khi số lượng thành phần tăng lên.
+
+**Exercise 2.**Đơn vị `sklearn.manifold.TSNE`ba lần trên cùng một bộ phận, thay đổi chỉ `perplexity`, và sử dụng cùng một `random_state`Sự bối rối thấp nhìn vào ít hàng xóm, vì vậy mong đợi các nhóm nhỏ chặt chẽ; sự bối rối cao nhìn vào nhiều hàng xóm, vì vậy mong đợi các nhóm lớn hơn, mượt mà hơn.
+
+**Exercise 3.**Gọi`make_classification(n_features=50, n_informative=5, n_redundant=45)`, phù hợp`PCA`, và in sự biến thể được giải thích tích lũy. Các tính năng dư thừa là kết hợp tuyến tính của những thông tin, do đó đường cong đạt gần 1.0 ở 5 thành phần.`n_redundant=0`: 45 tính năng khác là tiếng ồn độc lập, và đường cong không phẳng.
 
 ## Các điều khoản chính
 

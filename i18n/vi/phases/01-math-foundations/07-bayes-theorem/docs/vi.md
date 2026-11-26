@@ -3,7 +3,7 @@
 > Thiếu khả năng là về những gì bạn mong đợi. Lý thuyết Bayes là về những gì bạn học được.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 Thêm 1 vào mỗi con số đảm bảo không có khả năng nào là không.
 
+Một từ chưa bao giờ xuất hiện trong bất kỳ thông điệp đào tạo nào không có trong từ vựng. `predict`bỏ qua nó, bởi vì nó không cung cấp bằng chứng cho cả hai lớp.
+
 ### Tối đa a posteriori (MAP)
 
 MLE hỏi: những tham số nào tối đa hóa $P(\text{data} \mid \text{parameters})$- Không .
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ Same algorithm. CountVectorizer xử lý tokenization và xây dựng từ vựn
 
 ## Chuyển nó
 
-Các lớp NaiveBayes được xây dựng ở đây cho thấy toàn bộ đường ống: tokenization, ước tính xác suất với Laplace smoothing, dự đoán log-space.`code/bayes.py`chạy từ đầu đến cuối mà không có phụ thuộc ngoài thư viện tiêu chuẩn của Python.
+Các lớp NaiveBayes được xây dựng ở đây cho thấy toàn bộ đường ống: tokenization, ước tính xác suất với Laplace smoothing, dự đoán log-space.`code/bayes.py`chạy kết thúc đến kết thúc mà không có phụ thuộc ngoài thư viện tiêu chuẩn của Python.`code/bayes.ts`chỉ sử dụng thư viện tiêu chuẩn Node.
 
 ### Những người trước tiên kết hợp
 
@@ -450,6 +452,16 @@ Lợi ích so với thử nghiệm A/B thường xuyên:
 3. **Add features.**Lớn thêm lớp NaiveBayes để cũng sử dụng chiều dài thông điệp (cắn/dáu) như một tính năng bên cạnh số lượng từ.$P(\text{short} \mid \text{spam})$và $P(\text{short} \mid \text{ham})$từ dữ liệu đào tạo và gấp nó vào điểm dự đoán.
 
 4. **MAP by hand.**Với dữ liệu quan sát (7 đầu trong 10 cú đánh đồng), tính toán ước tính MAP của sự thiên vị bằng cách sử dụng một $\text{Beta}(2,2)$so sánh với ước tính MLE ($7/10$().
+
+### Những gợi ý
+
+**Exercise 1.**Gọi`bayes`một lần để lấy phía sau sau xét nghiệm 1, sau đó gọi lại với phía sau như trước. `sequential_bayes(prior, likelihood, false_positive_rate, 2)`phải có cùng giá trị, gần 0,5.
+
+**Exercise 2.**Tạo ra một cái `NaiveBayes(smoothing=s)`cho mỗi giá trị, đào tạo nó trên cùng các dữ liệu, và in `top_words`Với thanh toán 0, một từ không bao giờ xuất hiện trong spam có xác suất 0, vì vậy nhật ký của nó không được xác định.
+
+**Exercise 3.**Đếm số lượng thư spam và ham ngắn, chia bằng số lượng thư trong mỗi lớp, và thêm nhật ký của tỷ lệ đó vào điểm trong `predict`Kiểm tra xem hai xác suất cho mỗi lớp cộng lên đến 1.
+
+**Exercise 4.**Với một $\text{Beta}(\alpha, \beta)$trước đó, ước tính MAP là $\frac{h + \alpha - 1}{n + \alpha + \beta - 2}$Đặt vào.$h = 7$- $n = 10$; kết quả phải nằm giữa MLE (0.7) và chế độ trước (0,5).
 
 ## Các điều khoản chính
 

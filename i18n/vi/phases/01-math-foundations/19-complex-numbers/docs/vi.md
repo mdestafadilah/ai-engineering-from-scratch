@@ -3,7 +3,7 @@
 > Nguồn vuông của -1 không phải là tưởng tượng. Nó là chìa khóa cho các quay, tần số và một nửa xử lý tín hiệu.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -105,7 +105,7 @@ Bất kỳ điểm nào trong máy bay có thể được mô tả bằng cách 
 \begin{aligned}
 z &= r (\cos\theta + i \sin\theta) \\[4pt]
 \text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
-\theta &= \operatorname{atan2}(b, a) \quad \text{(phase, or argument)}
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
 \end{aligned}
 ```
 
@@ -250,7 +250,7 @@ Các cặp sin và cos là các phần thực và tưởng tượng của các h
 | Multiplication | $(ac-bd) + (ad+bc)i$ | Rotate and scale |
 | Conjugate | $a - bi$ | Reflect over real axis |
 | Magnitude | $\sqrt{a^2 + b^2}$ | Distance from origin |
-| Phase | $\operatorname{atan2}(b, a)$ | Angle from positive real axis |
+| Phase | $\mathop{\mathrm{atan2}}(b, a)$ | Angle from positive real axis |
 | Division | multiply by conjugate | Reverse rotation and rescale |
 | Power | $r^n e^{in\theta}$ | Rotate $n$ times, scale by $r^n$ |
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## Chuyển nó
 
-Đi chạy`code/complex_numbers.py`để tạo ra `outputs/skill-complex-arithmetic.md`- Tôi không biết.
+Đi chạy`code/complex_numbers.py`hoặc `npx tsx code/complex_numbers.ts`để tạo ra `outputs/skill-complex-arithmetic.md`- Tôi không biết.
 
 ## Các bài tập
 
@@ -440,6 +440,18 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 5. **Rotation matrix equivalence.**Đối với 10 góc ngẫu nhiên và 10 điểm ngẫu nhiên, xác minh rằng nhân phức hợp mang lại kết quả tương tự như nhân tử-vector với các 2x2 quay tử liệu.
 
+### Những gợi ý
+
+**Exercise 1.**Tăng sản phẩm với $i^2 = -1$, sau đó chia bằng cách nhân phần trên và dưới bằng conyugat $1 + 3i$Kiểm tra sản phẩm với `Complex(2, 3) * Complex(4, -1)`: của nó `magnitude()`phải bằng với nhân của hai cường độ, và nó `phase()`phải bằng với tổng của hai giai đoạn.
+
+**Exercise 2.**Hãy bước đi với `euler(math.pi / 6)`và nhân 12 lần. Ở mỗi bước, kiểm tra rằng độ lớn vẫn là 1 và góc tăng thêm 30 độ. Điểm cuối cùng phải là trong khoảng 1e-12 của (1, 0).
+
+**Exercise 3.**Hãy ghi thời gian với $t = n/32$và gọi`dft`Chỉ nhìn vào các thùng 0 đến 15, bởi vì nửa trên là hình ảnh gương.$k$cho một âm âm của độ lớn $A$là $AN/2$, nên mong đợi khoảng 16 ở Bin 3 và khoảng 8 ở Bin 7.
+
+**Exercise 4.**Gọi`roots_of_unity(8)`và thêm các gốc: quy mô của tổng số phải gần 0. Chia mỗi gốc bằng gốc trước và kiểm tra rằng mọi kết quả đều bằng `euler(2 * math.pi / 8)`- Tôi không biết.
+
+**Exercise 5.**Các mô hình quay là [[cos t, -sin t], [sin t, cos t]]. Đối với mỗi góc và điểm, tính toán `euler(t) * Complex(x, y)`và các sản phẩm tử liệu, sau đó ghi lại sự khác biệt tuyệt đối lớn nhất.$10^{-15}$- Tôi không biết.
+
 ## Các điều khoản chính
 
 | Term | What it means |
@@ -448,7 +460,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 | Imaginary unit | The number $i$, defined by $i^2 = -1$. Not imaginary in the philosophical sense -- it is a rotation operator |
 | Complex plane | The 2D plane where the x-axis is real and the y-axis is imaginary. Also called the Argand plane |
 | Magnitude (modulus) | The distance from the origin: $\sqrt{a^2 + b^2}$. Written as $\lvert z \rvert$ |
-| Phase (argument) | The angle from the positive real axis: $\operatorname{atan2}(b, a)$. Written as $\arg(z)$ |
+| Phase (argument) | The angle from the positive real axis: $\mathop{\mathrm{atan2}}(b, a)$. Written as $\arg(z)$ |
 | Conjugate | The mirror image across the real axis: conjugate of $a + bi$ is $a - bi$ |
 | Polar form | Expressing $z$ as $r e^{i\theta}$ instead of $a + bi$. Makes multiplication easy |
 | Euler's formula | $e^{i\theta} = \cos\theta + i \sin\theta$. Connects exponentials to trigonometry |
