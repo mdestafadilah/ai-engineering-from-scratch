@@ -3,7 +3,7 @@
 > تولید موتورهای خدمتگری مدرن بر سه اشتباهات مخلوط، نه یک ترفند، تکیه می کند. "پاگاد اتاشن" هميشه فعاله دسته بندی مداوم درخواست های جدید را در دسته فعال بین تکرار های رمزگذاری تزریق می کند. قطعات پر کردن از قبل قطعات طولانی به عنوان نشان دهنده های رمزگذاری هرگز گرسنگی. تمام سه را روشن کنید و Llama 3.3 70B FP8 در یک H100 SXM5 2,200-2,400 توک / ثانیه را در 128 همزمان فشار می دهد  حدود 25٪ بالاتر از پیش فرض vLLM و 3-4x یک حلقه PyTorch ساده. این درس برنامه ریزی کننده و هسته توجه vLLM را می خواند  موتور مرجع برای سه تکنیک  در سطح شما می توانید نمودار را ببینید، و با یک بازی مداوم دسته بندی در `code/main.py`که برنامه ها مثل vLLM قبل از پر کردن و رمزگذاری کردنش رو انجام میده
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy continuous batching scheduler)
+**Languages:** Python, TypeScript (stdlib, toy continuous batching scheduler)
 **Prerequisites:** Phase 17 · 01 (Model Serving), Phase 11 (LLM Engineering)
 **Time:** ~75 minutes
 
@@ -11,7 +11,7 @@
 
 - PagedAttention را به عنوان یک توزیع کننده حافظه کش KV توضیح دهید: بلوک ها، جدول های بلوک و اینکه چرا شکاف در بار تولید کمتر از 4٪ باقی می ماند.
 - نمودار دسته بندی مداوم در سطح تکرار: چگونه دنباله های نهایی دسته را ترک می کنند و جدید بدون تخلیه به هم می پیوندند.
-- پیش پر کردن قطعه ای را در یک جمله و نامگذاری کنید که کدام متریک تاخیر را محافظت می کند (توصیه: این دم TTFT است، نه متوسط تولید).
+- پیش پر کردن قطعه ای را در یک جمله و نامی که از متریک تاخیر محافظت می کند توصیف کنید (ملاحظه: این دم ITL از کد های همزمان است، نه متوسط تولید).
 - قبل از فعال کردن هر بهینه سازی یکبار، ترکیبی از ویژگی های vLLM را با ماتریس سازگاری برای نسخه خود بررسی کنید.
 
 ## مشکل
@@ -44,7 +44,7 @@ PagedAttention ایده را از حافظه مجازی OS قرض می گیرد.
 
 اندازه دسته هرگز به یک عدد ثابت پوشیده نمی شود. دنباله های در موقعیت های مختلف در خروجی خود به اشتراک می گذارند یک مخلوط به جلو. در vLLM 2026 این به نام `V1 scheduler`. غیر متغیر کلید: برنامه ریزی کننده یک بار در هر تکرار رمزگذاری اجرا می شود، نه یک بار در هر درخواست.
 
-### پر کردن پیش از قطعه ای از دم TTFT محافظت می کند
+### پر کردن پیش از قطعه ای از دم ITL محافظت می کند
 
 Prefill محدود به محاسبه است. یک پیام 32k-token در Llama 3.3 70B حدود 800 ms از prefill خالص را در یک H100 مصرف می کند. در حالی که prefill اجرا می شود، توکن ها را برای هر ردیف دیگر در دسته انتظار کنید. در یک حلقه ارائه، تاخیر اولین توکن (TTFT) یک پیام طولانی به بین دوجن دیگر کاربران تبدیل می شود.
 
@@ -130,7 +130,7 @@ tensor-parallel
 | Chunked prefill | "prefill splitting" | Break long prefill into 512-token slices interleaved with decode |
 | TTFT | "first token time" | Prefill + queue + network; dominated by prefill at long prompts |
 | ITL | "inter-token latency" | Time between consecutive decode tokens; dominated by batch size |
-| Goodput | "throughput that meets SLO" | Tokens/sec where every request still hit TTFT and ITL targets |
+| Goodput | "throughput that meets SLO" | Requests/sec that still hit TTFT and ITL targets (Phase 17 · 08 reports it as the share of requests) |
 | V1 scheduler | "the new scheduler" | vLLM's 2026 scheduler; runs continuous batching with chunked prefill |
 | `--gpu-memory-utilization` | "the memory knob" | Fraction of HBM reserved for KV blocks after weights and activations |
 

@@ -3,7 +3,7 @@
 > فرمت کوانتزیشن یک انتخاب جهانی نیست  این یک تابع سخت افزار، موتور خدمت و بار کار است. GGUF Q4_K_M یا Q5_K_M مالک CPU و کناره است که از طریق llama.cpp و Ollama ارائه می شود. GPTQ در داخل vLLM برنده می شه وقتی به چندین LoRA در همان پایه نیاز داری. AWQ با هسته های Marlin-AWQ ~ 741 توک / ثانیه را در یک مدل کلاس 7B با بهترین Pass@1 در INT4  پیش فرض 2026 برای تولید مرکز داده ارائه می دهد. FP8 در میان زمین هاپر، آدا و بلکویل باقی می ماند  تقریبا بدون ضرر و به طور گسترده ای پشتیبانی می شود. NVFP4 و MXFP4 (مکروسکالینگ بلیک ویل) تهاجمی هستند و نیاز به اعتبارگذاری در هر بلوک دارند. دو تیم گیرنده: مجموعه داده های کالیبریشن باید با دامنه انتشار مطابقت داشته باشد و کیش KV از کوانتزی وزن جدا شده است  درس AWQ "نموذج من اکنون 4 GB است" کیش KV 10-30 GB را در اندازه دسته تولید فراموش می کند.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy memory and throughput comparison across formats)
+**Languages:** Python, TypeScript (stdlib, toy memory and throughput comparison across formats)
 **Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 
@@ -103,6 +103,8 @@ gpu-memory-breakdown
 ## ازش استفاده کن
 
 `code/main.py`اندازه گیری نقش حافظه (وزن + KV + فعال سازی) و تولید نسبی در شش فرمت برای طیف وسیعی از اندازه های مدل را محاسبه می کند. نشان می دهد که KV cache در کجا غالب است، فشرده سازی وزن در کجا پرداخت می شود و FP8 انتخاب امن است.
+
+.[Inside an LLM Serving GPU](https://aiengineeringfromscratch.com/inside-an-llm-serving-gpu?dtype=fp8&users=64)دستگاه FP8 را در NVIDIA L4 نشان می دهد. وزن از 15.28 گگابایت به 8.81 گگابایت کاهش می یابد، مجموعه KV از 24.094 تا 142.369 توکن افزایش می یابد و تولید اندازه گیری شده در 64 کاربر از 250.85 تا 735.91 توکن در ثانیه می رود.
 
 ## -باده
 
