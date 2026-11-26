@@ -3,7 +3,7 @@
 > A teoria da informação mede a surpresa.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 
@@ -202,7 +202,7 @@ Propriedades:
 2. Características de classificação por pontuação MI.
 3. Mantém o topo .$k$características.
 
-Isto funciona para qualquer relação entre característica e alvo -- linear, não linear, monótono ou não. A correlação só capta relações lineares.
+Isso funciona para qualquer relação entre característica e alvo - linear, não linear, monótono ou não. A correlação de Pearson só capta relações lineares.
 
 | Method | Detects | Computational cost | Handles categorical? |
 |--------|---------|-------------------|---------------------|
@@ -460,6 +460,16 @@ Construiste a partir do nada o que ?`torch.nn.CrossEntropyLoss()`Agora sabe por 
 3. Mostre que a divergência KL não é simétrica.$P$E ...$Q$e computação .$D_{KL}(P \Vert Q)$E ...$D_{KL}(Q \Vert P)$Explica porque são diferentes.
 
 4. Construir uma função que calcula a perplexidade para uma sequência de previsões de tokens. Dada uma lista de pares (true_token_index, predicted_logits), retorne a perplexidade da sequência.
+
+### Indicios
+
+**Exercise 1.**Liga-me .`entropy`com 26 probabilidades iguais; o resultado deve ser $\log_2 26 \approx 4.70$As frequências reais das letras não são uniformes, por isso a entropia com elas deve ser menor.
+
+**Exercise 2.**Computação`softmax`das logites, então $-\ln$de probabilidade no índice 1, e comparar com `cross_entropy_loss(1, logits)`• ambas devem estar próximas de 3,06. A perda aproxima-se de 0, apenas quando a logite para a classe 1 é muito maior do que as outras duas.
+
+**Exercise 3.**Usar duas pequenas distribuições com formas diferentes, por exemplo $P = [0.9, 0.1]$E ...$Q = [0.5, 0.5]$, e ligar`kl_divergence`Os dois valores devem ser diferentes, porque cada direcção pesa a relação log por uma distribuição diferente.
+
+**Exercise 4.**Para cada par, calcular `cross_entropy_loss(true_token_index, predicted_logits)`, tomar o meio, e passar para `perplexity`Verifique com os registos uniformes .$V$Tokens: a perplexidade deve ser $V$- Não .
 
 ## Termos-chave
 

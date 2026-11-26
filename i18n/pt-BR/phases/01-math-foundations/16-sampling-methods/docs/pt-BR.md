@@ -3,7 +3,7 @@
 > A amostragem é como a IA explora o espaço das possibilidades.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -117,7 +117,8 @@ Algorithm:
   3. If u < p(x) / (M * q(x)), accept x
   4. Otherwise, reject and go to step 1
 
-Acceptance rate = 1/M
+Acceptance rate = Z/M, where Z is the integral of p(x)
+                (Z = 1, so the rate is 1/M, when p is normalized)
 ```
 
 Quanto mais apertado for o limite$M$Em dimensões baixas (1-3), a amostragem de rejeição funciona bem. Em dimensões altas, a taxa de aceitação cai exponencialmente porque a maior parte do volume da proposta é rejeitada. Esta é a maldição da dimensionalidade para a amostragem de rejeição.
@@ -608,6 +609,8 @@ Mostre como a diminuição da temperatura faz com que a saída se aproxime de um
 
 Implementações completas com todas as visualizações estão em `code/sampling.py`- Não .
 
+O port TypeScript está em `code/sampling.ts`Ele usa seu próprio gerador aleatório sementeado, por isso os números aleatórios diferem da saída Python.
+
 ## Usá-lo
 
 Com NumPy e SciPy, as versões de produção:
@@ -651,6 +654,18 @@ Construíste isto do zero, agora sabes o que fazem as chamadas da biblioteca.
 4. Implementar Metropolis-Hastings para amostragem de uma distribuição 2D $p(x, y)$Proporcional a $\exp(-(x^2 y^2 + x^2 + y^2 - 8x - 8y) / 2)$- Desenhar as amostras e a trajetória da cadeia.
 
 5. Construir uma demonstração completa de geração de texto: dado um vocabulário de 10 palavras com logits, gerar sequências de 20 tokens usando (a) ganancioso, (b) temperatura = 0,7, (c) top-k = 3, (d) top-p = 0,9. Compare a diversidade de saídas em 5 corridas.
+
+### Indicios
+
+**Exercise 1.**Resolver$u = F(x)$Para$x$, o que dá $x = \tan(\pi(u - 0.5))$Verifique se a mediana da amostra está próxima a 0 e se cerca de 6% das amostras têm$\lvert x \rvert > 10$, que é $1 - (2/\pi)\arctan(10)$- Não .
+
+**Exercise 2.**A densidade Beta ((2, 5) é $30x(1-x)^4$. Encontre o seu maior valor no modo $x = 1/5$e usar esse valor como $M$em `rejection_sample`A taxa de aceitação teórica é de$1/M$, então compare-o com a fração de propostas que aceita.
+
+**Exercise 3.**O valor exacto é 2.`monte_carlo_integral(math.sin, 0, math.pi, n)`para cada um $n$e repita cada corrida com várias sementes.$n$A taxa de erro média deve diminuir em cerca de $\sqrt{10} \approx 3.2$- Não .
+
+**Exercise 4.**Escreva o registro do alvo, que é $-(x^2 y^2 + x^2 + y^2 - 8x - 8y)/2$, e passar para `metropolis_hastings_2d`- registar a taxa de aceitação de cada proposta de desvio padrão: um valor muito pequeno aceita quase todos os passos, mas se move lentamente, e um valor muito grande rejeita quase todos os passos.
+
+**Exercise 5.**A codificação gananciosa leva o índice da maior logit em cada passo.`temperature_sample`- Não .`top_k_sample`, e `top_p_sample`A ganância deve dar a mesma sequência em todas as 5 corridas, então conte as sequências distintas para cada método para medir a diversidade.
 
 ## Termos-chave
 
