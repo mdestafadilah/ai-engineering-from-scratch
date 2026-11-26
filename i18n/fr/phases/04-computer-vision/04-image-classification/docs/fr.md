@@ -53,19 +53,19 @@ Chaque ligne de cette boucle est où un bug peut vivre.`model(x).softmax()`Les a
 Un classifiant produit `C`Les nombres par image sont appelés logits.
 
 ```math
-\operatorname{softmax}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
+\mathop{\mathrm{softmax}}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
 ```
 
 L'entropie croisée mesure la probabilité négative de log de la classe correcte:
 
 ```math
 \begin{aligned}
-\mathrm{CE}(z, y) &= -\log\left( \operatorname{softmax}(z)_y \right) \\
+\mathrm{CE}(z, y) &= -\log\left( \mathop{\mathrm{softmax}}(z)_y \right) \\
 &= -z_y + \log\left( \sum_j \exp(z_j) \right)
 \end{aligned}
 ```
 
-La forme de droite est celle numériquement stable (log-sum-exp).`nn.CrossEntropyLoss`Il est possible de faire une commande de la même manière que le logiciel de commande de la même manière.$\log(\operatorname{softmax}(\operatorname{softmax}(z)))$, une quantité sans sens.
+La forme de droite est celle numériquement stable (log-sum-exp).`nn.CrossEntropyLoss`Il est possible de faire une commande de la même manière que le logiciel de commande de la même manière.$\log(\mathop{\mathrm{softmax}}(\mathop{\mathrm{softmax}}(z)))$, une quantité sans sens.
 
 ### Pourquoi l'augmentation fonctionne
 
@@ -100,7 +100,7 @@ Pourquoi cela aide-t-il: le modèle cesse de mémoriser des cibles ponctuelles e
 
 ### Légalisation des étiquettes
 
-Un cousin de confusion.`[0, 0, 1, 0, 0]`, train contre `[eps/C, eps/C, 1-eps, eps/C, eps/C]`Pour un petit`eps`Il permet de réduire la production de logits arbitrairement tranchants et d'améliorer l'étalonnage à presque aucun coût.`nn.CrossEntropyLoss(label_smoothing=0.1)`depuis PyTorch 1.10.
+Un cousin de confusion.`[0, 0, 1, 0, 0]`, train contre `[eps/C, eps/C, 1-eps+eps/C, eps/C, eps/C]`Pour un petit`eps`La mise en place d'une méthode de calcul de la valeur de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échantillon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon de l'échon`nn.CrossEntropyLoss(label_smoothing=0.1)`depuis PyTorch 1.10.
 
 ### Évaluation au-delà de l'exactitude
 
@@ -415,7 +415,7 @@ Cette leçon donne:
 | DataLoader | "The batcher" | Wraps a dataset with shuffling, batching, and (optional) multi-worker loading; gets blamed for half of training bugs |
 | Augmentation | "Random transforms" | Any pixel-level transform at training time that preserves the label; teaches invariances the CNN does not have natively |
 | Mixup / Cutmix | "Mix two images" | Blend both inputs and labels so the classifier learns smooth interpolations instead of hard boundaries |
-| Label smoothing | "Softer targets" | Replace one-hot with (1-eps, eps/(C-1), ...); improves calibration and slightly boosts accuracy |
+| Label smoothing | "Softer targets" | Replace one-hot with (1-eps+eps/C, eps/C, ...); improves calibration and slightly boosts accuracy |
 | Top-k accuracy | "Top-5" | The correct class is in the k highest-probability predictions; used on datasets with genuinely ambiguous classes |
 | Confusion matrix | "Where errors live" | C x C table where entry (i, j) counts images of true class i predicted as j; diagonal is right, off-diagonal tells you what to fix |
 

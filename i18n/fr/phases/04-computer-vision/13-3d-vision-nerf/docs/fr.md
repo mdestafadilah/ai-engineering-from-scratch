@@ -45,7 +45,7 @@ Aucune grille, aucune connectivité.
 PointNet (Qi et al., 2017) a résolu les deux avec une idée: appliquer un MLP partagé à chaque point, puis agréger avec une fonction symétrique (pools max). Le résultat est un vecteur de taille fixe qui ne dépend pas de l'ordre.
 
 ```math
-f(P) = \max_{p \in P} \operatorname{MLP}(p)
+f(P) = \max_{p \in P} \mathop{\mathrm{MLP}}(p)
 ```
 
 C'est le cœur de PointNet. Les variantes plus profondes (PointNet++, Point Transformer) ajoutent un échantillonnage hiérarchique et une aggregation locale, mais le truc de fonction symétrique est inchangé.

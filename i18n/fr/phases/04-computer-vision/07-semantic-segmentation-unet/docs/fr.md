@@ -90,7 +90,7 @@ Pour une première U-Net, le bilinéaire est plus sûr.
 Pour la segmentation sémantique avec $C$les classes, la sortie du modèle est `(N, C, H, W)`La cible est`(N, H, W)`L'entropie croisée est identique à la classification, appliquée à chaque position spatiale:
 
 ```math
-\text{Loss} = \operatorname*{mean}_{(n, h, w)} \left[ -\log\left( \operatorname{softmax}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy`PyTorch traite cette forme de manière native.
@@ -103,7 +103,7 @@ La perte de dés résout cela en optimisant directement le chevauchement entre l
 
 ```math
 \begin{aligned}
-\operatorname{Dice}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
 \text{Dice}_{\text{loss}} &= 1 - \text{Dice}
 \end{aligned}
 ```
@@ -129,7 +129,7 @@ Les taux de participation sont de 15% pour une classe, alors que les autres neuf
 
 ### Compromise de résolution des entrées
 
-Le codeur d'U-Net réduit de moitié la résolution de quatre fois, de sorte que l'entrée doit être divisible par 16.`H * W * C_max`, et à 1024x1024 avec 1024 canaux à goulot d'étranglement, le passage avant utilise déjà des gigaoctets de VRAM.
+Le codeur U-Net réduit de moitié la résolution de quatre fois, de sorte que les connexions de saut ne s'alignent exactement que lorsque l'entrée est divisible par 16.`H * W * C_max`, et à 1024x1024 avec 1024 canaux à goulot d'étranglement, le passage avant utilise déjà des gigaoctets de VRAM.
 
 Deux solutions standard:
 1. Tissage des tuiles d'entrée  processus 256x256 avec chevauchement et couture.
