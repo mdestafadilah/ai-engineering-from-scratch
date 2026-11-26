@@ -3,7 +3,7 @@
 > Rafailov e outros. (2023) mostrou que o ótimo da RLHF tem uma forma fechada em termos de dados de preferência, para que você possa ignorar o modelo de recompensa explícito e otimizar a política diretamente. Essa percepção gerou uma família  IPO, KTO, SimPO, ORPO, BPO  cada um corrigindo um modo de falha de DPO. Em 2026, os algoritmos de alinhamento direto enviam mais corridas de pós-treino fronteiriças do que o PPO. Mas a curva de otimização excessiva da lição 2 ainda se aplica: os DAAs não escapam do Goodhart, eles apenas se movem onde morde.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 
@@ -53,7 +53,7 @@ O que pode dar errado:
 
 - A diferença implícita de recompensa .`beta * (log(pi/pi_ref)_w - log(pi/pi_ref)_l)`Uma pequena preferência pode produzir uma lacuna arbitrariamente grande.
 - O disco de perda seleciona e rejeita log-probs em direções opostas. Pode empurrar o log-prob absoluto escolhido para baixo, desde que o rejeitado cai mais rápido.
-- As preferências fora da distribuição (par raro raro vs par raro raro) produzem recompensas implícitas arbitrárias.
+- As preferências fora de distribuição (pares em que ambas as respostas são raras no âmbito da política de referência) produzem recompensas implícitas arbitrárias.
 
 ### O IPO (Azar et al., 2024)
 
