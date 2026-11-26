@@ -3,7 +3,7 @@
 > Uma árvore de decisão é apenas um fluxo, mas uma floresta delas é uma das ferramentas mais poderosas do ML.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -104,7 +104,7 @@ Esta abordagem gananciosa não garante a árvore globalmente ideal. Encontrar a 
 
 ### Condições de parada
 
-Sem condições de parada, a árvore cresce até que cada folha seja pura (uma amostra por folha).
+Sem condições de parada, a árvore cresce até que cada folha seja pura ou sem fragmentação possa separar suas amostras, muitas vezes até uma única amostra por folha.
 
 **Pre-pruning**para a árvore antes de crescer completamente:
 - Profundeza máxima: parar de se dividir quando a árvore atingir uma profundidade definida
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-Veja .`code/trees.py`Para a execução completa com todos os métodos auxiliares.
+Veja .`code/trees.py`Para a implementação completa com todos os métodos auxiliares. `code/trees.ts`é uma porta TypeScript com as mesmas funções e demos.`npx tsx code/trees.ts`- Não .
 
 ## Usá-lo
 
