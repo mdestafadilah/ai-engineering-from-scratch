@@ -3,7 +3,7 @@
 > Si un mot est surprenant, le modèle est mauvais. La perplexité fait une surprise. Le doucement le maintient fini.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 
@@ -42,7 +42,7 @@ prediction-game
 **N-gram probability:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`- Réparer .`n`(généralement 3 pour les trigrammes, 4 pour les 4 grammes).
 
 ```math
-P(w \mid \text{context}) = \frac{\operatorname{count}(\text{context}, w)}{\operatorname{count}(\text{context})}
+P(w \mid \text{context}) = \frac{\mathop{\mathrm{count}}(\text{context}, w)}{\mathop{\mathrm{count}}(\text{context})}
 ```
 
 **The zero-count problem.**Un rapport de 2007 sur le corpus de Brown a révélé que même un modèle de 4 grammes avait 30% de 4 grammes non vus dans l'entraînement.
