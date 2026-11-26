@@ -3,7 +3,7 @@
 > لقد بنيت جهاز GPT-2 صغير من الصفر في الدروس 04. النماذج المفتوحة الحدودية في عام 2026 هي نفس العائلة مع خمسة أو ست تغييرات ملموسة. RMSNorm بدلا من LayerNorm. (سويجلو) بدلاً من (جيلو) (روبي) بدلاً من المواقف المتعلقة (جيكا) أو (ملا) بدلاً من (مها) الكاملة مزيج من الخبراء على نطاق واسع الرياضيات التي تعرفها بالفعل تغطي 95٪ منهم. هذه الدروس تقرأ Llama 3، DeepSeek-V3، Mixtral، Qwen، و Gemma جنبا إلى جنب وسمي الخط الدقيق حيث تختلف كل معمارية.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 
@@ -53,7 +53,7 @@
 LayerNorm يخص متوسط، وينقسم بواسطة std، مقياس، وتحركات. RMSNorm يحتفظ فقط بالمقياس:
 
 ```math
-\operatorname{RMSNorm}(x) = \frac{x}{\sqrt{\operatorname{mean}(x^2) + \epsilon}} \cdot \gamma
+\mathop{\mathrm{RMSNorm}}(x) = \frac{x}{\sqrt{\mathop{\mathrm{mean}}(x^2) + \epsilon}} \cdot \gamma
 ```
 
 لا يعني الحد من النسب. لا يوجد تحيز. واحد من الممل أقل لكل رمز. جادل Zhang و Sennrich (2019) أنه يطابق LayerNorm على الترجمة الآلية مع أن يكون أسرع بنسبة 10%. كل نموذج مفتوح حديث يعمل عليه.
@@ -79,7 +79,7 @@ score = q_rotated . k_rotated
 المخططات المختلفة لـ GPT-2 هي`x -> gelu(xW1 + b1) -> (...)W2 + b2`. يُستبدل SwiGLU (Shazeer 2020) التفعيل بمنتج مغلق:
 
 ```math
-\operatorname{SwiGLU}(x) = (xW_1) \cdot \operatorname{sigmoid}(xW_1) \cdot xV
+\mathop{\mathrm{SwiGLU}}(x) = (xW_1) \cdot \mathop{\mathrm{sigmoid}}(xW_1) \cdot xV
 ```
 
 تمت إعداد مقياسات متوازية بدلاً من مقياس واحد، وتتوافق مع عملية تنشيط سويش. أقوى تجريبياً على التعقيد لكل مبرمج. اعتمدت Llama 2 ، اتبعها الجميع. يتم تحديد حجم المبرمج المخبأ عادةً بحيث يطابق عدد المبرمجات الكلي مع MLP الكثيفة الأصلية: إذا استخدم GPT-2`ff_dim = 4 * hidden`, SwiGLU يستخدم `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden`. . .
