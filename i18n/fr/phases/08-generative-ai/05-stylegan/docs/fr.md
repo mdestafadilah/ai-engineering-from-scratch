@@ -3,7 +3,7 @@
 > La plupart des générateurs se déplacent .$z$StyleGAN le partage: première carte$z$à un intermédiaire $w$, puis * injecter *$w$Ce changement unique a démêlé l'espace latent et fait des visages photoréalistes un problème résolu pendant sept ans consécutifs.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
@@ -26,7 +26,7 @@ Le résultat: $W$Il a des axes orthogonaux pour "style de haut niveau" (position
 **AdaIN.**
 
 ```math
-\operatorname{AdaIN}(x, y) = y_{\text{scale}} \cdot \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x)} + y_{\text{bias}}
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 où $y_{\text{scale}}$et $y_{\text{bias}}$proviennent de projections affine de $w$Normalement par carte de fonctionnalités, puis re-style. "Style" ici est la statistique de premier et deuxième ordre de la carte de fonctionnalités.

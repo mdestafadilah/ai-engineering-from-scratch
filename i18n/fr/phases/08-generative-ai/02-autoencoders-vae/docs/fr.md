@@ -3,7 +3,7 @@
 > Un simple autoencodeur comprime puis reconstruit. Il mémore. Il ne génère pas. Ajoutez une astuce  forcez le code à regarder Gaussian  et vous obtenez un échantillonneur. Cette astuce unique, la réparamétrisation de $z = \mu + \sigma \cdot \epsilon$C'est pourquoi chaque modèle d'image de diffusion latente et de correspondance de flux que vous utilisez en 2026 a un VAE à l'entrée.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 
@@ -23,7 +23,7 @@ En 2026, les VAE sont rarement livrés indépendamment  ils ont été dépassés
 
 **Autoencoder.** $z = \text{encoder}(x)$- Je suis là .$\hat{x} = \text{decoder}(z)$, perte = $\lVert x - \hat{x} \rVert^2$- L'espace de code est non structuré.
 
-**VAE encoder.**Les sorties sont de deux vecteurs: $\mu(x)$et $\log \sigma^2(x)$- Ils définissent ...$q(z \mid x) = \mathcal{N}(\mu, \operatorname{diag}(\sigma^2))$- Je suis désolé .
+**VAE encoder.**Les sorties sont de deux vecteurs: $\mu(x)$et $\log \sigma^2(x)$- Ils définissent ...$q(z \mid x) = \mathcal{N}(\mu, \mathop{\mathrm{diag}}(\sigma^2))$- Je suis désolé .
 
 **Reparameterization trick.**Prise d' échantillons à partir de $q(z \mid x)$L'échantillon est réécrit comme $z = \mu + \sigma \cdot \epsilon$où $\epsilon \sim \mathcal{N}(0, I)$- Maintenant .$z$est une fonction déterministe de $(\mu, \sigma)$+ un bruit non paramétrique  des gradients circulent `μ`et $\sigma$- Je suis désolé .
 
